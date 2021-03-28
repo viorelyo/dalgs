@@ -1,5 +1,6 @@
 syntax = "proto3";
 package communication; // You can change the package name to anything you like
+option csharp_namespace = "NewDalgs.ProtoComm";
 // option go_package = ".;main"; // This is necessary only if you use Go
 
 /*

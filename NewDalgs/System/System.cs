@@ -1,22 +1,18 @@
-﻿using NewDalgs.Core;
-using NewDalgs.Utils;
+﻿using NewDalgs.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace NewDalgs.System
 {
     class System
     {
-        private readonly Communication.ProcessId _processId;
+        private readonly ProtoComm.ProcessId _processId;
         private readonly string _hubHost;
         private readonly int _hubPort;
 
         private NetworkHandler _networkHandler;
 
-        public System(Communication.ProcessId processId, string hubHost, int hubPort)
+        public System(ProtoComm.ProcessId processId, string hubHost, int hubPort)
         {
             _processId = processId;
             _hubHost = hubHost;
@@ -55,15 +51,15 @@ namespace NewDalgs.System
 
         private void RegisterToHub()
         {
-            var procRegistration = new Communication.ProcRegistration
+            var procRegistration = new ProtoComm.ProcRegistration
             {
                 Owner = _processId.Owner,
                 Index = _processId.Index
             };
 
-            var wrapperMsg = new Communication.Message
+            var wrapperMsg = new ProtoComm.Message
             {
-                Type = Communication.Message.Types.Type.ProcRegistration,
+                Type = ProtoComm.Message.Types.Type.ProcRegistration,
                 ProcRegistration = procRegistration,
                 //SystemId = "sys-1",     // TODO should be added?!
                 ToAbstractionId = "app",

@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Communication {
+namespace NewDalgs.ProtoComm {
 
   /// <summary>Holder for reflection information generated from communication-protocol.proto</summary>
   public static partial class CommunicationProtocolReflection {
@@ -157,58 +157,58 @@ namespace Communication {
             "SEVBUlRCRUFUX1JFUExZEFASIwofRVBGRF9JTlRFUk5BTF9IRUFSVEJFQVRf",
             "UkVRVUVTVBBREhAKDEVQRkRfUkVTVE9SRRBSEhAKDEVQRkRfU1VTUEVDVBBT",
             "EhAKDEVQRkRfVElNRU9VVBBUEg4KClBMX0RFTElWRVIQWhILCgdQTF9TRU5E",
-            "EFtiBnByb3RvMw=="));
+            "EFtCFaoCEk5ld0RhbGdzLlByb3RvQ29tbWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.ProcessId), global::Communication.ProcessId.Parser, new[]{ "Host", "Port", "Owner", "Index", "Rank" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.Value), global::Communication.Value.Parser, new[]{ "Defined", "V" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.ProcRegistration), global::Communication.ProcRegistration.Parser, new[]{ "Owner", "Index" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.ProcInitializeSystem), global::Communication.ProcInitializeSystem.Parser, new[]{ "Processes" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.ProcDestroySystem), global::Communication.ProcDestroySystem.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppBroadcast), global::Communication.AppBroadcast.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppValue), global::Communication.AppValue.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppPropose), global::Communication.AppPropose.Parser, new[]{ "Topic", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppDecide), global::Communication.AppDecide.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppRead), global::Communication.AppRead.Parser, new[]{ "Register" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppWrite), global::Communication.AppWrite.Parser, new[]{ "Register", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppReadReturn), global::Communication.AppReadReturn.Parser, new[]{ "Register", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.AppWriteReturn), global::Communication.AppWriteReturn.Parser, new[]{ "Register" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.UcPropose), global::Communication.UcPropose.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.UcDecide), global::Communication.UcDecide.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpAbort), global::Communication.EpAbort.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpAborted), global::Communication.EpAborted.Parser, new[]{ "Ets", "ValueTimestamp", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpPropose), global::Communication.EpPropose.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpDecide), global::Communication.EpDecide.Parser, new[]{ "Ets", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpInternalRead), global::Communication.EpInternalRead.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpInternalState), global::Communication.EpInternalState.Parser, new[]{ "ValueTimestamp", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpInternalWrite), global::Communication.EpInternalWrite.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpInternalAccept), global::Communication.EpInternalAccept.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpInternalDecided), global::Communication.EpInternalDecided.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EcInternalNack), global::Communication.EcInternalNack.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EcStartEpoch), global::Communication.EcStartEpoch.Parser, new[]{ "NewTimestamp", "NewLeader" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EcInternalNewEpoch), global::Communication.EcInternalNewEpoch.Parser, new[]{ "Timestamp" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.BebBroadcast), global::Communication.BebBroadcast.Parser, new[]{ "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.BebDeliver), global::Communication.BebDeliver.Parser, new[]{ "Message", "Sender" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EldTimeout), global::Communication.EldTimeout.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EldTrust), global::Communication.EldTrust.Parser, new[]{ "Process" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarRead), global::Communication.NnarRead.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarInternalRead), global::Communication.NnarInternalRead.Parser, new[]{ "ReadId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarInternalValue), global::Communication.NnarInternalValue.Parser, new[]{ "ReadId", "Timestamp", "WriterRank", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarInternalWrite), global::Communication.NnarInternalWrite.Parser, new[]{ "ReadId", "Timestamp", "WriterRank", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarWrite), global::Communication.NnarWrite.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarInternalAck), global::Communication.NnarInternalAck.Parser, new[]{ "ReadId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarReadReturn), global::Communication.NnarReadReturn.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NnarWriteReturn), global::Communication.NnarWriteReturn.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpfdTimeout), global::Communication.EpfdTimeout.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpfdInternalHeartbeatRequest), global::Communication.EpfdInternalHeartbeatRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpfdInternalHeartbeatReply), global::Communication.EpfdInternalHeartbeatReply.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpfdSuspect), global::Communication.EpfdSuspect.Parser, new[]{ "Process" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.EpfdRestore), global::Communication.EpfdRestore.Parser, new[]{ "Process" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.PlSend), global::Communication.PlSend.Parser, new[]{ "Destination", "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.PlDeliver), global::Communication.PlDeliver.Parser, new[]{ "Sender", "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.NetworkMessage), global::Communication.NetworkMessage.Parser, new[]{ "SenderHost", "SenderListeningPort", "Message" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Communication.Message), global::Communication.Message.Parser, new[]{ "Type", "MessageUuid", "FromAbstractionId", "ToAbstractionId", "SystemId", "NetworkMessage", "ProcRegistration", "ProcInitializeSystem", "ProcDestroySystem", "AppBroadcast", "AppValue", "AppPropose", "AppDecide", "AppRead", "AppWrite", "AppReadReturn", "AppWriteReturn", "UcDecide", "UcPropose", "EpAbort", "EpAborted", "EpInternalAccept", "EpDecide", "EpInternalDecided", "EpPropose", "EpInternalRead", "EpInternalState", "EpInternalWrite", "EcInternalNack", "EcInternalNewEpoch", "EcStartEpoch", "BebBroadcast", "BebDeliver", "EldTimeout", "EldTrust", "NnarInternalAck", "NnarInternalRead", "NnarInternalValue", "NnarInternalWrite", "NnarRead", "NnarReadReturn", "NnarWrite", "NnarWriteReturn", "EpfdTimeout", "EpfdInternalHeartbeatRequest", "EpfdInternalHeartbeatReply", "EpfdSuspect", "EpfdRestore", "PlDeliver", "PlSend" }, null, new[]{ typeof(global::Communication.Message.Types.Type) }, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.ProcessId), global::NewDalgs.ProtoComm.ProcessId.Parser, new[]{ "Host", "Port", "Owner", "Index", "Rank" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.Value), global::NewDalgs.ProtoComm.Value.Parser, new[]{ "Defined", "V" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.ProcRegistration), global::NewDalgs.ProtoComm.ProcRegistration.Parser, new[]{ "Owner", "Index" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.ProcInitializeSystem), global::NewDalgs.ProtoComm.ProcInitializeSystem.Parser, new[]{ "Processes" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.ProcDestroySystem), global::NewDalgs.ProtoComm.ProcDestroySystem.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppBroadcast), global::NewDalgs.ProtoComm.AppBroadcast.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppValue), global::NewDalgs.ProtoComm.AppValue.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppPropose), global::NewDalgs.ProtoComm.AppPropose.Parser, new[]{ "Topic", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppDecide), global::NewDalgs.ProtoComm.AppDecide.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppRead), global::NewDalgs.ProtoComm.AppRead.Parser, new[]{ "Register" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppWrite), global::NewDalgs.ProtoComm.AppWrite.Parser, new[]{ "Register", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppReadReturn), global::NewDalgs.ProtoComm.AppReadReturn.Parser, new[]{ "Register", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.AppWriteReturn), global::NewDalgs.ProtoComm.AppWriteReturn.Parser, new[]{ "Register" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.UcPropose), global::NewDalgs.ProtoComm.UcPropose.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.UcDecide), global::NewDalgs.ProtoComm.UcDecide.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpAbort), global::NewDalgs.ProtoComm.EpAbort.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpAborted), global::NewDalgs.ProtoComm.EpAborted.Parser, new[]{ "Ets", "ValueTimestamp", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpPropose), global::NewDalgs.ProtoComm.EpPropose.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpDecide), global::NewDalgs.ProtoComm.EpDecide.Parser, new[]{ "Ets", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpInternalRead), global::NewDalgs.ProtoComm.EpInternalRead.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpInternalState), global::NewDalgs.ProtoComm.EpInternalState.Parser, new[]{ "ValueTimestamp", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpInternalWrite), global::NewDalgs.ProtoComm.EpInternalWrite.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpInternalAccept), global::NewDalgs.ProtoComm.EpInternalAccept.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpInternalDecided), global::NewDalgs.ProtoComm.EpInternalDecided.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EcInternalNack), global::NewDalgs.ProtoComm.EcInternalNack.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EcStartEpoch), global::NewDalgs.ProtoComm.EcStartEpoch.Parser, new[]{ "NewTimestamp", "NewLeader" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EcInternalNewEpoch), global::NewDalgs.ProtoComm.EcInternalNewEpoch.Parser, new[]{ "Timestamp" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.BebBroadcast), global::NewDalgs.ProtoComm.BebBroadcast.Parser, new[]{ "Message" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.BebDeliver), global::NewDalgs.ProtoComm.BebDeliver.Parser, new[]{ "Message", "Sender" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EldTimeout), global::NewDalgs.ProtoComm.EldTimeout.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EldTrust), global::NewDalgs.ProtoComm.EldTrust.Parser, new[]{ "Process" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarRead), global::NewDalgs.ProtoComm.NnarRead.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarInternalRead), global::NewDalgs.ProtoComm.NnarInternalRead.Parser, new[]{ "ReadId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarInternalValue), global::NewDalgs.ProtoComm.NnarInternalValue.Parser, new[]{ "ReadId", "Timestamp", "WriterRank", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarInternalWrite), global::NewDalgs.ProtoComm.NnarInternalWrite.Parser, new[]{ "ReadId", "Timestamp", "WriterRank", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarWrite), global::NewDalgs.ProtoComm.NnarWrite.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarInternalAck), global::NewDalgs.ProtoComm.NnarInternalAck.Parser, new[]{ "ReadId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarReadReturn), global::NewDalgs.ProtoComm.NnarReadReturn.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NnarWriteReturn), global::NewDalgs.ProtoComm.NnarWriteReturn.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpfdTimeout), global::NewDalgs.ProtoComm.EpfdTimeout.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpfdInternalHeartbeatRequest), global::NewDalgs.ProtoComm.EpfdInternalHeartbeatRequest.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpfdInternalHeartbeatReply), global::NewDalgs.ProtoComm.EpfdInternalHeartbeatReply.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpfdSuspect), global::NewDalgs.ProtoComm.EpfdSuspect.Parser, new[]{ "Process" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.EpfdRestore), global::NewDalgs.ProtoComm.EpfdRestore.Parser, new[]{ "Process" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.PlSend), global::NewDalgs.ProtoComm.PlSend.Parser, new[]{ "Destination", "Message" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.PlDeliver), global::NewDalgs.ProtoComm.PlDeliver.Parser, new[]{ "Sender", "Message" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.NetworkMessage), global::NewDalgs.ProtoComm.NetworkMessage.Parser, new[]{ "SenderHost", "SenderListeningPort", "Message" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::NewDalgs.ProtoComm.Message), global::NewDalgs.ProtoComm.Message.Parser, new[]{ "Type", "MessageUuid", "FromAbstractionId", "ToAbstractionId", "SystemId", "NetworkMessage", "ProcRegistration", "ProcInitializeSystem", "ProcDestroySystem", "AppBroadcast", "AppValue", "AppPropose", "AppDecide", "AppRead", "AppWrite", "AppReadReturn", "AppWriteReturn", "UcDecide", "UcPropose", "EpAbort", "EpAborted", "EpInternalAccept", "EpDecide", "EpInternalDecided", "EpPropose", "EpInternalRead", "EpInternalState", "EpInternalWrite", "EcInternalNack", "EcInternalNewEpoch", "EcStartEpoch", "BebBroadcast", "BebDeliver", "EldTimeout", "EldTrust", "NnarInternalAck", "NnarInternalRead", "NnarInternalValue", "NnarInternalWrite", "NnarRead", "NnarReadReturn", "NnarWrite", "NnarWriteReturn", "EpfdTimeout", "EpfdInternalHeartbeatRequest", "EpfdInternalHeartbeatReply", "EpfdSuspect", "EpfdRestore", "PlDeliver", "PlSend" }, null, new[]{ typeof(global::NewDalgs.ProtoComm.Message.Types.Type) }, null, null)
           }));
     }
     #endregion
@@ -230,7 +230,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[0]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -561,7 +561,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[1]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -776,7 +776,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[2]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -993,7 +993,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[3]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1021,14 +1021,14 @@ namespace Communication {
 
     /// <summary>Field number for the "processes" field.</summary>
     public const int ProcessesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Communication.ProcessId> _repeated_processes_codec
-        = pb::FieldCodec.ForMessage(10, global::Communication.ProcessId.Parser);
-    private readonly pbc::RepeatedField<global::Communication.ProcessId> processes_ = new pbc::RepeatedField<global::Communication.ProcessId>();
+    private static readonly pb::FieldCodec<global::NewDalgs.ProtoComm.ProcessId> _repeated_processes_codec
+        = pb::FieldCodec.ForMessage(10, global::NewDalgs.ProtoComm.ProcessId.Parser);
+    private readonly pbc::RepeatedField<global::NewDalgs.ProtoComm.ProcessId> processes_ = new pbc::RepeatedField<global::NewDalgs.ProtoComm.ProcessId>();
     /// <summary>
     /// be handled by the process.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Communication.ProcessId> Processes {
+    public pbc::RepeatedField<global::NewDalgs.ProtoComm.ProcessId> Processes {
       get { return processes_; }
     }
 
@@ -1160,7 +1160,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[4]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1299,7 +1299,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[5]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1327,12 +1327,12 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     /// <summary>
     /// Triggers a BEB broadcast containing AppValue populated with the value from AppBroadcast
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -1418,7 +1418,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -1438,7 +1438,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -1459,7 +1459,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -1486,7 +1486,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[6]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1514,12 +1514,12 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     /// <summary>
     /// Message(NetworkMessage(Message(AppValue)))
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -1605,7 +1605,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -1625,7 +1625,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -1646,7 +1646,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -1673,7 +1673,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[7]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1716,12 +1716,12 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     /// <summary>
     /// Random value chosen by the HUB
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -1823,7 +1823,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -1847,7 +1847,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -1872,7 +1872,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -1899,7 +1899,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[8]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1927,12 +1927,12 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     /// <summary>
     /// Decided value taken from UcDecide
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -2018,7 +2018,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -2038,7 +2038,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -2059,7 +2059,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -2086,7 +2086,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[9]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2261,7 +2261,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[10]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2301,12 +2301,12 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     /// <summary>
     /// Value to write in the register
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -2408,7 +2408,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -2432,7 +2432,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -2457,7 +2457,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -2484,7 +2484,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[11]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2524,12 +2524,12 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     /// <summary>
     /// Value read from the register
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -2631,7 +2631,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -2655,7 +2655,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -2680,7 +2680,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -2707,7 +2707,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[12]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2883,7 +2883,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[13]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2911,9 +2911,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -2999,7 +2999,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -3019,7 +3019,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3040,7 +3040,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3064,7 +3064,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[14]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3092,9 +3092,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -3180,7 +3180,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -3200,7 +3200,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3221,7 +3221,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3248,7 +3248,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[15]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3384,7 +3384,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[16]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3442,12 +3442,12 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 3;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     /// <summary>
     /// The value part of the "state" mentioned in the algorithm
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -3565,7 +3565,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -3593,7 +3593,7 @@ namespace Communication {
           }
           case 26: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3622,7 +3622,7 @@ namespace Communication {
           }
           case 26: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3646,7 +3646,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[17]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3674,9 +3674,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -3762,7 +3762,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -3782,7 +3782,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3803,7 +3803,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -3827,7 +3827,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[18]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3870,9 +3870,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -3974,7 +3974,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -3998,7 +3998,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4023,7 +4023,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4047,7 +4047,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[19]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4183,7 +4183,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[20]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4223,9 +4223,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -4327,7 +4327,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -4351,7 +4351,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4376,7 +4376,7 @@ namespace Communication {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4400,7 +4400,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[21]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4428,9 +4428,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -4516,7 +4516,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -4536,7 +4536,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4557,7 +4557,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4581,7 +4581,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[22]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4717,7 +4717,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[23]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4745,9 +4745,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -4833,7 +4833,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -4853,7 +4853,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4874,7 +4874,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -4902,7 +4902,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[24]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5038,7 +5038,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[25]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5078,9 +5078,9 @@ namespace Communication {
 
     /// <summary>Field number for the "newLeader" field.</summary>
     public const int NewLeaderFieldNumber = 2;
-    private global::Communication.ProcessId newLeader_;
+    private global::NewDalgs.ProtoComm.ProcessId newLeader_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcessId NewLeader {
+    public global::NewDalgs.ProtoComm.ProcessId NewLeader {
       get { return newLeader_; }
       set {
         newLeader_ = value;
@@ -5182,7 +5182,7 @@ namespace Communication {
       }
       if (other.newLeader_ != null) {
         if (newLeader_ == null) {
-          NewLeader = new global::Communication.ProcessId();
+          NewLeader = new global::NewDalgs.ProtoComm.ProcessId();
         }
         NewLeader.MergeFrom(other.NewLeader);
       }
@@ -5206,7 +5206,7 @@ namespace Communication {
           }
           case 18: {
             if (newLeader_ == null) {
-              NewLeader = new global::Communication.ProcessId();
+              NewLeader = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(NewLeader);
             break;
@@ -5231,7 +5231,7 @@ namespace Communication {
           }
           case 18: {
             if (newLeader_ == null) {
-              NewLeader = new global::Communication.ProcessId();
+              NewLeader = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(NewLeader);
             break;
@@ -5255,7 +5255,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[26]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5430,7 +5430,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[27]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5458,9 +5458,9 @@ namespace Communication {
 
     /// <summary>Field number for the "message" field.</summary>
     public const int MessageFieldNumber = 1;
-    private global::Communication.Message message_;
+    private global::NewDalgs.ProtoComm.Message message_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Message Message {
+    public global::NewDalgs.ProtoComm.Message Message {
       get { return message_; }
       set {
         message_ = value;
@@ -5546,7 +5546,7 @@ namespace Communication {
       }
       if (other.message_ != null) {
         if (message_ == null) {
-          Message = new global::Communication.Message();
+          Message = new global::NewDalgs.ProtoComm.Message();
         }
         Message.MergeFrom(other.Message);
       }
@@ -5566,7 +5566,7 @@ namespace Communication {
             break;
           case 10: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -5587,7 +5587,7 @@ namespace Communication {
             break;
           case 10: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -5611,7 +5611,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[28]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5640,9 +5640,9 @@ namespace Communication {
 
     /// <summary>Field number for the "message" field.</summary>
     public const int MessageFieldNumber = 1;
-    private global::Communication.Message message_;
+    private global::NewDalgs.ProtoComm.Message message_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Message Message {
+    public global::NewDalgs.ProtoComm.Message Message {
       get { return message_; }
       set {
         message_ = value;
@@ -5651,9 +5651,9 @@ namespace Communication {
 
     /// <summary>Field number for the "sender" field.</summary>
     public const int SenderFieldNumber = 2;
-    private global::Communication.ProcessId sender_;
+    private global::NewDalgs.ProtoComm.ProcessId sender_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcessId Sender {
+    public global::NewDalgs.ProtoComm.ProcessId Sender {
       get { return sender_; }
       set {
         sender_ = value;
@@ -5752,13 +5752,13 @@ namespace Communication {
       }
       if (other.message_ != null) {
         if (message_ == null) {
-          Message = new global::Communication.Message();
+          Message = new global::NewDalgs.ProtoComm.Message();
         }
         Message.MergeFrom(other.Message);
       }
       if (other.sender_ != null) {
         if (sender_ == null) {
-          Sender = new global::Communication.ProcessId();
+          Sender = new global::NewDalgs.ProtoComm.ProcessId();
         }
         Sender.MergeFrom(other.Sender);
       }
@@ -5778,14 +5778,14 @@ namespace Communication {
             break;
           case 10: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
           }
           case 18: {
             if (sender_ == null) {
-              Sender = new global::Communication.ProcessId();
+              Sender = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Sender);
             break;
@@ -5806,14 +5806,14 @@ namespace Communication {
             break;
           case 10: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
           }
           case 18: {
             if (sender_ == null) {
-              Sender = new global::Communication.ProcessId();
+              Sender = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Sender);
             break;
@@ -5840,7 +5840,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[29]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5976,7 +5976,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[30]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6004,9 +6004,9 @@ namespace Communication {
 
     /// <summary>Field number for the "process" field.</summary>
     public const int ProcessFieldNumber = 1;
-    private global::Communication.ProcessId process_;
+    private global::NewDalgs.ProtoComm.ProcessId process_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcessId Process {
+    public global::NewDalgs.ProtoComm.ProcessId Process {
       get { return process_; }
       set {
         process_ = value;
@@ -6092,7 +6092,7 @@ namespace Communication {
       }
       if (other.process_ != null) {
         if (process_ == null) {
-          Process = new global::Communication.ProcessId();
+          Process = new global::NewDalgs.ProtoComm.ProcessId();
         }
         Process.MergeFrom(other.Process);
       }
@@ -6112,7 +6112,7 @@ namespace Communication {
             break;
           case 10: {
             if (process_ == null) {
-              Process = new global::Communication.ProcessId();
+              Process = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Process);
             break;
@@ -6133,7 +6133,7 @@ namespace Communication {
             break;
           case 10: {
             if (process_ == null) {
-              Process = new global::Communication.ProcessId();
+              Process = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Process);
             break;
@@ -6160,7 +6160,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[31]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6296,7 +6296,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[32]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6468,7 +6468,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[33]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6532,9 +6532,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 4;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -6668,7 +6668,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -6700,7 +6700,7 @@ namespace Communication {
           }
           case 34: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -6733,7 +6733,7 @@ namespace Communication {
           }
           case 34: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -6757,7 +6757,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[34]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[34]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6821,9 +6821,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 4;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -6957,7 +6957,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -6989,7 +6989,7 @@ namespace Communication {
           }
           case 34: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -7022,7 +7022,7 @@ namespace Communication {
           }
           case 34: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -7046,7 +7046,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[35]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[35]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7074,9 +7074,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -7162,7 +7162,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -7182,7 +7182,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -7203,7 +7203,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -7227,7 +7227,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[36]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[36]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7399,7 +7399,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[37]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[37]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7427,9 +7427,9 @@ namespace Communication {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 1;
-    private global::Communication.Value value_;
+    private global::NewDalgs.ProtoComm.Value value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Value Value {
+    public global::NewDalgs.ProtoComm.Value Value {
       get { return value_; }
       set {
         value_ = value;
@@ -7515,7 +7515,7 @@ namespace Communication {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Communication.Value();
+          Value = new global::NewDalgs.ProtoComm.Value();
         }
         Value.MergeFrom(other.Value);
       }
@@ -7535,7 +7535,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -7556,7 +7556,7 @@ namespace Communication {
             break;
           case 10: {
             if (value_ == null) {
-              Value = new global::Communication.Value();
+              Value = new global::NewDalgs.ProtoComm.Value();
             }
             input.ReadMessage(Value);
             break;
@@ -7580,7 +7580,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[38]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[38]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7720,7 +7720,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[39]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[39]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7856,7 +7856,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[40]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[40]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7992,7 +7992,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[41]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[41]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8128,7 +8128,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[42]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[42]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8156,9 +8156,9 @@ namespace Communication {
 
     /// <summary>Field number for the "process" field.</summary>
     public const int ProcessFieldNumber = 1;
-    private global::Communication.ProcessId process_;
+    private global::NewDalgs.ProtoComm.ProcessId process_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcessId Process {
+    public global::NewDalgs.ProtoComm.ProcessId Process {
       get { return process_; }
       set {
         process_ = value;
@@ -8244,7 +8244,7 @@ namespace Communication {
       }
       if (other.process_ != null) {
         if (process_ == null) {
-          Process = new global::Communication.ProcessId();
+          Process = new global::NewDalgs.ProtoComm.ProcessId();
         }
         Process.MergeFrom(other.Process);
       }
@@ -8264,7 +8264,7 @@ namespace Communication {
             break;
           case 10: {
             if (process_ == null) {
-              Process = new global::Communication.ProcessId();
+              Process = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Process);
             break;
@@ -8285,7 +8285,7 @@ namespace Communication {
             break;
           case 10: {
             if (process_ == null) {
-              Process = new global::Communication.ProcessId();
+              Process = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Process);
             break;
@@ -8309,7 +8309,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[43]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[43]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8337,9 +8337,9 @@ namespace Communication {
 
     /// <summary>Field number for the "process" field.</summary>
     public const int ProcessFieldNumber = 1;
-    private global::Communication.ProcessId process_;
+    private global::NewDalgs.ProtoComm.ProcessId process_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcessId Process {
+    public global::NewDalgs.ProtoComm.ProcessId Process {
       get { return process_; }
       set {
         process_ = value;
@@ -8425,7 +8425,7 @@ namespace Communication {
       }
       if (other.process_ != null) {
         if (process_ == null) {
-          Process = new global::Communication.ProcessId();
+          Process = new global::NewDalgs.ProtoComm.ProcessId();
         }
         Process.MergeFrom(other.Process);
       }
@@ -8445,7 +8445,7 @@ namespace Communication {
             break;
           case 10: {
             if (process_ == null) {
-              Process = new global::Communication.ProcessId();
+              Process = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Process);
             break;
@@ -8466,7 +8466,7 @@ namespace Communication {
             break;
           case 10: {
             if (process_ == null) {
-              Process = new global::Communication.ProcessId();
+              Process = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Process);
             break;
@@ -8493,7 +8493,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[44]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[44]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8522,9 +8522,9 @@ namespace Communication {
 
     /// <summary>Field number for the "destination" field.</summary>
     public const int DestinationFieldNumber = 1;
-    private global::Communication.ProcessId destination_;
+    private global::NewDalgs.ProtoComm.ProcessId destination_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcessId Destination {
+    public global::NewDalgs.ProtoComm.ProcessId Destination {
       get { return destination_; }
       set {
         destination_ = value;
@@ -8533,9 +8533,9 @@ namespace Communication {
 
     /// <summary>Field number for the "message" field.</summary>
     public const int MessageFieldNumber = 2;
-    private global::Communication.Message message_;
+    private global::NewDalgs.ProtoComm.Message message_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Message Message {
+    public global::NewDalgs.ProtoComm.Message Message {
       get { return message_; }
       set {
         message_ = value;
@@ -8634,13 +8634,13 @@ namespace Communication {
       }
       if (other.destination_ != null) {
         if (destination_ == null) {
-          Destination = new global::Communication.ProcessId();
+          Destination = new global::NewDalgs.ProtoComm.ProcessId();
         }
         Destination.MergeFrom(other.Destination);
       }
       if (other.message_ != null) {
         if (message_ == null) {
-          Message = new global::Communication.Message();
+          Message = new global::NewDalgs.ProtoComm.Message();
         }
         Message.MergeFrom(other.Message);
       }
@@ -8660,14 +8660,14 @@ namespace Communication {
             break;
           case 10: {
             if (destination_ == null) {
-              Destination = new global::Communication.ProcessId();
+              Destination = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Destination);
             break;
           }
           case 18: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -8688,14 +8688,14 @@ namespace Communication {
             break;
           case 10: {
             if (destination_ == null) {
-              Destination = new global::Communication.ProcessId();
+              Destination = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Destination);
             break;
           }
           case 18: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -8719,7 +8719,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[45]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[45]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8748,9 +8748,9 @@ namespace Communication {
 
     /// <summary>Field number for the "sender" field.</summary>
     public const int SenderFieldNumber = 1;
-    private global::Communication.ProcessId sender_;
+    private global::NewDalgs.ProtoComm.ProcessId sender_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcessId Sender {
+    public global::NewDalgs.ProtoComm.ProcessId Sender {
       get { return sender_; }
       set {
         sender_ = value;
@@ -8759,9 +8759,9 @@ namespace Communication {
 
     /// <summary>Field number for the "message" field.</summary>
     public const int MessageFieldNumber = 2;
-    private global::Communication.Message message_;
+    private global::NewDalgs.ProtoComm.Message message_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Message Message {
+    public global::NewDalgs.ProtoComm.Message Message {
       get { return message_; }
       set {
         message_ = value;
@@ -8860,13 +8860,13 @@ namespace Communication {
       }
       if (other.sender_ != null) {
         if (sender_ == null) {
-          Sender = new global::Communication.ProcessId();
+          Sender = new global::NewDalgs.ProtoComm.ProcessId();
         }
         Sender.MergeFrom(other.Sender);
       }
       if (other.message_ != null) {
         if (message_ == null) {
-          Message = new global::Communication.Message();
+          Message = new global::NewDalgs.ProtoComm.Message();
         }
         Message.MergeFrom(other.Message);
       }
@@ -8886,14 +8886,14 @@ namespace Communication {
             break;
           case 10: {
             if (sender_ == null) {
-              Sender = new global::Communication.ProcessId();
+              Sender = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Sender);
             break;
           }
           case 18: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -8914,14 +8914,14 @@ namespace Communication {
             break;
           case 10: {
             if (sender_ == null) {
-              Sender = new global::Communication.ProcessId();
+              Sender = new global::NewDalgs.ProtoComm.ProcessId();
             }
             input.ReadMessage(Sender);
             break;
           }
           case 18: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -8958,7 +8958,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[46]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[46]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9010,9 +9010,9 @@ namespace Communication {
 
     /// <summary>Field number for the "message" field.</summary>
     public const int MessageFieldNumber = 3;
-    private global::Communication.Message message_;
+    private global::NewDalgs.ProtoComm.Message message_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Message Message {
+    public global::NewDalgs.ProtoComm.Message Message {
       get { return message_; }
       set {
         message_ = value;
@@ -9130,7 +9130,7 @@ namespace Communication {
       }
       if (other.message_ != null) {
         if (message_ == null) {
-          Message = new global::Communication.Message();
+          Message = new global::NewDalgs.ProtoComm.Message();
         }
         Message.MergeFrom(other.Message);
       }
@@ -9158,7 +9158,7 @@ namespace Communication {
           }
           case 26: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -9187,7 +9187,7 @@ namespace Communication {
           }
           case 26: {
             if (message_ == null) {
-              Message = new global::Communication.Message();
+              Message = new global::NewDalgs.ProtoComm.Message();
             }
             input.ReadMessage(Message);
             break;
@@ -9214,7 +9214,7 @@ namespace Communication {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Communication.CommunicationProtocolReflection.Descriptor.MessageTypes[47]; }
+      get { return global::NewDalgs.ProtoComm.CommunicationProtocolReflection.Descriptor.MessageTypes[47]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9291,9 +9291,9 @@ namespace Communication {
 
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 1;
-    private global::Communication.Message.Types.Type type_ = global::Communication.Message.Types.Type.NetworkMessage;
+    private global::NewDalgs.ProtoComm.Message.Types.Type type_ = global::NewDalgs.ProtoComm.Message.Types.Type.NetworkMessage;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.Message.Types.Type Type {
+    public global::NewDalgs.ProtoComm.Message.Types.Type Type {
       get { return type_; }
       set {
         type_ = value;
@@ -9352,9 +9352,9 @@ namespace Communication {
 
     /// <summary>Field number for the "networkMessage" field.</summary>
     public const int NetworkMessageFieldNumber = 6;
-    private global::Communication.NetworkMessage networkMessage_;
+    private global::NewDalgs.ProtoComm.NetworkMessage networkMessage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NetworkMessage NetworkMessage {
+    public global::NewDalgs.ProtoComm.NetworkMessage NetworkMessage {
       get { return networkMessage_; }
       set {
         networkMessage_ = value;
@@ -9363,9 +9363,9 @@ namespace Communication {
 
     /// <summary>Field number for the "procRegistration" field.</summary>
     public const int ProcRegistrationFieldNumber = 7;
-    private global::Communication.ProcRegistration procRegistration_;
+    private global::NewDalgs.ProtoComm.ProcRegistration procRegistration_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcRegistration ProcRegistration {
+    public global::NewDalgs.ProtoComm.ProcRegistration ProcRegistration {
       get { return procRegistration_; }
       set {
         procRegistration_ = value;
@@ -9374,9 +9374,9 @@ namespace Communication {
 
     /// <summary>Field number for the "procInitializeSystem" field.</summary>
     public const int ProcInitializeSystemFieldNumber = 8;
-    private global::Communication.ProcInitializeSystem procInitializeSystem_;
+    private global::NewDalgs.ProtoComm.ProcInitializeSystem procInitializeSystem_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcInitializeSystem ProcInitializeSystem {
+    public global::NewDalgs.ProtoComm.ProcInitializeSystem ProcInitializeSystem {
       get { return procInitializeSystem_; }
       set {
         procInitializeSystem_ = value;
@@ -9385,9 +9385,9 @@ namespace Communication {
 
     /// <summary>Field number for the "procDestroySystem" field.</summary>
     public const int ProcDestroySystemFieldNumber = 9;
-    private global::Communication.ProcDestroySystem procDestroySystem_;
+    private global::NewDalgs.ProtoComm.ProcDestroySystem procDestroySystem_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.ProcDestroySystem ProcDestroySystem {
+    public global::NewDalgs.ProtoComm.ProcDestroySystem ProcDestroySystem {
       get { return procDestroySystem_; }
       set {
         procDestroySystem_ = value;
@@ -9396,9 +9396,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appBroadcast" field.</summary>
     public const int AppBroadcastFieldNumber = 10;
-    private global::Communication.AppBroadcast appBroadcast_;
+    private global::NewDalgs.ProtoComm.AppBroadcast appBroadcast_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppBroadcast AppBroadcast {
+    public global::NewDalgs.ProtoComm.AppBroadcast AppBroadcast {
       get { return appBroadcast_; }
       set {
         appBroadcast_ = value;
@@ -9407,9 +9407,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appValue" field.</summary>
     public const int AppValueFieldNumber = 11;
-    private global::Communication.AppValue appValue_;
+    private global::NewDalgs.ProtoComm.AppValue appValue_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppValue AppValue {
+    public global::NewDalgs.ProtoComm.AppValue AppValue {
       get { return appValue_; }
       set {
         appValue_ = value;
@@ -9418,9 +9418,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appPropose" field.</summary>
     public const int AppProposeFieldNumber = 12;
-    private global::Communication.AppPropose appPropose_;
+    private global::NewDalgs.ProtoComm.AppPropose appPropose_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppPropose AppPropose {
+    public global::NewDalgs.ProtoComm.AppPropose AppPropose {
       get { return appPropose_; }
       set {
         appPropose_ = value;
@@ -9429,9 +9429,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appDecide" field.</summary>
     public const int AppDecideFieldNumber = 13;
-    private global::Communication.AppDecide appDecide_;
+    private global::NewDalgs.ProtoComm.AppDecide appDecide_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppDecide AppDecide {
+    public global::NewDalgs.ProtoComm.AppDecide AppDecide {
       get { return appDecide_; }
       set {
         appDecide_ = value;
@@ -9440,9 +9440,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appRead" field.</summary>
     public const int AppReadFieldNumber = 14;
-    private global::Communication.AppRead appRead_;
+    private global::NewDalgs.ProtoComm.AppRead appRead_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppRead AppRead {
+    public global::NewDalgs.ProtoComm.AppRead AppRead {
       get { return appRead_; }
       set {
         appRead_ = value;
@@ -9451,9 +9451,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appWrite" field.</summary>
     public const int AppWriteFieldNumber = 15;
-    private global::Communication.AppWrite appWrite_;
+    private global::NewDalgs.ProtoComm.AppWrite appWrite_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppWrite AppWrite {
+    public global::NewDalgs.ProtoComm.AppWrite AppWrite {
       get { return appWrite_; }
       set {
         appWrite_ = value;
@@ -9462,9 +9462,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appReadReturn" field.</summary>
     public const int AppReadReturnFieldNumber = 16;
-    private global::Communication.AppReadReturn appReadReturn_;
+    private global::NewDalgs.ProtoComm.AppReadReturn appReadReturn_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppReadReturn AppReadReturn {
+    public global::NewDalgs.ProtoComm.AppReadReturn AppReadReturn {
       get { return appReadReturn_; }
       set {
         appReadReturn_ = value;
@@ -9473,9 +9473,9 @@ namespace Communication {
 
     /// <summary>Field number for the "appWriteReturn" field.</summary>
     public const int AppWriteReturnFieldNumber = 17;
-    private global::Communication.AppWriteReturn appWriteReturn_;
+    private global::NewDalgs.ProtoComm.AppWriteReturn appWriteReturn_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.AppWriteReturn AppWriteReturn {
+    public global::NewDalgs.ProtoComm.AppWriteReturn AppWriteReturn {
       get { return appWriteReturn_; }
       set {
         appWriteReturn_ = value;
@@ -9484,9 +9484,9 @@ namespace Communication {
 
     /// <summary>Field number for the "ucDecide" field.</summary>
     public const int UcDecideFieldNumber = 20;
-    private global::Communication.UcDecide ucDecide_;
+    private global::NewDalgs.ProtoComm.UcDecide ucDecide_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.UcDecide UcDecide {
+    public global::NewDalgs.ProtoComm.UcDecide UcDecide {
       get { return ucDecide_; }
       set {
         ucDecide_ = value;
@@ -9495,9 +9495,9 @@ namespace Communication {
 
     /// <summary>Field number for the "ucPropose" field.</summary>
     public const int UcProposeFieldNumber = 21;
-    private global::Communication.UcPropose ucPropose_;
+    private global::NewDalgs.ProtoComm.UcPropose ucPropose_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.UcPropose UcPropose {
+    public global::NewDalgs.ProtoComm.UcPropose UcPropose {
       get { return ucPropose_; }
       set {
         ucPropose_ = value;
@@ -9506,9 +9506,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epAbort" field.</summary>
     public const int EpAbortFieldNumber = 30;
-    private global::Communication.EpAbort epAbort_;
+    private global::NewDalgs.ProtoComm.EpAbort epAbort_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpAbort EpAbort {
+    public global::NewDalgs.ProtoComm.EpAbort EpAbort {
       get { return epAbort_; }
       set {
         epAbort_ = value;
@@ -9517,9 +9517,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epAborted" field.</summary>
     public const int EpAbortedFieldNumber = 31;
-    private global::Communication.EpAborted epAborted_;
+    private global::NewDalgs.ProtoComm.EpAborted epAborted_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpAborted EpAborted {
+    public global::NewDalgs.ProtoComm.EpAborted EpAborted {
       get { return epAborted_; }
       set {
         epAborted_ = value;
@@ -9528,9 +9528,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epInternalAccept" field.</summary>
     public const int EpInternalAcceptFieldNumber = 32;
-    private global::Communication.EpInternalAccept epInternalAccept_;
+    private global::NewDalgs.ProtoComm.EpInternalAccept epInternalAccept_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpInternalAccept EpInternalAccept {
+    public global::NewDalgs.ProtoComm.EpInternalAccept EpInternalAccept {
       get { return epInternalAccept_; }
       set {
         epInternalAccept_ = value;
@@ -9539,9 +9539,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epDecide" field.</summary>
     public const int EpDecideFieldNumber = 33;
-    private global::Communication.EpDecide epDecide_;
+    private global::NewDalgs.ProtoComm.EpDecide epDecide_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpDecide EpDecide {
+    public global::NewDalgs.ProtoComm.EpDecide EpDecide {
       get { return epDecide_; }
       set {
         epDecide_ = value;
@@ -9550,9 +9550,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epInternalDecided" field.</summary>
     public const int EpInternalDecidedFieldNumber = 34;
-    private global::Communication.EpInternalDecided epInternalDecided_;
+    private global::NewDalgs.ProtoComm.EpInternalDecided epInternalDecided_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpInternalDecided EpInternalDecided {
+    public global::NewDalgs.ProtoComm.EpInternalDecided EpInternalDecided {
       get { return epInternalDecided_; }
       set {
         epInternalDecided_ = value;
@@ -9561,9 +9561,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epPropose" field.</summary>
     public const int EpProposeFieldNumber = 35;
-    private global::Communication.EpPropose epPropose_;
+    private global::NewDalgs.ProtoComm.EpPropose epPropose_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpPropose EpPropose {
+    public global::NewDalgs.ProtoComm.EpPropose EpPropose {
       get { return epPropose_; }
       set {
         epPropose_ = value;
@@ -9572,9 +9572,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epInternalRead" field.</summary>
     public const int EpInternalReadFieldNumber = 36;
-    private global::Communication.EpInternalRead epInternalRead_;
+    private global::NewDalgs.ProtoComm.EpInternalRead epInternalRead_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpInternalRead EpInternalRead {
+    public global::NewDalgs.ProtoComm.EpInternalRead EpInternalRead {
       get { return epInternalRead_; }
       set {
         epInternalRead_ = value;
@@ -9583,9 +9583,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epInternalState" field.</summary>
     public const int EpInternalStateFieldNumber = 37;
-    private global::Communication.EpInternalState epInternalState_;
+    private global::NewDalgs.ProtoComm.EpInternalState epInternalState_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpInternalState EpInternalState {
+    public global::NewDalgs.ProtoComm.EpInternalState EpInternalState {
       get { return epInternalState_; }
       set {
         epInternalState_ = value;
@@ -9594,9 +9594,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epInternalWrite" field.</summary>
     public const int EpInternalWriteFieldNumber = 38;
-    private global::Communication.EpInternalWrite epInternalWrite_;
+    private global::NewDalgs.ProtoComm.EpInternalWrite epInternalWrite_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpInternalWrite EpInternalWrite {
+    public global::NewDalgs.ProtoComm.EpInternalWrite EpInternalWrite {
       get { return epInternalWrite_; }
       set {
         epInternalWrite_ = value;
@@ -9605,9 +9605,9 @@ namespace Communication {
 
     /// <summary>Field number for the "ecInternalNack" field.</summary>
     public const int EcInternalNackFieldNumber = 41;
-    private global::Communication.EcInternalNack ecInternalNack_;
+    private global::NewDalgs.ProtoComm.EcInternalNack ecInternalNack_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EcInternalNack EcInternalNack {
+    public global::NewDalgs.ProtoComm.EcInternalNack EcInternalNack {
       get { return ecInternalNack_; }
       set {
         ecInternalNack_ = value;
@@ -9616,9 +9616,9 @@ namespace Communication {
 
     /// <summary>Field number for the "ecInternalNewEpoch" field.</summary>
     public const int EcInternalNewEpochFieldNumber = 42;
-    private global::Communication.EcInternalNewEpoch ecInternalNewEpoch_;
+    private global::NewDalgs.ProtoComm.EcInternalNewEpoch ecInternalNewEpoch_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EcInternalNewEpoch EcInternalNewEpoch {
+    public global::NewDalgs.ProtoComm.EcInternalNewEpoch EcInternalNewEpoch {
       get { return ecInternalNewEpoch_; }
       set {
         ecInternalNewEpoch_ = value;
@@ -9627,9 +9627,9 @@ namespace Communication {
 
     /// <summary>Field number for the "ecStartEpoch" field.</summary>
     public const int EcStartEpochFieldNumber = 43;
-    private global::Communication.EcStartEpoch ecStartEpoch_;
+    private global::NewDalgs.ProtoComm.EcStartEpoch ecStartEpoch_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EcStartEpoch EcStartEpoch {
+    public global::NewDalgs.ProtoComm.EcStartEpoch EcStartEpoch {
       get { return ecStartEpoch_; }
       set {
         ecStartEpoch_ = value;
@@ -9638,9 +9638,9 @@ namespace Communication {
 
     /// <summary>Field number for the "bebBroadcast" field.</summary>
     public const int BebBroadcastFieldNumber = 50;
-    private global::Communication.BebBroadcast bebBroadcast_;
+    private global::NewDalgs.ProtoComm.BebBroadcast bebBroadcast_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.BebBroadcast BebBroadcast {
+    public global::NewDalgs.ProtoComm.BebBroadcast BebBroadcast {
       get { return bebBroadcast_; }
       set {
         bebBroadcast_ = value;
@@ -9649,9 +9649,9 @@ namespace Communication {
 
     /// <summary>Field number for the "bebDeliver" field.</summary>
     public const int BebDeliverFieldNumber = 51;
-    private global::Communication.BebDeliver bebDeliver_;
+    private global::NewDalgs.ProtoComm.BebDeliver bebDeliver_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.BebDeliver BebDeliver {
+    public global::NewDalgs.ProtoComm.BebDeliver BebDeliver {
       get { return bebDeliver_; }
       set {
         bebDeliver_ = value;
@@ -9660,9 +9660,9 @@ namespace Communication {
 
     /// <summary>Field number for the "eldTimeout" field.</summary>
     public const int EldTimeoutFieldNumber = 60;
-    private global::Communication.EldTimeout eldTimeout_;
+    private global::NewDalgs.ProtoComm.EldTimeout eldTimeout_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EldTimeout EldTimeout {
+    public global::NewDalgs.ProtoComm.EldTimeout EldTimeout {
       get { return eldTimeout_; }
       set {
         eldTimeout_ = value;
@@ -9671,9 +9671,9 @@ namespace Communication {
 
     /// <summary>Field number for the "eldTrust" field.</summary>
     public const int EldTrustFieldNumber = 61;
-    private global::Communication.EldTrust eldTrust_;
+    private global::NewDalgs.ProtoComm.EldTrust eldTrust_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EldTrust EldTrust {
+    public global::NewDalgs.ProtoComm.EldTrust EldTrust {
       get { return eldTrust_; }
       set {
         eldTrust_ = value;
@@ -9682,9 +9682,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarInternalAck" field.</summary>
     public const int NnarInternalAckFieldNumber = 70;
-    private global::Communication.NnarInternalAck nnarInternalAck_;
+    private global::NewDalgs.ProtoComm.NnarInternalAck nnarInternalAck_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarInternalAck NnarInternalAck {
+    public global::NewDalgs.ProtoComm.NnarInternalAck NnarInternalAck {
       get { return nnarInternalAck_; }
       set {
         nnarInternalAck_ = value;
@@ -9693,9 +9693,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarInternalRead" field.</summary>
     public const int NnarInternalReadFieldNumber = 71;
-    private global::Communication.NnarInternalRead nnarInternalRead_;
+    private global::NewDalgs.ProtoComm.NnarInternalRead nnarInternalRead_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarInternalRead NnarInternalRead {
+    public global::NewDalgs.ProtoComm.NnarInternalRead NnarInternalRead {
       get { return nnarInternalRead_; }
       set {
         nnarInternalRead_ = value;
@@ -9704,9 +9704,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarInternalValue" field.</summary>
     public const int NnarInternalValueFieldNumber = 72;
-    private global::Communication.NnarInternalValue nnarInternalValue_;
+    private global::NewDalgs.ProtoComm.NnarInternalValue nnarInternalValue_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarInternalValue NnarInternalValue {
+    public global::NewDalgs.ProtoComm.NnarInternalValue NnarInternalValue {
       get { return nnarInternalValue_; }
       set {
         nnarInternalValue_ = value;
@@ -9715,9 +9715,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarInternalWrite" field.</summary>
     public const int NnarInternalWriteFieldNumber = 73;
-    private global::Communication.NnarInternalWrite nnarInternalWrite_;
+    private global::NewDalgs.ProtoComm.NnarInternalWrite nnarInternalWrite_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarInternalWrite NnarInternalWrite {
+    public global::NewDalgs.ProtoComm.NnarInternalWrite NnarInternalWrite {
       get { return nnarInternalWrite_; }
       set {
         nnarInternalWrite_ = value;
@@ -9726,9 +9726,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarRead" field.</summary>
     public const int NnarReadFieldNumber = 74;
-    private global::Communication.NnarRead nnarRead_;
+    private global::NewDalgs.ProtoComm.NnarRead nnarRead_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarRead NnarRead {
+    public global::NewDalgs.ProtoComm.NnarRead NnarRead {
       get { return nnarRead_; }
       set {
         nnarRead_ = value;
@@ -9737,9 +9737,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarReadReturn" field.</summary>
     public const int NnarReadReturnFieldNumber = 75;
-    private global::Communication.NnarReadReturn nnarReadReturn_;
+    private global::NewDalgs.ProtoComm.NnarReadReturn nnarReadReturn_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarReadReturn NnarReadReturn {
+    public global::NewDalgs.ProtoComm.NnarReadReturn NnarReadReturn {
       get { return nnarReadReturn_; }
       set {
         nnarReadReturn_ = value;
@@ -9748,9 +9748,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarWrite" field.</summary>
     public const int NnarWriteFieldNumber = 76;
-    private global::Communication.NnarWrite nnarWrite_;
+    private global::NewDalgs.ProtoComm.NnarWrite nnarWrite_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarWrite NnarWrite {
+    public global::NewDalgs.ProtoComm.NnarWrite NnarWrite {
       get { return nnarWrite_; }
       set {
         nnarWrite_ = value;
@@ -9759,9 +9759,9 @@ namespace Communication {
 
     /// <summary>Field number for the "nnarWriteReturn" field.</summary>
     public const int NnarWriteReturnFieldNumber = 77;
-    private global::Communication.NnarWriteReturn nnarWriteReturn_;
+    private global::NewDalgs.ProtoComm.NnarWriteReturn nnarWriteReturn_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.NnarWriteReturn NnarWriteReturn {
+    public global::NewDalgs.ProtoComm.NnarWriteReturn NnarWriteReturn {
       get { return nnarWriteReturn_; }
       set {
         nnarWriteReturn_ = value;
@@ -9770,9 +9770,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epfdTimeout" field.</summary>
     public const int EpfdTimeoutFieldNumber = 80;
-    private global::Communication.EpfdTimeout epfdTimeout_;
+    private global::NewDalgs.ProtoComm.EpfdTimeout epfdTimeout_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpfdTimeout EpfdTimeout {
+    public global::NewDalgs.ProtoComm.EpfdTimeout EpfdTimeout {
       get { return epfdTimeout_; }
       set {
         epfdTimeout_ = value;
@@ -9781,9 +9781,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epfdInternalHeartbeatRequest" field.</summary>
     public const int EpfdInternalHeartbeatRequestFieldNumber = 81;
-    private global::Communication.EpfdInternalHeartbeatRequest epfdInternalHeartbeatRequest_;
+    private global::NewDalgs.ProtoComm.EpfdInternalHeartbeatRequest epfdInternalHeartbeatRequest_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpfdInternalHeartbeatRequest EpfdInternalHeartbeatRequest {
+    public global::NewDalgs.ProtoComm.EpfdInternalHeartbeatRequest EpfdInternalHeartbeatRequest {
       get { return epfdInternalHeartbeatRequest_; }
       set {
         epfdInternalHeartbeatRequest_ = value;
@@ -9792,9 +9792,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epfdInternalHeartbeatReply" field.</summary>
     public const int EpfdInternalHeartbeatReplyFieldNumber = 82;
-    private global::Communication.EpfdInternalHeartbeatReply epfdInternalHeartbeatReply_;
+    private global::NewDalgs.ProtoComm.EpfdInternalHeartbeatReply epfdInternalHeartbeatReply_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpfdInternalHeartbeatReply EpfdInternalHeartbeatReply {
+    public global::NewDalgs.ProtoComm.EpfdInternalHeartbeatReply EpfdInternalHeartbeatReply {
       get { return epfdInternalHeartbeatReply_; }
       set {
         epfdInternalHeartbeatReply_ = value;
@@ -9803,9 +9803,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epfdSuspect" field.</summary>
     public const int EpfdSuspectFieldNumber = 83;
-    private global::Communication.EpfdSuspect epfdSuspect_;
+    private global::NewDalgs.ProtoComm.EpfdSuspect epfdSuspect_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpfdSuspect EpfdSuspect {
+    public global::NewDalgs.ProtoComm.EpfdSuspect EpfdSuspect {
       get { return epfdSuspect_; }
       set {
         epfdSuspect_ = value;
@@ -9814,9 +9814,9 @@ namespace Communication {
 
     /// <summary>Field number for the "epfdRestore" field.</summary>
     public const int EpfdRestoreFieldNumber = 84;
-    private global::Communication.EpfdRestore epfdRestore_;
+    private global::NewDalgs.ProtoComm.EpfdRestore epfdRestore_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.EpfdRestore EpfdRestore {
+    public global::NewDalgs.ProtoComm.EpfdRestore EpfdRestore {
       get { return epfdRestore_; }
       set {
         epfdRestore_ = value;
@@ -9825,9 +9825,9 @@ namespace Communication {
 
     /// <summary>Field number for the "plDeliver" field.</summary>
     public const int PlDeliverFieldNumber = 90;
-    private global::Communication.PlDeliver plDeliver_;
+    private global::NewDalgs.ProtoComm.PlDeliver plDeliver_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.PlDeliver PlDeliver {
+    public global::NewDalgs.ProtoComm.PlDeliver PlDeliver {
       get { return plDeliver_; }
       set {
         plDeliver_ = value;
@@ -9836,9 +9836,9 @@ namespace Communication {
 
     /// <summary>Field number for the "plSend" field.</summary>
     public const int PlSendFieldNumber = 91;
-    private global::Communication.PlSend plSend_;
+    private global::NewDalgs.ProtoComm.PlSend plSend_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Communication.PlSend PlSend {
+    public global::NewDalgs.ProtoComm.PlSend PlSend {
       get { return plSend_; }
       set {
         plSend_ = value;
@@ -9914,7 +9914,7 @@ namespace Communication {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Type != global::Communication.Message.Types.Type.NetworkMessage) hash ^= Type.GetHashCode();
+      if (Type != global::NewDalgs.ProtoComm.Message.Types.Type.NetworkMessage) hash ^= Type.GetHashCode();
       if (MessageUuid.Length != 0) hash ^= MessageUuid.GetHashCode();
       if (FromAbstractionId.Length != 0) hash ^= FromAbstractionId.GetHashCode();
       if (ToAbstractionId.Length != 0) hash ^= ToAbstractionId.GetHashCode();
@@ -9980,7 +9980,7 @@ namespace Communication {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Type != global::Communication.Message.Types.Type.NetworkMessage) {
+      if (Type != global::NewDalgs.ProtoComm.Message.Types.Type.NetworkMessage) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Type);
       }
@@ -10189,7 +10189,7 @@ namespace Communication {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Type != global::Communication.Message.Types.Type.NetworkMessage) {
+      if (Type != global::NewDalgs.ProtoComm.Message.Types.Type.NetworkMessage) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Type);
       }
@@ -10398,7 +10398,7 @@ namespace Communication {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Type != global::Communication.Message.Types.Type.NetworkMessage) {
+      if (Type != global::NewDalgs.ProtoComm.Message.Types.Type.NetworkMessage) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       if (MessageUuid.Length != 0) {
@@ -10559,7 +10559,7 @@ namespace Communication {
       if (other == null) {
         return;
       }
-      if (other.Type != global::Communication.Message.Types.Type.NetworkMessage) {
+      if (other.Type != global::NewDalgs.ProtoComm.Message.Types.Type.NetworkMessage) {
         Type = other.Type;
       }
       if (other.MessageUuid.Length != 0) {
@@ -10576,271 +10576,271 @@ namespace Communication {
       }
       if (other.networkMessage_ != null) {
         if (networkMessage_ == null) {
-          NetworkMessage = new global::Communication.NetworkMessage();
+          NetworkMessage = new global::NewDalgs.ProtoComm.NetworkMessage();
         }
         NetworkMessage.MergeFrom(other.NetworkMessage);
       }
       if (other.procRegistration_ != null) {
         if (procRegistration_ == null) {
-          ProcRegistration = new global::Communication.ProcRegistration();
+          ProcRegistration = new global::NewDalgs.ProtoComm.ProcRegistration();
         }
         ProcRegistration.MergeFrom(other.ProcRegistration);
       }
       if (other.procInitializeSystem_ != null) {
         if (procInitializeSystem_ == null) {
-          ProcInitializeSystem = new global::Communication.ProcInitializeSystem();
+          ProcInitializeSystem = new global::NewDalgs.ProtoComm.ProcInitializeSystem();
         }
         ProcInitializeSystem.MergeFrom(other.ProcInitializeSystem);
       }
       if (other.procDestroySystem_ != null) {
         if (procDestroySystem_ == null) {
-          ProcDestroySystem = new global::Communication.ProcDestroySystem();
+          ProcDestroySystem = new global::NewDalgs.ProtoComm.ProcDestroySystem();
         }
         ProcDestroySystem.MergeFrom(other.ProcDestroySystem);
       }
       if (other.appBroadcast_ != null) {
         if (appBroadcast_ == null) {
-          AppBroadcast = new global::Communication.AppBroadcast();
+          AppBroadcast = new global::NewDalgs.ProtoComm.AppBroadcast();
         }
         AppBroadcast.MergeFrom(other.AppBroadcast);
       }
       if (other.appValue_ != null) {
         if (appValue_ == null) {
-          AppValue = new global::Communication.AppValue();
+          AppValue = new global::NewDalgs.ProtoComm.AppValue();
         }
         AppValue.MergeFrom(other.AppValue);
       }
       if (other.appPropose_ != null) {
         if (appPropose_ == null) {
-          AppPropose = new global::Communication.AppPropose();
+          AppPropose = new global::NewDalgs.ProtoComm.AppPropose();
         }
         AppPropose.MergeFrom(other.AppPropose);
       }
       if (other.appDecide_ != null) {
         if (appDecide_ == null) {
-          AppDecide = new global::Communication.AppDecide();
+          AppDecide = new global::NewDalgs.ProtoComm.AppDecide();
         }
         AppDecide.MergeFrom(other.AppDecide);
       }
       if (other.appRead_ != null) {
         if (appRead_ == null) {
-          AppRead = new global::Communication.AppRead();
+          AppRead = new global::NewDalgs.ProtoComm.AppRead();
         }
         AppRead.MergeFrom(other.AppRead);
       }
       if (other.appWrite_ != null) {
         if (appWrite_ == null) {
-          AppWrite = new global::Communication.AppWrite();
+          AppWrite = new global::NewDalgs.ProtoComm.AppWrite();
         }
         AppWrite.MergeFrom(other.AppWrite);
       }
       if (other.appReadReturn_ != null) {
         if (appReadReturn_ == null) {
-          AppReadReturn = new global::Communication.AppReadReturn();
+          AppReadReturn = new global::NewDalgs.ProtoComm.AppReadReturn();
         }
         AppReadReturn.MergeFrom(other.AppReadReturn);
       }
       if (other.appWriteReturn_ != null) {
         if (appWriteReturn_ == null) {
-          AppWriteReturn = new global::Communication.AppWriteReturn();
+          AppWriteReturn = new global::NewDalgs.ProtoComm.AppWriteReturn();
         }
         AppWriteReturn.MergeFrom(other.AppWriteReturn);
       }
       if (other.ucDecide_ != null) {
         if (ucDecide_ == null) {
-          UcDecide = new global::Communication.UcDecide();
+          UcDecide = new global::NewDalgs.ProtoComm.UcDecide();
         }
         UcDecide.MergeFrom(other.UcDecide);
       }
       if (other.ucPropose_ != null) {
         if (ucPropose_ == null) {
-          UcPropose = new global::Communication.UcPropose();
+          UcPropose = new global::NewDalgs.ProtoComm.UcPropose();
         }
         UcPropose.MergeFrom(other.UcPropose);
       }
       if (other.epAbort_ != null) {
         if (epAbort_ == null) {
-          EpAbort = new global::Communication.EpAbort();
+          EpAbort = new global::NewDalgs.ProtoComm.EpAbort();
         }
         EpAbort.MergeFrom(other.EpAbort);
       }
       if (other.epAborted_ != null) {
         if (epAborted_ == null) {
-          EpAborted = new global::Communication.EpAborted();
+          EpAborted = new global::NewDalgs.ProtoComm.EpAborted();
         }
         EpAborted.MergeFrom(other.EpAborted);
       }
       if (other.epInternalAccept_ != null) {
         if (epInternalAccept_ == null) {
-          EpInternalAccept = new global::Communication.EpInternalAccept();
+          EpInternalAccept = new global::NewDalgs.ProtoComm.EpInternalAccept();
         }
         EpInternalAccept.MergeFrom(other.EpInternalAccept);
       }
       if (other.epDecide_ != null) {
         if (epDecide_ == null) {
-          EpDecide = new global::Communication.EpDecide();
+          EpDecide = new global::NewDalgs.ProtoComm.EpDecide();
         }
         EpDecide.MergeFrom(other.EpDecide);
       }
       if (other.epInternalDecided_ != null) {
         if (epInternalDecided_ == null) {
-          EpInternalDecided = new global::Communication.EpInternalDecided();
+          EpInternalDecided = new global::NewDalgs.ProtoComm.EpInternalDecided();
         }
         EpInternalDecided.MergeFrom(other.EpInternalDecided);
       }
       if (other.epPropose_ != null) {
         if (epPropose_ == null) {
-          EpPropose = new global::Communication.EpPropose();
+          EpPropose = new global::NewDalgs.ProtoComm.EpPropose();
         }
         EpPropose.MergeFrom(other.EpPropose);
       }
       if (other.epInternalRead_ != null) {
         if (epInternalRead_ == null) {
-          EpInternalRead = new global::Communication.EpInternalRead();
+          EpInternalRead = new global::NewDalgs.ProtoComm.EpInternalRead();
         }
         EpInternalRead.MergeFrom(other.EpInternalRead);
       }
       if (other.epInternalState_ != null) {
         if (epInternalState_ == null) {
-          EpInternalState = new global::Communication.EpInternalState();
+          EpInternalState = new global::NewDalgs.ProtoComm.EpInternalState();
         }
         EpInternalState.MergeFrom(other.EpInternalState);
       }
       if (other.epInternalWrite_ != null) {
         if (epInternalWrite_ == null) {
-          EpInternalWrite = new global::Communication.EpInternalWrite();
+          EpInternalWrite = new global::NewDalgs.ProtoComm.EpInternalWrite();
         }
         EpInternalWrite.MergeFrom(other.EpInternalWrite);
       }
       if (other.ecInternalNack_ != null) {
         if (ecInternalNack_ == null) {
-          EcInternalNack = new global::Communication.EcInternalNack();
+          EcInternalNack = new global::NewDalgs.ProtoComm.EcInternalNack();
         }
         EcInternalNack.MergeFrom(other.EcInternalNack);
       }
       if (other.ecInternalNewEpoch_ != null) {
         if (ecInternalNewEpoch_ == null) {
-          EcInternalNewEpoch = new global::Communication.EcInternalNewEpoch();
+          EcInternalNewEpoch = new global::NewDalgs.ProtoComm.EcInternalNewEpoch();
         }
         EcInternalNewEpoch.MergeFrom(other.EcInternalNewEpoch);
       }
       if (other.ecStartEpoch_ != null) {
         if (ecStartEpoch_ == null) {
-          EcStartEpoch = new global::Communication.EcStartEpoch();
+          EcStartEpoch = new global::NewDalgs.ProtoComm.EcStartEpoch();
         }
         EcStartEpoch.MergeFrom(other.EcStartEpoch);
       }
       if (other.bebBroadcast_ != null) {
         if (bebBroadcast_ == null) {
-          BebBroadcast = new global::Communication.BebBroadcast();
+          BebBroadcast = new global::NewDalgs.ProtoComm.BebBroadcast();
         }
         BebBroadcast.MergeFrom(other.BebBroadcast);
       }
       if (other.bebDeliver_ != null) {
         if (bebDeliver_ == null) {
-          BebDeliver = new global::Communication.BebDeliver();
+          BebDeliver = new global::NewDalgs.ProtoComm.BebDeliver();
         }
         BebDeliver.MergeFrom(other.BebDeliver);
       }
       if (other.eldTimeout_ != null) {
         if (eldTimeout_ == null) {
-          EldTimeout = new global::Communication.EldTimeout();
+          EldTimeout = new global::NewDalgs.ProtoComm.EldTimeout();
         }
         EldTimeout.MergeFrom(other.EldTimeout);
       }
       if (other.eldTrust_ != null) {
         if (eldTrust_ == null) {
-          EldTrust = new global::Communication.EldTrust();
+          EldTrust = new global::NewDalgs.ProtoComm.EldTrust();
         }
         EldTrust.MergeFrom(other.EldTrust);
       }
       if (other.nnarInternalAck_ != null) {
         if (nnarInternalAck_ == null) {
-          NnarInternalAck = new global::Communication.NnarInternalAck();
+          NnarInternalAck = new global::NewDalgs.ProtoComm.NnarInternalAck();
         }
         NnarInternalAck.MergeFrom(other.NnarInternalAck);
       }
       if (other.nnarInternalRead_ != null) {
         if (nnarInternalRead_ == null) {
-          NnarInternalRead = new global::Communication.NnarInternalRead();
+          NnarInternalRead = new global::NewDalgs.ProtoComm.NnarInternalRead();
         }
         NnarInternalRead.MergeFrom(other.NnarInternalRead);
       }
       if (other.nnarInternalValue_ != null) {
         if (nnarInternalValue_ == null) {
-          NnarInternalValue = new global::Communication.NnarInternalValue();
+          NnarInternalValue = new global::NewDalgs.ProtoComm.NnarInternalValue();
         }
         NnarInternalValue.MergeFrom(other.NnarInternalValue);
       }
       if (other.nnarInternalWrite_ != null) {
         if (nnarInternalWrite_ == null) {
-          NnarInternalWrite = new global::Communication.NnarInternalWrite();
+          NnarInternalWrite = new global::NewDalgs.ProtoComm.NnarInternalWrite();
         }
         NnarInternalWrite.MergeFrom(other.NnarInternalWrite);
       }
       if (other.nnarRead_ != null) {
         if (nnarRead_ == null) {
-          NnarRead = new global::Communication.NnarRead();
+          NnarRead = new global::NewDalgs.ProtoComm.NnarRead();
         }
         NnarRead.MergeFrom(other.NnarRead);
       }
       if (other.nnarReadReturn_ != null) {
         if (nnarReadReturn_ == null) {
-          NnarReadReturn = new global::Communication.NnarReadReturn();
+          NnarReadReturn = new global::NewDalgs.ProtoComm.NnarReadReturn();
         }
         NnarReadReturn.MergeFrom(other.NnarReadReturn);
       }
       if (other.nnarWrite_ != null) {
         if (nnarWrite_ == null) {
-          NnarWrite = new global::Communication.NnarWrite();
+          NnarWrite = new global::NewDalgs.ProtoComm.NnarWrite();
         }
         NnarWrite.MergeFrom(other.NnarWrite);
       }
       if (other.nnarWriteReturn_ != null) {
         if (nnarWriteReturn_ == null) {
-          NnarWriteReturn = new global::Communication.NnarWriteReturn();
+          NnarWriteReturn = new global::NewDalgs.ProtoComm.NnarWriteReturn();
         }
         NnarWriteReturn.MergeFrom(other.NnarWriteReturn);
       }
       if (other.epfdTimeout_ != null) {
         if (epfdTimeout_ == null) {
-          EpfdTimeout = new global::Communication.EpfdTimeout();
+          EpfdTimeout = new global::NewDalgs.ProtoComm.EpfdTimeout();
         }
         EpfdTimeout.MergeFrom(other.EpfdTimeout);
       }
       if (other.epfdInternalHeartbeatRequest_ != null) {
         if (epfdInternalHeartbeatRequest_ == null) {
-          EpfdInternalHeartbeatRequest = new global::Communication.EpfdInternalHeartbeatRequest();
+          EpfdInternalHeartbeatRequest = new global::NewDalgs.ProtoComm.EpfdInternalHeartbeatRequest();
         }
         EpfdInternalHeartbeatRequest.MergeFrom(other.EpfdInternalHeartbeatRequest);
       }
       if (other.epfdInternalHeartbeatReply_ != null) {
         if (epfdInternalHeartbeatReply_ == null) {
-          EpfdInternalHeartbeatReply = new global::Communication.EpfdInternalHeartbeatReply();
+          EpfdInternalHeartbeatReply = new global::NewDalgs.ProtoComm.EpfdInternalHeartbeatReply();
         }
         EpfdInternalHeartbeatReply.MergeFrom(other.EpfdInternalHeartbeatReply);
       }
       if (other.epfdSuspect_ != null) {
         if (epfdSuspect_ == null) {
-          EpfdSuspect = new global::Communication.EpfdSuspect();
+          EpfdSuspect = new global::NewDalgs.ProtoComm.EpfdSuspect();
         }
         EpfdSuspect.MergeFrom(other.EpfdSuspect);
       }
       if (other.epfdRestore_ != null) {
         if (epfdRestore_ == null) {
-          EpfdRestore = new global::Communication.EpfdRestore();
+          EpfdRestore = new global::NewDalgs.ProtoComm.EpfdRestore();
         }
         EpfdRestore.MergeFrom(other.EpfdRestore);
       }
       if (other.plDeliver_ != null) {
         if (plDeliver_ == null) {
-          PlDeliver = new global::Communication.PlDeliver();
+          PlDeliver = new global::NewDalgs.ProtoComm.PlDeliver();
         }
         PlDeliver.MergeFrom(other.PlDeliver);
       }
       if (other.plSend_ != null) {
         if (plSend_ == null) {
-          PlSend = new global::Communication.PlSend();
+          PlSend = new global::NewDalgs.ProtoComm.PlSend();
         }
         PlSend.MergeFrom(other.PlSend);
       }
@@ -10859,7 +10859,7 @@ namespace Communication {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Type = (global::Communication.Message.Types.Type) input.ReadEnum();
+            Type = (global::NewDalgs.ProtoComm.Message.Types.Type) input.ReadEnum();
             break;
           }
           case 18: {
@@ -10880,315 +10880,315 @@ namespace Communication {
           }
           case 50: {
             if (networkMessage_ == null) {
-              NetworkMessage = new global::Communication.NetworkMessage();
+              NetworkMessage = new global::NewDalgs.ProtoComm.NetworkMessage();
             }
             input.ReadMessage(NetworkMessage);
             break;
           }
           case 58: {
             if (procRegistration_ == null) {
-              ProcRegistration = new global::Communication.ProcRegistration();
+              ProcRegistration = new global::NewDalgs.ProtoComm.ProcRegistration();
             }
             input.ReadMessage(ProcRegistration);
             break;
           }
           case 66: {
             if (procInitializeSystem_ == null) {
-              ProcInitializeSystem = new global::Communication.ProcInitializeSystem();
+              ProcInitializeSystem = new global::NewDalgs.ProtoComm.ProcInitializeSystem();
             }
             input.ReadMessage(ProcInitializeSystem);
             break;
           }
           case 74: {
             if (procDestroySystem_ == null) {
-              ProcDestroySystem = new global::Communication.ProcDestroySystem();
+              ProcDestroySystem = new global::NewDalgs.ProtoComm.ProcDestroySystem();
             }
             input.ReadMessage(ProcDestroySystem);
             break;
           }
           case 82: {
             if (appBroadcast_ == null) {
-              AppBroadcast = new global::Communication.AppBroadcast();
+              AppBroadcast = new global::NewDalgs.ProtoComm.AppBroadcast();
             }
             input.ReadMessage(AppBroadcast);
             break;
           }
           case 90: {
             if (appValue_ == null) {
-              AppValue = new global::Communication.AppValue();
+              AppValue = new global::NewDalgs.ProtoComm.AppValue();
             }
             input.ReadMessage(AppValue);
             break;
           }
           case 98: {
             if (appPropose_ == null) {
-              AppPropose = new global::Communication.AppPropose();
+              AppPropose = new global::NewDalgs.ProtoComm.AppPropose();
             }
             input.ReadMessage(AppPropose);
             break;
           }
           case 106: {
             if (appDecide_ == null) {
-              AppDecide = new global::Communication.AppDecide();
+              AppDecide = new global::NewDalgs.ProtoComm.AppDecide();
             }
             input.ReadMessage(AppDecide);
             break;
           }
           case 114: {
             if (appRead_ == null) {
-              AppRead = new global::Communication.AppRead();
+              AppRead = new global::NewDalgs.ProtoComm.AppRead();
             }
             input.ReadMessage(AppRead);
             break;
           }
           case 122: {
             if (appWrite_ == null) {
-              AppWrite = new global::Communication.AppWrite();
+              AppWrite = new global::NewDalgs.ProtoComm.AppWrite();
             }
             input.ReadMessage(AppWrite);
             break;
           }
           case 130: {
             if (appReadReturn_ == null) {
-              AppReadReturn = new global::Communication.AppReadReturn();
+              AppReadReturn = new global::NewDalgs.ProtoComm.AppReadReturn();
             }
             input.ReadMessage(AppReadReturn);
             break;
           }
           case 138: {
             if (appWriteReturn_ == null) {
-              AppWriteReturn = new global::Communication.AppWriteReturn();
+              AppWriteReturn = new global::NewDalgs.ProtoComm.AppWriteReturn();
             }
             input.ReadMessage(AppWriteReturn);
             break;
           }
           case 162: {
             if (ucDecide_ == null) {
-              UcDecide = new global::Communication.UcDecide();
+              UcDecide = new global::NewDalgs.ProtoComm.UcDecide();
             }
             input.ReadMessage(UcDecide);
             break;
           }
           case 170: {
             if (ucPropose_ == null) {
-              UcPropose = new global::Communication.UcPropose();
+              UcPropose = new global::NewDalgs.ProtoComm.UcPropose();
             }
             input.ReadMessage(UcPropose);
             break;
           }
           case 242: {
             if (epAbort_ == null) {
-              EpAbort = new global::Communication.EpAbort();
+              EpAbort = new global::NewDalgs.ProtoComm.EpAbort();
             }
             input.ReadMessage(EpAbort);
             break;
           }
           case 250: {
             if (epAborted_ == null) {
-              EpAborted = new global::Communication.EpAborted();
+              EpAborted = new global::NewDalgs.ProtoComm.EpAborted();
             }
             input.ReadMessage(EpAborted);
             break;
           }
           case 258: {
             if (epInternalAccept_ == null) {
-              EpInternalAccept = new global::Communication.EpInternalAccept();
+              EpInternalAccept = new global::NewDalgs.ProtoComm.EpInternalAccept();
             }
             input.ReadMessage(EpInternalAccept);
             break;
           }
           case 266: {
             if (epDecide_ == null) {
-              EpDecide = new global::Communication.EpDecide();
+              EpDecide = new global::NewDalgs.ProtoComm.EpDecide();
             }
             input.ReadMessage(EpDecide);
             break;
           }
           case 274: {
             if (epInternalDecided_ == null) {
-              EpInternalDecided = new global::Communication.EpInternalDecided();
+              EpInternalDecided = new global::NewDalgs.ProtoComm.EpInternalDecided();
             }
             input.ReadMessage(EpInternalDecided);
             break;
           }
           case 282: {
             if (epPropose_ == null) {
-              EpPropose = new global::Communication.EpPropose();
+              EpPropose = new global::NewDalgs.ProtoComm.EpPropose();
             }
             input.ReadMessage(EpPropose);
             break;
           }
           case 290: {
             if (epInternalRead_ == null) {
-              EpInternalRead = new global::Communication.EpInternalRead();
+              EpInternalRead = new global::NewDalgs.ProtoComm.EpInternalRead();
             }
             input.ReadMessage(EpInternalRead);
             break;
           }
           case 298: {
             if (epInternalState_ == null) {
-              EpInternalState = new global::Communication.EpInternalState();
+              EpInternalState = new global::NewDalgs.ProtoComm.EpInternalState();
             }
             input.ReadMessage(EpInternalState);
             break;
           }
           case 306: {
             if (epInternalWrite_ == null) {
-              EpInternalWrite = new global::Communication.EpInternalWrite();
+              EpInternalWrite = new global::NewDalgs.ProtoComm.EpInternalWrite();
             }
             input.ReadMessage(EpInternalWrite);
             break;
           }
           case 330: {
             if (ecInternalNack_ == null) {
-              EcInternalNack = new global::Communication.EcInternalNack();
+              EcInternalNack = new global::NewDalgs.ProtoComm.EcInternalNack();
             }
             input.ReadMessage(EcInternalNack);
             break;
           }
           case 338: {
             if (ecInternalNewEpoch_ == null) {
-              EcInternalNewEpoch = new global::Communication.EcInternalNewEpoch();
+              EcInternalNewEpoch = new global::NewDalgs.ProtoComm.EcInternalNewEpoch();
             }
             input.ReadMessage(EcInternalNewEpoch);
             break;
           }
           case 346: {
             if (ecStartEpoch_ == null) {
-              EcStartEpoch = new global::Communication.EcStartEpoch();
+              EcStartEpoch = new global::NewDalgs.ProtoComm.EcStartEpoch();
             }
             input.ReadMessage(EcStartEpoch);
             break;
           }
           case 402: {
             if (bebBroadcast_ == null) {
-              BebBroadcast = new global::Communication.BebBroadcast();
+              BebBroadcast = new global::NewDalgs.ProtoComm.BebBroadcast();
             }
             input.ReadMessage(BebBroadcast);
             break;
           }
           case 410: {
             if (bebDeliver_ == null) {
-              BebDeliver = new global::Communication.BebDeliver();
+              BebDeliver = new global::NewDalgs.ProtoComm.BebDeliver();
             }
             input.ReadMessage(BebDeliver);
             break;
           }
           case 482: {
             if (eldTimeout_ == null) {
-              EldTimeout = new global::Communication.EldTimeout();
+              EldTimeout = new global::NewDalgs.ProtoComm.EldTimeout();
             }
             input.ReadMessage(EldTimeout);
             break;
           }
           case 490: {
             if (eldTrust_ == null) {
-              EldTrust = new global::Communication.EldTrust();
+              EldTrust = new global::NewDalgs.ProtoComm.EldTrust();
             }
             input.ReadMessage(EldTrust);
             break;
           }
           case 562: {
             if (nnarInternalAck_ == null) {
-              NnarInternalAck = new global::Communication.NnarInternalAck();
+              NnarInternalAck = new global::NewDalgs.ProtoComm.NnarInternalAck();
             }
             input.ReadMessage(NnarInternalAck);
             break;
           }
           case 570: {
             if (nnarInternalRead_ == null) {
-              NnarInternalRead = new global::Communication.NnarInternalRead();
+              NnarInternalRead = new global::NewDalgs.ProtoComm.NnarInternalRead();
             }
             input.ReadMessage(NnarInternalRead);
             break;
           }
           case 578: {
             if (nnarInternalValue_ == null) {
-              NnarInternalValue = new global::Communication.NnarInternalValue();
+              NnarInternalValue = new global::NewDalgs.ProtoComm.NnarInternalValue();
             }
             input.ReadMessage(NnarInternalValue);
             break;
           }
           case 586: {
             if (nnarInternalWrite_ == null) {
-              NnarInternalWrite = new global::Communication.NnarInternalWrite();
+              NnarInternalWrite = new global::NewDalgs.ProtoComm.NnarInternalWrite();
             }
             input.ReadMessage(NnarInternalWrite);
             break;
           }
           case 594: {
             if (nnarRead_ == null) {
-              NnarRead = new global::Communication.NnarRead();
+              NnarRead = new global::NewDalgs.ProtoComm.NnarRead();
             }
             input.ReadMessage(NnarRead);
             break;
           }
           case 602: {
             if (nnarReadReturn_ == null) {
-              NnarReadReturn = new global::Communication.NnarReadReturn();
+              NnarReadReturn = new global::NewDalgs.ProtoComm.NnarReadReturn();
             }
             input.ReadMessage(NnarReadReturn);
             break;
           }
           case 610: {
             if (nnarWrite_ == null) {
-              NnarWrite = new global::Communication.NnarWrite();
+              NnarWrite = new global::NewDalgs.ProtoComm.NnarWrite();
             }
             input.ReadMessage(NnarWrite);
             break;
           }
           case 618: {
             if (nnarWriteReturn_ == null) {
-              NnarWriteReturn = new global::Communication.NnarWriteReturn();
+              NnarWriteReturn = new global::NewDalgs.ProtoComm.NnarWriteReturn();
             }
             input.ReadMessage(NnarWriteReturn);
             break;
           }
           case 642: {
             if (epfdTimeout_ == null) {
-              EpfdTimeout = new global::Communication.EpfdTimeout();
+              EpfdTimeout = new global::NewDalgs.ProtoComm.EpfdTimeout();
             }
             input.ReadMessage(EpfdTimeout);
             break;
           }
           case 650: {
             if (epfdInternalHeartbeatRequest_ == null) {
-              EpfdInternalHeartbeatRequest = new global::Communication.EpfdInternalHeartbeatRequest();
+              EpfdInternalHeartbeatRequest = new global::NewDalgs.ProtoComm.EpfdInternalHeartbeatRequest();
             }
             input.ReadMessage(EpfdInternalHeartbeatRequest);
             break;
           }
           case 658: {
             if (epfdInternalHeartbeatReply_ == null) {
-              EpfdInternalHeartbeatReply = new global::Communication.EpfdInternalHeartbeatReply();
+              EpfdInternalHeartbeatReply = new global::NewDalgs.ProtoComm.EpfdInternalHeartbeatReply();
             }
             input.ReadMessage(EpfdInternalHeartbeatReply);
             break;
           }
           case 666: {
             if (epfdSuspect_ == null) {
-              EpfdSuspect = new global::Communication.EpfdSuspect();
+              EpfdSuspect = new global::NewDalgs.ProtoComm.EpfdSuspect();
             }
             input.ReadMessage(EpfdSuspect);
             break;
           }
           case 674: {
             if (epfdRestore_ == null) {
-              EpfdRestore = new global::Communication.EpfdRestore();
+              EpfdRestore = new global::NewDalgs.ProtoComm.EpfdRestore();
             }
             input.ReadMessage(EpfdRestore);
             break;
           }
           case 722: {
             if (plDeliver_ == null) {
-              PlDeliver = new global::Communication.PlDeliver();
+              PlDeliver = new global::NewDalgs.ProtoComm.PlDeliver();
             }
             input.ReadMessage(PlDeliver);
             break;
           }
           case 730: {
             if (plSend_ == null) {
-              PlSend = new global::Communication.PlSend();
+              PlSend = new global::NewDalgs.ProtoComm.PlSend();
             }
             input.ReadMessage(PlSend);
             break;
@@ -11208,7 +11208,7 @@ namespace Communication {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Type = (global::Communication.Message.Types.Type) input.ReadEnum();
+            Type = (global::NewDalgs.ProtoComm.Message.Types.Type) input.ReadEnum();
             break;
           }
           case 18: {
@@ -11229,315 +11229,315 @@ namespace Communication {
           }
           case 50: {
             if (networkMessage_ == null) {
-              NetworkMessage = new global::Communication.NetworkMessage();
+              NetworkMessage = new global::NewDalgs.ProtoComm.NetworkMessage();
             }
             input.ReadMessage(NetworkMessage);
             break;
           }
           case 58: {
             if (procRegistration_ == null) {
-              ProcRegistration = new global::Communication.ProcRegistration();
+              ProcRegistration = new global::NewDalgs.ProtoComm.ProcRegistration();
             }
             input.ReadMessage(ProcRegistration);
             break;
           }
           case 66: {
             if (procInitializeSystem_ == null) {
-              ProcInitializeSystem = new global::Communication.ProcInitializeSystem();
+              ProcInitializeSystem = new global::NewDalgs.ProtoComm.ProcInitializeSystem();
             }
             input.ReadMessage(ProcInitializeSystem);
             break;
           }
           case 74: {
             if (procDestroySystem_ == null) {
-              ProcDestroySystem = new global::Communication.ProcDestroySystem();
+              ProcDestroySystem = new global::NewDalgs.ProtoComm.ProcDestroySystem();
             }
             input.ReadMessage(ProcDestroySystem);
             break;
           }
           case 82: {
             if (appBroadcast_ == null) {
-              AppBroadcast = new global::Communication.AppBroadcast();
+              AppBroadcast = new global::NewDalgs.ProtoComm.AppBroadcast();
             }
             input.ReadMessage(AppBroadcast);
             break;
           }
           case 90: {
             if (appValue_ == null) {
-              AppValue = new global::Communication.AppValue();
+              AppValue = new global::NewDalgs.ProtoComm.AppValue();
             }
             input.ReadMessage(AppValue);
             break;
           }
           case 98: {
             if (appPropose_ == null) {
-              AppPropose = new global::Communication.AppPropose();
+              AppPropose = new global::NewDalgs.ProtoComm.AppPropose();
             }
             input.ReadMessage(AppPropose);
             break;
           }
           case 106: {
             if (appDecide_ == null) {
-              AppDecide = new global::Communication.AppDecide();
+              AppDecide = new global::NewDalgs.ProtoComm.AppDecide();
             }
             input.ReadMessage(AppDecide);
             break;
           }
           case 114: {
             if (appRead_ == null) {
-              AppRead = new global::Communication.AppRead();
+              AppRead = new global::NewDalgs.ProtoComm.AppRead();
             }
             input.ReadMessage(AppRead);
             break;
           }
           case 122: {
             if (appWrite_ == null) {
-              AppWrite = new global::Communication.AppWrite();
+              AppWrite = new global::NewDalgs.ProtoComm.AppWrite();
             }
             input.ReadMessage(AppWrite);
             break;
           }
           case 130: {
             if (appReadReturn_ == null) {
-              AppReadReturn = new global::Communication.AppReadReturn();
+              AppReadReturn = new global::NewDalgs.ProtoComm.AppReadReturn();
             }
             input.ReadMessage(AppReadReturn);
             break;
           }
           case 138: {
             if (appWriteReturn_ == null) {
-              AppWriteReturn = new global::Communication.AppWriteReturn();
+              AppWriteReturn = new global::NewDalgs.ProtoComm.AppWriteReturn();
             }
             input.ReadMessage(AppWriteReturn);
             break;
           }
           case 162: {
             if (ucDecide_ == null) {
-              UcDecide = new global::Communication.UcDecide();
+              UcDecide = new global::NewDalgs.ProtoComm.UcDecide();
             }
             input.ReadMessage(UcDecide);
             break;
           }
           case 170: {
             if (ucPropose_ == null) {
-              UcPropose = new global::Communication.UcPropose();
+              UcPropose = new global::NewDalgs.ProtoComm.UcPropose();
             }
             input.ReadMessage(UcPropose);
             break;
           }
           case 242: {
             if (epAbort_ == null) {
-              EpAbort = new global::Communication.EpAbort();
+              EpAbort = new global::NewDalgs.ProtoComm.EpAbort();
             }
             input.ReadMessage(EpAbort);
             break;
           }
           case 250: {
             if (epAborted_ == null) {
-              EpAborted = new global::Communication.EpAborted();
+              EpAborted = new global::NewDalgs.ProtoComm.EpAborted();
             }
             input.ReadMessage(EpAborted);
             break;
           }
           case 258: {
             if (epInternalAccept_ == null) {
-              EpInternalAccept = new global::Communication.EpInternalAccept();
+              EpInternalAccept = new global::NewDalgs.ProtoComm.EpInternalAccept();
             }
             input.ReadMessage(EpInternalAccept);
             break;
           }
           case 266: {
             if (epDecide_ == null) {
-              EpDecide = new global::Communication.EpDecide();
+              EpDecide = new global::NewDalgs.ProtoComm.EpDecide();
             }
             input.ReadMessage(EpDecide);
             break;
           }
           case 274: {
             if (epInternalDecided_ == null) {
-              EpInternalDecided = new global::Communication.EpInternalDecided();
+              EpInternalDecided = new global::NewDalgs.ProtoComm.EpInternalDecided();
             }
             input.ReadMessage(EpInternalDecided);
             break;
           }
           case 282: {
             if (epPropose_ == null) {
-              EpPropose = new global::Communication.EpPropose();
+              EpPropose = new global::NewDalgs.ProtoComm.EpPropose();
             }
             input.ReadMessage(EpPropose);
             break;
           }
           case 290: {
             if (epInternalRead_ == null) {
-              EpInternalRead = new global::Communication.EpInternalRead();
+              EpInternalRead = new global::NewDalgs.ProtoComm.EpInternalRead();
             }
             input.ReadMessage(EpInternalRead);
             break;
           }
           case 298: {
             if (epInternalState_ == null) {
-              EpInternalState = new global::Communication.EpInternalState();
+              EpInternalState = new global::NewDalgs.ProtoComm.EpInternalState();
             }
             input.ReadMessage(EpInternalState);
             break;
           }
           case 306: {
             if (epInternalWrite_ == null) {
-              EpInternalWrite = new global::Communication.EpInternalWrite();
+              EpInternalWrite = new global::NewDalgs.ProtoComm.EpInternalWrite();
             }
             input.ReadMessage(EpInternalWrite);
             break;
           }
           case 330: {
             if (ecInternalNack_ == null) {
-              EcInternalNack = new global::Communication.EcInternalNack();
+              EcInternalNack = new global::NewDalgs.ProtoComm.EcInternalNack();
             }
             input.ReadMessage(EcInternalNack);
             break;
           }
           case 338: {
             if (ecInternalNewEpoch_ == null) {
-              EcInternalNewEpoch = new global::Communication.EcInternalNewEpoch();
+              EcInternalNewEpoch = new global::NewDalgs.ProtoComm.EcInternalNewEpoch();
             }
             input.ReadMessage(EcInternalNewEpoch);
             break;
           }
           case 346: {
             if (ecStartEpoch_ == null) {
-              EcStartEpoch = new global::Communication.EcStartEpoch();
+              EcStartEpoch = new global::NewDalgs.ProtoComm.EcStartEpoch();
             }
             input.ReadMessage(EcStartEpoch);
             break;
           }
           case 402: {
             if (bebBroadcast_ == null) {
-              BebBroadcast = new global::Communication.BebBroadcast();
+              BebBroadcast = new global::NewDalgs.ProtoComm.BebBroadcast();
             }
             input.ReadMessage(BebBroadcast);
             break;
           }
           case 410: {
             if (bebDeliver_ == null) {
-              BebDeliver = new global::Communication.BebDeliver();
+              BebDeliver = new global::NewDalgs.ProtoComm.BebDeliver();
             }
             input.ReadMessage(BebDeliver);
             break;
           }
           case 482: {
             if (eldTimeout_ == null) {
-              EldTimeout = new global::Communication.EldTimeout();
+              EldTimeout = new global::NewDalgs.ProtoComm.EldTimeout();
             }
             input.ReadMessage(EldTimeout);
             break;
           }
           case 490: {
             if (eldTrust_ == null) {
-              EldTrust = new global::Communication.EldTrust();
+              EldTrust = new global::NewDalgs.ProtoComm.EldTrust();
             }
             input.ReadMessage(EldTrust);
             break;
           }
           case 562: {
             if (nnarInternalAck_ == null) {
-              NnarInternalAck = new global::Communication.NnarInternalAck();
+              NnarInternalAck = new global::NewDalgs.ProtoComm.NnarInternalAck();
             }
             input.ReadMessage(NnarInternalAck);
             break;
           }
           case 570: {
             if (nnarInternalRead_ == null) {
-              NnarInternalRead = new global::Communication.NnarInternalRead();
+              NnarInternalRead = new global::NewDalgs.ProtoComm.NnarInternalRead();
             }
             input.ReadMessage(NnarInternalRead);
             break;
           }
           case 578: {
             if (nnarInternalValue_ == null) {
-              NnarInternalValue = new global::Communication.NnarInternalValue();
+              NnarInternalValue = new global::NewDalgs.ProtoComm.NnarInternalValue();
             }
             input.ReadMessage(NnarInternalValue);
             break;
           }
           case 586: {
             if (nnarInternalWrite_ == null) {
-              NnarInternalWrite = new global::Communication.NnarInternalWrite();
+              NnarInternalWrite = new global::NewDalgs.ProtoComm.NnarInternalWrite();
             }
             input.ReadMessage(NnarInternalWrite);
             break;
           }
           case 594: {
             if (nnarRead_ == null) {
-              NnarRead = new global::Communication.NnarRead();
+              NnarRead = new global::NewDalgs.ProtoComm.NnarRead();
             }
             input.ReadMessage(NnarRead);
             break;
           }
           case 602: {
             if (nnarReadReturn_ == null) {
-              NnarReadReturn = new global::Communication.NnarReadReturn();
+              NnarReadReturn = new global::NewDalgs.ProtoComm.NnarReadReturn();
             }
             input.ReadMessage(NnarReadReturn);
             break;
           }
           case 610: {
             if (nnarWrite_ == null) {
-              NnarWrite = new global::Communication.NnarWrite();
+              NnarWrite = new global::NewDalgs.ProtoComm.NnarWrite();
             }
             input.ReadMessage(NnarWrite);
             break;
           }
           case 618: {
             if (nnarWriteReturn_ == null) {
-              NnarWriteReturn = new global::Communication.NnarWriteReturn();
+              NnarWriteReturn = new global::NewDalgs.ProtoComm.NnarWriteReturn();
             }
             input.ReadMessage(NnarWriteReturn);
             break;
           }
           case 642: {
             if (epfdTimeout_ == null) {
-              EpfdTimeout = new global::Communication.EpfdTimeout();
+              EpfdTimeout = new global::NewDalgs.ProtoComm.EpfdTimeout();
             }
             input.ReadMessage(EpfdTimeout);
             break;
           }
           case 650: {
             if (epfdInternalHeartbeatRequest_ == null) {
-              EpfdInternalHeartbeatRequest = new global::Communication.EpfdInternalHeartbeatRequest();
+              EpfdInternalHeartbeatRequest = new global::NewDalgs.ProtoComm.EpfdInternalHeartbeatRequest();
             }
             input.ReadMessage(EpfdInternalHeartbeatRequest);
             break;
           }
           case 658: {
             if (epfdInternalHeartbeatReply_ == null) {
-              EpfdInternalHeartbeatReply = new global::Communication.EpfdInternalHeartbeatReply();
+              EpfdInternalHeartbeatReply = new global::NewDalgs.ProtoComm.EpfdInternalHeartbeatReply();
             }
             input.ReadMessage(EpfdInternalHeartbeatReply);
             break;
           }
           case 666: {
             if (epfdSuspect_ == null) {
-              EpfdSuspect = new global::Communication.EpfdSuspect();
+              EpfdSuspect = new global::NewDalgs.ProtoComm.EpfdSuspect();
             }
             input.ReadMessage(EpfdSuspect);
             break;
           }
           case 674: {
             if (epfdRestore_ == null) {
-              EpfdRestore = new global::Communication.EpfdRestore();
+              EpfdRestore = new global::NewDalgs.ProtoComm.EpfdRestore();
             }
             input.ReadMessage(EpfdRestore);
             break;
           }
           case 722: {
             if (plDeliver_ == null) {
-              PlDeliver = new global::Communication.PlDeliver();
+              PlDeliver = new global::NewDalgs.ProtoComm.PlDeliver();
             }
             input.ReadMessage(PlDeliver);
             break;
           }
           case 730: {
             if (plSend_ == null) {
-              PlSend = new global::Communication.PlSend();
+              PlSend = new global::NewDalgs.ProtoComm.PlSend();
             }
             input.ReadMessage(PlSend);
             break;

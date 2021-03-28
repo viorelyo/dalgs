@@ -1,10 +1,8 @@
 ﻿using Google.Protobuf;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 
 namespace NewDalgs.Utils
@@ -27,20 +25,20 @@ namespace NewDalgs.Utils
         /// <summary>
         /// Wrapping each message into Message(NetworMessage) before sending it through TCP Socket
         /// </summary>
-        public void SendMessage(Communication.Message message, string remoteHost, int remotePort)
+        public void SendMessage(ProtoComm.Message message, string remoteHost, int remotePort)
         {
             // TODO method to be try-excepted
 
-            var networkMsg = new Communication.NetworkMessage
+            var networkMsg = new ProtoComm.NetworkMessage
             {
                 Message = message,
                 SenderHost = _processHost,
                 SenderListeningPort = _processPort
             };
 
-            var wrapperMsg = new Communication.Message
+            var wrapperMsg = new ProtoComm.Message
             {
-                Type = Communication.Message.Types.Type.NetworkMessage,
+                Type = ProtoComm.Message.Types.Type.NetworkMessage,
                 NetworkMessage = networkMsg,
                 SystemId = message.SystemId,
                 ToAbstractionId = message.ToAbstractionId,

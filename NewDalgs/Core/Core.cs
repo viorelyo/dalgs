@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using NewDalgs.System;
 using System.Threading.Tasks;
 
 namespace NewDalgs.Core
@@ -23,7 +20,7 @@ namespace NewDalgs.Core
             int processIndex = 1;
             foreach (var port in coreParams.ProcessesPorts)
             {
-                var processsId = new Communication.ProcessId
+                var processsId = new ProtoComm.ProcessId
                 {
                     Host = coreParams.ProcessesHost,
                     Port = port,
