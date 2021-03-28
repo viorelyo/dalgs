@@ -29,8 +29,6 @@ namespace NewDalgs.Utils
         /// </summary>
         public void SendMessage(ProtoComm.Message message, string remoteHost, int remotePort)
         {
-            // TODO method to be try-excepted
-
             var networkMsg = new ProtoComm.NetworkMessage
             {
                 Message = message,
@@ -54,19 +52,26 @@ namespace NewDalgs.Utils
             byte[] bigEndianMsgLen = BitConverter.GetBytes(serializedMsg.Length);
             Array.Reverse(bigEndianMsgLen);
 
-            using (var connection = new TcpClient(remoteHost, remotePort))
+            try
             {
-                using (var networkStream = connection.GetStream())
+                using (var connection = new TcpClient(remoteHost, remotePort))
                 {
-                    using (var writer = new BinaryWriter(networkStream))
+                    using (var networkStream = connection.GetStream())
                     {
-                        writer.Write(bigEndianMsgLen);
-                        writer.Write(serializedMsg);
+                        using (var writer = new BinaryWriter(networkStream))
+                        {
+                            writer.Write(bigEndianMsgLen);
+                            writer.Write(serializedMsg);
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw new NetworkException("Exception occurred in SendMessage", ex);
+            }
 
-            Logger.Debug(String.Format("[{0}]: Message sent to [{1}:{2}]", _processPort, remoteHost, remotePort));
+            Logger.Debug(String.Format("[{0}]: Message [{1}] sent to [{2}:{3}]", _processPort, message.Type,  remoteHost, remotePort));     // TODO check if should remove destinatar from log
         }
 
         public void ListenForConnections()
@@ -74,12 +79,14 @@ namespace NewDalgs.Utils
             Logger.Debug(String.Format("[{0}]: Waiting for requests", _processPort));
 
             var adr = IPAddress.Parse(_processHost);
-            var _listener = new TcpListener(adr, _processPort);
-            _listener.Start();
-            _ct = _cts.Token;
+            TcpListener _listener = null;
 
             try
-            { 
+            {
+                _listener = new TcpListener(adr, _processPort);
+                _listener.Start();
+                _ct = _cts.Token;
+
                 while(!_ct.IsCancellationRequested)
                 {
                     _listenerReady.Reset();
@@ -107,6 +114,7 @@ namespace NewDalgs.Utils
 
             _cts?.Cancel();
             _listenerReady.Set();
+
             Logger.Debug(String.Format("[{0}]: Stop Requested", _processPort));
         }
 
@@ -123,7 +131,7 @@ namespace NewDalgs.Utils
 
             using (var connection = listener.EndAcceptTcpClient(ar))
             {
-                Console.WriteLine("New connection accepted");
+                Logger.Debug(String.Format("[{0}]: New connection accepted", _processPort));
             }
         }
     }

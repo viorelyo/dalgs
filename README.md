@@ -12,3 +12,4 @@
 - [Example logging](https://www.blinkingcaret.com/2018/02/14/net-core-console-logging/)
 - [NLog](https://github.com/NLog/NLog/wiki/Tutorial#configure-nlog-targets-for-output)
 - [Self-Contained EXE](https://dotnetcoretutorials.com/2019/06/20/publishing-a-single-exe-file-in-net-core-3-0/)
+- [NLog features](https://blog.elmah.io/nlog-tutorial-the-essential-guide-for-logging-from-csharp/)

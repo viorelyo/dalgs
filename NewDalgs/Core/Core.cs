@@ -35,11 +35,6 @@ namespace NewDalgs.Core
                 _systems.Add(system);
                 _processes.Add(process);
             }
-
-            foreach (var process in _processes)
-            {
-                process.Wait();
-            }
         }
 
         public void Stop()
@@ -47,6 +42,11 @@ namespace NewDalgs.Core
             foreach (var system in _systems)
             {
                 system.Stop();
+            }
+
+            foreach (var process in _processes)
+            {
+                process.Wait();
             }
         }
     }

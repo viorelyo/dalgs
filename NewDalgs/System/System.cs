@@ -12,6 +12,7 @@ namespace NewDalgs.System
         private readonly string _hubHost;
         private readonly int _hubPort;
 
+        private Task _messageListener;
         private NetworkHandler _networkHandler;
 
         public System(ProtoComm.ProcessId processId, string hubHost, int hubPort)
@@ -24,7 +25,7 @@ namespace NewDalgs.System
 
         public void Start()
         {
-            var listener = Task.Run(() =>
+            _messageListener = Task.Run(() =>
                 {
                     try
                     {
@@ -32,23 +33,30 @@ namespace NewDalgs.System
                     }
                     catch (NetworkException ex)
                     {
-                        // TODO notify stop of the system
+                        Logger.Fatal(ex);
+                        // TODO notify stop of the system && remove process from list!
                     }
                 });
-            
-            RegisterToHub();
 
-            //Thread.Sleep(10000);
-            //Stop();
+            try
+            {
+                RegisterToHub();
+            }
+            catch (NetworkException ex)
+            {
+                Logger.Fatal(ex);
+                // TODO notify stop of the system && remove process from list!
+            }
 
-            listener.Wait();
+            Logger.Info(String.Format("[{0}]: Process registered", _processId.Port));
         }
 
         public void Stop()
         {
             _networkHandler.StopListener();
             // TODO would be nice to notify dalgs that process is unregistered
-            // TODO move listener.Wait here
+
+            _messageListener.Wait();
         }
 
         private void RegisterToHub()

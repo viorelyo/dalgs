@@ -1,25 +1,36 @@
 ﻿using NewDalgs.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace NewDalgs
 {
     class Program
     {
-        // TODO handle CTRL-C
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();          // TODO maybe reconfigure logger on the fly?!
 
-        // maybe reconfigure logger on the fly?!
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static ManualResetEvent finished = new ManualResetEvent(false);
 
         static void Main(string[] args)
         {
+            Console.CancelKeyPress += new ConsoleCancelEventHandler(BreakHandler);
+
             var coreParams = ValidateInput(args);
             if (coreParams == null)
                 Environment.Exit(1);
 
-            //var core = serviceProvider.GetService<Core.Core>();
             var core = new Core.Core();
             core.Run(coreParams);
+
+            finished.WaitOne();
+
+            core.Stop();
+        }
+
+        private static void BreakHandler(object sender, ConsoleCancelEventArgs e)
+        {
+            Program.finished.Set();
+            e.Cancel = true;
         }
 
         static CoreParams ValidateInput(string[] args)
