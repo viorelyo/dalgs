@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace NewDalgs.Utils
 {
@@ -14,7 +15,9 @@ namespace NewDalgs.Utils
         private readonly int _processPort;
 
         private TcpListener _listener;
-        private bool _isActive = false;
+        private ManualResetEvent _listenerReady = new ManualResetEvent(false);
+        private CancellationToken _ct;
+        private CancellationTokenSource _cts = new CancellationTokenSource();
 
         public NetworkHandler(string processHost, int processPort)
         {
@@ -74,24 +77,52 @@ namespace NewDalgs.Utils
             var adr = IPAddress.Parse(_processHost);
             _listener = new TcpListener(adr, _processPort);
             _listener.Start();
+            _ct = _cts.Token;
 
-            _isActive = true;
+            try
+            { 
+                while(!_ct.IsCancellationRequested)
+                {
+                    _listenerReady.Reset();
 
-            while(_isActive)
+                    _listener.BeginAcceptTcpClient(new AsyncCallback(ProcessConnection), _listener);
+                    Console.WriteLine("new begin");
+
+                    _listenerReady.WaitOne();
+                }
+            }
+            finally
             {
-                var connection = _listener.AcceptTcpClient();
-                Console.WriteLine("Connection accepted");
-
-                break;
+                _listener?.Stop();
+                Console.WriteLine("Literally stopped");
             }
         }
 
         public void StopListener()
+        {   
+            if (_ct.IsCancellationRequested)
+                return;     // Listener was already cancelled
+
+            _cts?.Cancel();
+            _listenerReady.Set();
+            Console.WriteLine("Stop Requested...");
+        }
+
+        private void ProcessConnection(IAsyncResult ar)
         {
-            Console.WriteLine("Stopping Listener...");
-            _listener.Stop();
-            
-            _isActive = false;
+            if (_ct.IsCancellationRequested)
+                return;
+
+            var listener = ar.AsyncState as TcpListener;
+            if (listener == null)
+                return;
+
+            _listenerReady.Set();
+
+            using (var connection = listener.EndAcceptTcpClient(ar))
+            {
+                Console.WriteLine("New connection accepted");
+            }
         }
     }
 }

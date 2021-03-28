@@ -25,19 +25,23 @@ namespace NewDalgs.System
                     {
                         _networkHandler.ListenForConnections();
                     }
-                    catch (SocketException ex)
+                    catch (SocketException ex)      // TODO create custom exception
                     {
-                        _networkHandler.StopListener();
                         // TODO notify stop of the system
                     }
                 });
             
             RegisterToHub();
 
-            Thread.Sleep(3000);
-            _networkHandler.StopListener();
+            Thread.Sleep(10000);
+            Stop();
 
             listener.Wait();
+        }
+
+        public void Stop()
+        {
+            _networkHandler.StopListener();
         }
 
         private void RegisterToHub()
