@@ -9,6 +9,8 @@ namespace NewDalgs.Utils
 {
     class NetworkHandler
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private readonly string _processHost;
         private readonly int _processPort;
 
@@ -64,12 +66,12 @@ namespace NewDalgs.Utils
                 }
             }
 
-            Console.WriteLine(String.Format("Message sent to [{0}:{1}]", remoteHost, remotePort));        // TODO replace with logger
+            Logger.Debug(String.Format("[{0}]: Message sent to [{1}:{2}]", _processPort, remoteHost, remotePort));
         }
 
         public void ListenForConnections()
         {
-            Console.WriteLine(String.Format("Waiting for requests on port [{0}]", _processPort));        // TODO replace with logger
+            Logger.Debug(String.Format("[{0}]: Waiting for requests", _processPort));
 
             var adr = IPAddress.Parse(_processHost);
             var _listener = new TcpListener(adr, _processPort);
@@ -83,7 +85,6 @@ namespace NewDalgs.Utils
                     _listenerReady.Reset();
 
                     _listener.BeginAcceptTcpClient(new AsyncCallback(ProcessConnection), _listener);
-                    Console.WriteLine("new begin");
 
                     _listenerReady.WaitOne();
                 }
@@ -95,7 +96,7 @@ namespace NewDalgs.Utils
             finally
             {
                 _listener?.Stop();
-                Console.WriteLine("Literally stopped");
+                Logger.Info(String.Format("[{0}]: Listener Stopped", _processPort));
             }
         }
 
@@ -106,7 +107,7 @@ namespace NewDalgs.Utils
 
             _cts?.Cancel();
             _listenerReady.Set();
-            Console.WriteLine("Stop Requested...");
+            Logger.Debug(String.Format("[{0}]: Stop Requested", _processPort));
         }
 
         private void ProcessConnection(IAsyncResult ar)

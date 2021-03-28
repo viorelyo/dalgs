@@ -6,6 +6,8 @@ namespace NewDalgs.System
 {
     class System
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private readonly ProtoComm.ProcessId _processId;
         private readonly string _hubHost;
         private readonly int _hubPort;

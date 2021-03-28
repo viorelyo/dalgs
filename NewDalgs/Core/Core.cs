@@ -1,13 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NewDalgs.Core
 {
     class Core
     {
-        private readonly ILogger logger;
-
         private List<Task> _processes = new List<Task>();
         private List<System.System> _systems = new List<System.System>();
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using NewDalgs.Core;
+﻿using NewDalgs.Core;
 using System;
 using System.Collections.Generic;
 
@@ -10,20 +8,11 @@ namespace NewDalgs
     {
         // TODO handle CTRL-C
 
+        // maybe reconfigure logger on the fly?!
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            var serviceProvider = services.BuildServiceProvider();
-
-            //var logger = serviceProvider.GetService<ILogger<Program>>();
-            //logger.LogInformation("Hello world!");
-            //logger.LogWarning("warn");
-            //logger.LogError("err");
-            //logger.LogDebug("debug");
-            //logger.LogTrace("trace");
-            //logger.LogCritical("critical");
-
             var coreParams = ValidateInput(args);
             if (coreParams == null)
                 Environment.Exit(1);
@@ -80,17 +69,6 @@ namespace NewDalgs
             coreParams.Owner = args[6];
 
             return coreParams;
-        }
-
-        static void ConfigureServices(ServiceCollection services)
-        {
-            services.AddLogging(loggerBuilder =>
-            {
-                loggerBuilder.ClearProviders();
-                loggerBuilder.AddConsole();
-            });
-            
-            services.AddTransient<Core.Core>();
         }
     }
 }
