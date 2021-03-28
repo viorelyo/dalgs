@@ -1,5 +1,6 @@
 ﻿using NewDalgs.Utils;
 using System;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 namespace NewDalgs.System
@@ -15,12 +16,16 @@ namespace NewDalgs.System
         private Task _messageListener;
         private NetworkHandler _networkHandler;
 
+        private Task _eventLoopTask;
+        private BlockingCollection<ProtoComm.Message> _messageQueue;
+
         public System(ProtoComm.ProcessId processId, string hubHost, int hubPort)
         {
             _processId = processId;
             _hubHost = hubHost;
             _hubPort = hubPort;
             _networkHandler = new NetworkHandler(processId.Host, processId.Port);
+            _messageQueue = new BlockingCollection<ProtoComm.Message>(new ConcurrentQueue<ProtoComm.Message>());
         }
 
         public void Start()
@@ -48,15 +53,18 @@ namespace NewDalgs.System
                 // TODO notify stop of the system && remove process from list!
             }
 
-            Logger.Info(String.Format("[{0}]: Process registered", _processId.Port));
+            Logger.Info($"[{_processId.Port}]: Process registered - [{_processId.Owner}-{_processId.Index}]");
+
+            _eventLoopTask = Task.Run(this.EventLoop);      // TODO decide if separate Task is needed
         }
 
         public void Stop()
         {
-            _networkHandler.StopListener();
-            // TODO would be nice to notify dalgs that process is unregistered
+            _networkHandler.StopListener();     // TODO would be nice to notify dalgs that process is unregistered
+            _messageQueue.CompleteAdding();
 
             _messageListener.Wait();
+            _eventLoopTask.Wait();
         }
 
         private void RegisterToHub()
@@ -77,6 +85,15 @@ namespace NewDalgs.System
             };
 
             _networkHandler.SendMessage(wrapperMsg, _hubHost, _hubPort);
+        }
+
+        private void EventLoop()
+        {
+            // TODO try/catch excpetions
+            foreach (var msg in _messageQueue.GetConsumingEnumerable())
+            {
+                Logger.Info($"{msg.Type}");
+            }
         }
     }
 }

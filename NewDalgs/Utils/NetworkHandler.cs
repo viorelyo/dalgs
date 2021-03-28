@@ -71,12 +71,12 @@ namespace NewDalgs.Utils
                 throw new NetworkException("Exception occurred in SendMessage", ex);
             }
 
-            Logger.Debug(String.Format("[{0}]: Message [{1}] sent to [{2}:{3}]", _processPort, message.Type,  remoteHost, remotePort));     // TODO check if should remove destinatar from log
+            Logger.Debug($"[{_processPort}]: Message [{message.Type}] sent to [{remoteHost}:{remotePort}]");     // TODO check if should remove destinatar from log
         }
 
         public void ListenForConnections()
         {
-            Logger.Debug(String.Format("[{0}]: Waiting for requests", _processPort));
+            Logger.Debug($"[{_processPort}]: Waiting for requests");
 
             var adr = IPAddress.Parse(_processHost);
             TcpListener _listener = null;
@@ -103,7 +103,7 @@ namespace NewDalgs.Utils
             finally
             {
                 _listener?.Stop();
-                Logger.Info(String.Format("[{0}]: Listener Stopped", _processPort));
+                Logger.Info($"[{_processPort}]: Listener Stopped");
             }
         }
 
@@ -115,7 +115,7 @@ namespace NewDalgs.Utils
             _cts?.Cancel();
             _listenerReady.Set();
 
-            Logger.Debug(String.Format("[{0}]: Stop Requested", _processPort));
+            Logger.Debug($"[{_processPort}]: Stop Requested");
         }
 
         private void ProcessConnection(IAsyncResult ar)
@@ -131,7 +131,7 @@ namespace NewDalgs.Utils
 
             using (var connection = listener.EndAcceptTcpClient(ar))
             {
-                Logger.Debug(String.Format("[{0}]: New connection accepted", _processPort));
+                Logger.Debug($"[{_processPort}]: New connection accepted");
             }
         }
     }
