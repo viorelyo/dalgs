@@ -1,7 +1,7 @@
-﻿using NewDalgs.Utils;
+﻿using NewDalgs.Core;
+using NewDalgs.Utils;
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,11 +10,18 @@ namespace NewDalgs.System
 {
     class System
     {
+        private readonly Communication.ProcessId _processId;
+        private readonly string _hubHost;
+        private readonly int _hubPort;
+
         private NetworkHandler _networkHandler;
 
-        public System()
+        public System(Communication.ProcessId processId, string hubHost, int hubPort)
         {
-            _networkHandler = new NetworkHandler("127.0.0.1", 5004);
+            _processId = processId;
+            _hubHost = hubHost;
+            _hubPort = hubPort;
+            _networkHandler = new NetworkHandler(processId.Host, processId.Port);
         }
 
         public void Start()
@@ -25,7 +32,7 @@ namespace NewDalgs.System
                     {
                         _networkHandler.ListenForConnections();
                     }
-                    catch (SocketException ex)      // TODO create custom exception
+                    catch (NetworkException ex)
                     {
                         // TODO notify stop of the system
                     }
@@ -33,8 +40,8 @@ namespace NewDalgs.System
             
             RegisterToHub();
 
-            Thread.Sleep(10000);
-            Stop();
+            //Thread.Sleep(10000);
+            //Stop();
 
             listener.Wait();
         }
@@ -42,26 +49,28 @@ namespace NewDalgs.System
         public void Stop()
         {
             _networkHandler.StopListener();
+            // TODO would be nice to notify dalgs that process is unregistered
+            // TODO move listener.Wait here
         }
 
         private void RegisterToHub()
         {
             var procRegistration = new Communication.ProcRegistration
             {
-                Owner = "gvsd",     // TODO extract from coreParams
-                Index = 1
+                Owner = _processId.Owner,
+                Index = _processId.Index
             };
 
             var wrapperMsg = new Communication.Message
             {
                 Type = Communication.Message.Types.Type.ProcRegistration,
                 ProcRegistration = procRegistration,
-                SystemId = "sys-1",     // TODO extract from coreParams
+                //SystemId = "sys-1",     // TODO should be added?!
                 ToAbstractionId = "app",
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _networkHandler.SendMessage(wrapperMsg, "127.0.0.1", 5000);     // TODO exctract from coreParams
+            _networkHandler.SendMessage(wrapperMsg, _hubHost, _hubPort);
         }
     }
 }

@@ -2,11 +2,15 @@
 using Microsoft.Extensions.Logging;
 using NewDalgs.Core;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NewDalgs
 {
     class Program
     {
+        // TODO handle CTRL-C
+
         static void Main(string[] args)
         {
             var services = new ServiceCollection();
@@ -22,16 +26,61 @@ namespace NewDalgs
             //logger.LogCritical("critical");
 
             var coreParams = ValidateInput(args);
+            if (coreParams == null)
+                Environment.Exit(1);
 
-            var core = serviceProvider.GetService<Core.Core>();
+            //var core = serviceProvider.GetService<Core.Core>();
+            var core = new Core.Core();
             core.Run(coreParams);
         }
 
         static CoreParams ValidateInput(string[] args)
         {
+            if (args.Length < 7)
+            {
+                
+                return null;
+            }
+
+            var coreParams = new CoreParams();
             // TODO validate input
-            //if (args.Length < 5)
-            return new CoreParams();
+            coreParams.HubHost = args[0];
+
+            int parsedInt;
+            if (!Int32.TryParse(args[1], out parsedInt))
+            {
+
+                return null;
+            }
+
+            coreParams.HubPort = parsedInt;
+            coreParams.ProcessesHost = args[2];
+            coreParams.ProcessesPorts = new List<int>();
+
+            if (!Int32.TryParse(args[3], out parsedInt))
+            {
+
+                return null;
+            }
+            coreParams.ProcessesPorts.Add(parsedInt);
+
+            if (!Int32.TryParse(args[4], out parsedInt))
+            {
+
+                return null;
+            }
+            coreParams.ProcessesPorts.Add(parsedInt);
+
+            if (!Int32.TryParse(args[5], out parsedInt))
+            {
+
+                return null;
+            }
+            coreParams.ProcessesPorts.Add(parsedInt);
+
+            coreParams.Owner = args[6];
+
+            return coreParams;
         }
 
         static void ConfigureServices(ServiceCollection services)

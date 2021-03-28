@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NewDalgs": {
+      "commandName": "Project",
+      "commandLineArgs": "127.0.0.1 5000 127.0.0.1 5004 5005 5006 gvsd"
+    }
+  }
+}

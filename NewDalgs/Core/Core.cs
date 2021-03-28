@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NewDalgs.System;
+using System.Threading.Tasks;
 
 namespace NewDalgs.Core
 {
@@ -10,18 +11,49 @@ namespace NewDalgs.Core
     {
         private readonly ILogger logger;
 
-        public Core(ILogger<Core> logger_)
+        private List<Task> _processes = new List<Task>();
+        private List<System.System> _systems = new List<System.System>();
+
+        public Core()
         {
-            logger = logger_;
         }
 
         public void Run(CoreParams coreParams)
         {
-            logger.LogTrace("Starting processes");
+            int processIndex = 1;
+            foreach (var port in coreParams.ProcessesPorts)
+            {
+                var processsId = new Communication.ProcessId
+                {
+                    Host = coreParams.ProcessesHost,
+                    Port = port,
+                    Owner = coreParams.Owner,
+                    Index = processIndex
+                };
+                processIndex++;
 
-            // TODO create threads for each process
-            var system = new System.System();
-            system.Start();
+                var system = new System.System(processsId, coreParams.HubHost, coreParams.HubPort);
+                var process = Task.Run(() =>
+                {
+                    system.Start();
+                });
+
+                _systems.Add(system);
+                _processes.Add(process);
+            }
+
+            foreach (var process in _processes)
+            {
+                process.Wait();
+            }
+        }
+
+        public void Stop()
+        {
+            foreach (var system in _systems)
+            {
+                system.Stop();
+            }
         }
     }
 }

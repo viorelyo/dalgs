@@ -14,7 +14,6 @@ namespace NewDalgs.Utils
         private readonly string _processHost;
         private readonly int _processPort;
 
-        private TcpListener _listener;
         private ManualResetEvent _listenerReady = new ManualResetEvent(false);
         private CancellationToken _ct;
         private CancellationTokenSource _cts = new CancellationTokenSource();
@@ -43,14 +42,15 @@ namespace NewDalgs.Utils
             {
                 Type = Communication.Message.Types.Type.NetworkMessage,
                 NetworkMessage = networkMsg,
-                SystemId = message.SystemId,     // TODO read from args
+                SystemId = message.SystemId,
                 ToAbstractionId = message.ToAbstractionId,
             };
 
             byte[] serializedMsg = wrapperMsg.ToByteArray();
 
             // https://stackoverflow.com/questions/8620885/c-sharp-binary-reader-in-big-endian
-            // BinaryWriter / BinaryReader supports only LittleEndian. We should convert the length to BigEndian, because dalgs.exe (Go) reads in BigEndian
+            // BinaryWriter / BinaryReader supports only LittleEndian. 
+            // We should convert the length to BigEndian, because dalgs.exe (Go) reads in BigEndian
             byte[] bigEndianMsgLen = BitConverter.GetBytes(serializedMsg.Length);
             Array.Reverse(bigEndianMsgLen);
 
@@ -69,13 +69,12 @@ namespace NewDalgs.Utils
             Console.WriteLine(String.Format("Message sent to [{0}:{1}]", remoteHost, remotePort));        // TODO replace with logger
         }
 
-        // TODO to be try-excepted
         public void ListenForConnections()
         {
             Console.WriteLine(String.Format("Waiting for requests on port [{0}]", _processPort));        // TODO replace with logger
 
             var adr = IPAddress.Parse(_processHost);
-            _listener = new TcpListener(adr, _processPort);
+            var _listener = new TcpListener(adr, _processPort);
             _listener.Start();
             _ct = _cts.Token;
 
@@ -90,6 +89,10 @@ namespace NewDalgs.Utils
 
                     _listenerReady.WaitOne();
                 }
+            }
+            catch(Exception ex)
+            {
+                throw new NetworkException("Exception occurred in listener", ex);
             }
             finally
             {
