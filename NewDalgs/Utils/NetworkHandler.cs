@@ -18,6 +18,10 @@ namespace NewDalgs.Utils
         private CancellationToken _ct;
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
+        // TODO maybe implement abstract Publisher and inherit from him (if there will be more publishers)
+        public delegate void Notify(NetworkHandler publisher, ProtoComm.Message e);
+        public event Notify OnPublish;
+
         public NetworkHandler(string processHost, int processPort)
         {
             _processHost = processHost;
@@ -132,6 +136,16 @@ namespace NewDalgs.Utils
             using (var connection = listener.EndAcceptTcpClient(ar))
             {
                 Logger.Debug($"[{_processPort}]: New connection accepted");
+                if (OnPublish == null)
+                    return;
+
+                var msg = new ProtoComm.Message
+                {
+                    Type = ProtoComm.Message.Types.Type.EpInternalAccept
+                };
+
+                OnPublish(this, msg);
+                Logger.Debug($"[{_processPort}]: Message published");
             }
         }
     }
