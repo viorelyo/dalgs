@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace NewDalgs.Utils
+namespace NewDalgs.Networking
 {
     class NetworkHandler
     {
@@ -19,7 +19,7 @@ namespace NewDalgs.Utils
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
         // TODO maybe implement abstract Publisher and inherit from him (if there will be more publishers)
-        public delegate void Notify(NetworkHandler publisher, ProtoComm.Message e);
+        public delegate void Notify(NetworkHandler publisher, ReceivedMessage e);
         public event Notify OnPublish;
 
         public NetworkHandler(string processHost, int processPort)
@@ -51,7 +51,7 @@ namespace NewDalgs.Utils
             byte[] serializedMsg = wrapperMsg.ToByteArray();
 
             // https://stackoverflow.com/questions/8620885/c-sharp-binary-reader-in-big-endian
-            // BinaryWriter / BinaryReader supports only LittleEndian. 
+            // BinaryWriter / BinaryReader supports only LittleEndian.
             // We should convert the length to BigEndian, because dalgs.exe (Go) reads in BigEndian
             byte[] bigEndianMsgLen = BitConverter.GetBytes(serializedMsg.Length);
             Array.Reverse(bigEndianMsgLen);
@@ -72,7 +72,7 @@ namespace NewDalgs.Utils
             }
             catch (Exception ex)
             {
-                throw new NetworkException("Exception occurred in SendMessage", ex);
+                throw new NetworkException($"[{_processPort}]: Exception occurred in SendMessage", ex);
             }
 
             Logger.Debug($"[{_processPort}]: Message [{message.Type}] sent to [{remoteHost}:{remotePort}]");     // TODO check if should remove destinatar from log
@@ -85,6 +85,7 @@ namespace NewDalgs.Utils
             var adr = IPAddress.Parse(_processHost);
             TcpListener _listener = null;
 
+            // TODO more try/catch-es, e.g. try-catch BeginAcceptTcpClient and then continue (?)
             try
             {
                 _listener = new TcpListener(adr, _processPort);
@@ -102,7 +103,7 @@ namespace NewDalgs.Utils
             }
             catch(Exception ex)
             {
-                throw new NetworkException("Exception occurred in listener", ex);
+                throw new NetworkException($"[{_processPort}]: Exception occurred in listener", ex);
             }
             finally
             {
@@ -122,6 +123,10 @@ namespace NewDalgs.Utils
             Logger.Debug($"[{_processPort}]: Stop Requested");
         }
 
+
+        /// <summary>
+        /// Unwrapping each received message from Message(NetworkMessage)
+        /// </summary>
         private void ProcessConnection(IAsyncResult ar)
         {
             if (_ct.IsCancellationRequested)
@@ -133,19 +138,59 @@ namespace NewDalgs.Utils
 
             _listenerReady.Set();
 
-            using (var connection = listener.EndAcceptTcpClient(ar))
+            try
             {
-                Logger.Debug($"[{_processPort}]: New connection accepted");
-                if (OnPublish == null)
-                    return;
-
-                var msg = new ProtoComm.Message
+                using (var connection = listener.EndAcceptTcpClient(ar))
                 {
-                    Type = ProtoComm.Message.Types.Type.EpInternalAccept
-                };
+                    Logger.Debug($"[{_processPort}]: New connection accepted");
+                    if (OnPublish == null)
+                        return;
 
-                OnPublish(this, msg);
-                Logger.Debug($"[{_processPort}]: Message published");
+                    using (var networkStream = connection.GetStream())
+                    {
+                        using (var reader = new BinaryReader(networkStream))
+                        {
+                            // BinaryWriter / BinaryReader supports only LittleEndian.
+                            // We should convert the length to BigEndian, because dalgs.exe (Go) reads in BigEndian
+                            var msgLenArr = reader.ReadBytes(4);
+                            Array.Reverse(msgLenArr);
+                            int msgSize = BitConverter.ToInt32(msgLenArr, 0);
+
+                            byte[] serializedMsg = reader.ReadBytes(msgSize);
+                            if (msgSize != serializedMsg.Length)
+                            {
+                                Logger.Error($"[{_processPort}]: Incomplete message received: [{serializedMsg.Length}/{msgSize}]. Message ignored");
+                                return;
+                            }
+
+                            var wrappedMsg = ProtoComm.Message.Parser.ParseFrom(serializedMsg);
+                            if (wrappedMsg.Type != ProtoComm.Message.Types.Type.NetworkMessage)
+                            {
+                                Logger.Error($"[{_processPort}]: Incorrect message received: [{wrappedMsg.Type}/{ProtoComm.Message.Types.Type.NetworkMessage}]. Message ignored");
+                                return;
+                            }
+
+                            var networkMsg = wrappedMsg.NetworkMessage;
+                            var innerMsg = networkMsg.Message;
+
+                            var receivedMsg = new ReceivedMessage
+                            {
+                                Message = innerMsg,
+                                SenderListeningPort = networkMsg.SenderListeningPort, 
+                                // TODO networkMsg.SenderHost ?
+                                ReceivedSystemId = wrappedMsg.SystemId,
+                                ReceivedToAbstractionId = wrappedMsg.ToAbstractionId
+                            };
+
+                            OnPublish(this, receivedMsg);
+                            Logger.Debug($"[{_processPort}]: Message published");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new NetworkException($"[{_processPort}]: Could not handle incoming connection", ex);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using NewDalgs.Utils;
+﻿using NewDalgs.Networking;
 using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
@@ -13,11 +13,13 @@ namespace NewDalgs.System
         private readonly string _hubHost;
         private readonly int _hubPort;
 
+        private ConcurrentDictionary<int, ProtoComm.ProcessId> _processes;
+
         private Task _messageListener;
         private NetworkHandler _networkHandler;
 
-        private Task _eventLoopTask;
-        private BlockingCollection<ProtoComm.Message> _messageQueue;
+        //private Task _eventLoopTask;
+        private BlockingCollection<ReceivedMessage> _messageQueue;
 
         public System(ProtoComm.ProcessId processId, string hubHost, int hubPort)
         {
@@ -25,8 +27,10 @@ namespace NewDalgs.System
             _hubHost = hubHost;
             _hubPort = hubPort;
 
+            _processes = new ConcurrentDictionary<int, ProtoComm.ProcessId>();
+
             _networkHandler = new NetworkHandler(processId.Host, processId.Port);
-            _messageQueue = new BlockingCollection<ProtoComm.Message>(new ConcurrentQueue<ProtoComm.Message>());
+            _messageQueue = new BlockingCollection<ReceivedMessage>(new ConcurrentQueue<ReceivedMessage>());
         }
 
         public void Start()
@@ -101,19 +105,22 @@ namespace NewDalgs.System
             _messageQueue.CompleteAdding();
         }
 
-        protected virtual void OnMessageReceived(NetworkHandler p, ProtoComm.Message e)
+        protected virtual void OnMessageReceived(NetworkHandler p, ReceivedMessage e)
         {
             _messageQueue.Add(e);
-            Logger.Info($"[{_processId.Port}]: Message added - [{e.Type}]");
+            Logger.Info($"[{_processId.Port}]: Message added - [{e.Message.Type}]");
         }
 
         private void EventLoop()
         {
+            // TODO maybe move try/catch into foreach -> on exception ignore message and continue with next msg
             try
             {
                 foreach (var msg in _messageQueue.GetConsumingEnumerable())
                 {
-                    Logger.Warn($"[{_processId.Port}]: {msg.Type}");
+                    Logger.Warn($"[{_processId.Port}]: {msg.Message.Type}");
+
+                    ProcessReceivedMessage(msg);
                 }
             }
             catch (Exception ex)
@@ -121,6 +128,34 @@ namespace NewDalgs.System
                 Logger.Fatal(ex);
                 // TODO notify stop of the system && remove process from list!
             }
+        }
+
+
+        /// <summary>
+        /// Wrapping received message into Message(PlDeliver)
+        /// </summary>
+        private void ProcessReceivedMessage(ReceivedMessage msg)
+        {
+            var plDeliverMsg = new ProtoComm.PlDeliver
+            {
+                Message = msg.Message
+            };
+
+            ProtoComm.ProcessId foundProcessId;
+            if (_processes.TryGetValue(msg.SenderListeningPort, out foundProcessId))
+            {
+                plDeliverMsg.Sender = foundProcessId;
+            }
+
+            var outMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.PlDeliver,
+                PlDeliver = plDeliverMsg,
+                SystemId = msg.ReceivedSystemId,
+                ToAbstractionId = msg.ReceivedToAbstractionId
+            };
+
+
         }
     }
 }

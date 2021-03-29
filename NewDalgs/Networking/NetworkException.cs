@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NewDalgs.Utils
+namespace NewDalgs.Networking
 {
     class NetworkException : Exception
     {
