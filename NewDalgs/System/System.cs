@@ -163,11 +163,32 @@ namespace NewDalgs.System
             Logger.Debug($"[{_processId.Port}]: EventLoop stopped");
         }
 
+        // TODO handle message should be done in separate class - maybe use dict to map type of message to corresponding alg
+        private void ProcessReceivedMessage(ReceivedMessage msg)
+        {
+            if (msg.Message.Type == ProtoComm.Message.Types.Type.ProcInitializeSystem)
+            {
+                var procInitSysMsg = msg.Message.ProcInitializeSystem;
+                foreach (var proc in procInitSysMsg.Processes)
+                {
+                    if (!_processes.TryAdd(proc.Port, proc))
+                    {
+                        Logger.Error($"[{_processId.Port}]: Could not add a process from ProcInitializeSystem");
+                        // TODO should throw exception?
+                    }
+                }
+            }
+            else
+            {
+                var wrappedMsg = WrapIntoPLDeliver(msg);
+                Logger.Debug($"[{_processId.Port}]: {wrappedMsg.PlDeliver.Sender}");
+            }
+        }
 
         /// <summary>
         /// Wrapping received message into Message(PlDeliver)
         /// </summary>
-        private void ProcessReceivedMessage(ReceivedMessage msg)
+        private ProtoComm.Message WrapIntoPLDeliver(ReceivedMessage msg)
         {
             var plDeliverMsg = new ProtoComm.PlDeliver
             {
@@ -188,7 +209,7 @@ namespace NewDalgs.System
                 ToAbstractionId = msg.ReceivedToAbstractionId
             };
 
-
+            return outMsg;
         }
     }
 }
