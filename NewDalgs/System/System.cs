@@ -18,8 +18,9 @@ namespace NewDalgs.System
         private Task _messageListener;
         private NetworkHandler _networkHandler;
 
-        //private Task _eventLoopTask;
         private BlockingCollection<ReceivedMessage> _messageQueue;
+
+        private bool _isRunning;
 
         public System(ProtoComm.ProcessId processId, string hubHost, int hubPort)
         {
@@ -35,19 +36,15 @@ namespace NewDalgs.System
 
         public void Start()
         {
+            _isRunning = true;
+
             SubscribeToMessageListener();
-            _messageListener = Task.Run(() =>
+            _messageListener = new Task(() =>
                 {
-                    try
-                    {
-                        _networkHandler.ListenForConnections();
-                    }
-                    catch (NetworkException ex)
-                    {
-                        Logger.Fatal(ex);
-                        // TODO notify stop of the system && remove process from list!
-                    }
+                    _networkHandler.ListenForConnections();
                 });
+            //_messageListener.ContinueWith(MessageListenerExceptionHandler, TaskContinuationOptions.OnlyOnFaulted);
+            _messageListener.Start();
 
             try
             {
@@ -56,26 +53,57 @@ namespace NewDalgs.System
             catch (NetworkException ex)
             {
                 Logger.Fatal(ex);
-                // TODO notify stop of the system && remove process from list!
+                Stop();
+                // TODO throw StopProgramException to stop whole program?
+                return;
             }
 
             Logger.Info($"[{_processId.Port}]: Process registered - [{_processId.Owner}-{_processId.Index}]");
 
-            //_eventLoopTask = Task.Run(this.EventLoop);      // TODO decide if separate Task is needed
-            this.EventLoop();
+            var _eventLoopTask = Task.Run(() => this.EventLoop());
+            
+            try
+            {
+                _messageListener.Wait();
+            }
+            catch (AggregateException ex)
+            {
+                var exception = ex.GetBaseException();
+                Logger.Fatal(exception);
+
+                Stop();
+            }
+
+            _eventLoopTask.Wait();
         }
 
         public void Stop()
         {
+            if (!_isRunning)
+                return;
+
             UnsubscribeFromMessageListener();
             _networkHandler.StopListener();     // TODO would be nice to notify dalgs that process is unregistered
 
-            _messageListener.Wait();
-            //_eventLoopTask.Wait();
+            // TODO try the alternative with continue when onlyfualt => try except aggregate + get rid of task for eventLoop
+
+            _isRunning = false;
+            Logger.Warn($"[{_processId.Port}]: isRunning: {_isRunning}");      // TODO
+        }
+
+        private void MessageListenerExceptionHandler(Task task)
+        {
+            var exception = task.Exception?.GetBaseException();
+            Logger.Fatal(exception);
+            Stop();
+            // TODO throw StopProgramException to stop whole program?
         }
 
         private void RegisterToHub()
         {
+            if (!_isRunning)
+                return;
+
             var procRegistration = new ProtoComm.ProcRegistration
             {
                 Owner = _processId.Owner,
@@ -103,6 +131,7 @@ namespace NewDalgs.System
         {
             _networkHandler.OnPublish -= OnMessageReceived;
             _messageQueue.CompleteAdding();
+            Logger.Warn($"[{_processId.Port}]: Unsubscribed");      // TODO
         }
 
         protected virtual void OnMessageReceived(NetworkHandler p, ReceivedMessage e)
@@ -113,21 +142,25 @@ namespace NewDalgs.System
 
         private void EventLoop()
         {
-            // TODO maybe move try/catch into foreach -> on exception ignore message and continue with next msg
-            try
+            if (!_isRunning)
+                return;
+            
+            foreach (var msg in _messageQueue.GetConsumingEnumerable())
             {
-                foreach (var msg in _messageQueue.GetConsumingEnumerable())
-                {
-                    Logger.Warn($"[{_processId.Port}]: {msg.Message.Type}");
+                Logger.Warn($"[{_processId.Port}]: {msg.Message.Type}");
 
+                try
+                {
                     ProcessReceivedMessage(msg);
                 }
+                catch (Exception ex)        // TODO replace with more specific exception
+                {
+                    Logger.Error(ex);
+                    continue;
+                }
             }
-            catch (Exception ex)
-            {
-                Logger.Fatal(ex);
-                // TODO notify stop of the system && remove process from list!
-            }
+
+            Logger.Warn($"[{_processId.Port}]: EventLoop stopped");     // TODO
         }
 
 

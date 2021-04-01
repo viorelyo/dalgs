@@ -22,6 +22,8 @@ namespace NewDalgs.Networking
         public delegate void Notify(NetworkHandler publisher, ReceivedMessage e);
         public event Notify OnPublish;
 
+        private bool _isRunning;
+
         public NetworkHandler(string processHost, int processPort)
         {
             _processHost = processHost;
@@ -75,17 +77,17 @@ namespace NewDalgs.Networking
                 throw new NetworkException($"[{_processPort}]: Exception occurred in SendMessage", ex);
             }
 
-            Logger.Debug($"[{_processPort}]: Message [{message.Type}] sent to [{remoteHost}:{remotePort}]");     // TODO check if should remove destinatar from log
+            Logger.Debug($"[{_processPort}]: Message [{message.Type}] sent to [{remoteHost}:{remotePort}]");
         }
 
         public void ListenForConnections()
         {
+            _isRunning = true;
             Logger.Debug($"[{_processPort}]: Waiting for requests");
 
             var adr = IPAddress.Parse(_processHost);
             TcpListener _listener = null;
 
-            // TODO more try/catch-es, e.g. try-catch BeginAcceptTcpClient and then continue (?)
             try
             {
                 _listener = new TcpListener(adr, _processPort);
@@ -96,12 +98,24 @@ namespace NewDalgs.Networking
                 {
                     _listenerReady.Reset();
 
-                    _listener.BeginAcceptTcpClient(new AsyncCallback(ProcessConnection), _listener);
+                    Logger.Warn($"[{_processPort}]: Network. Before Accept");       // TODO
+
+                    try
+                    {
+                        _listener.BeginAcceptTcpClient(new AsyncCallback(ProcessConnection), _listener);
+                    }
+                    catch (SocketException ex)
+                    {
+                        Logger.Error(ex, $"[{_processPort}]: Could not handle connection. Connection ignored");
+                        continue;
+                    }
+
+                    Logger.Warn($"[{_processPort}]: Network. Before wait");        // TODO
 
                     _listenerReady.WaitOne();
                 }
             }
-            catch(Exception ex)
+            catch(SocketException ex)
             {
                 throw new NetworkException($"[{_processPort}]: Exception occurred in listener", ex);
             }
@@ -109,11 +123,16 @@ namespace NewDalgs.Networking
             {
                 _listener?.Stop();
                 Logger.Info($"[{_processPort}]: Listener Stopped");
+
+                _isRunning = false;
             }
         }
 
         public void StopListener()
-        {   
+        {
+            if (!_isRunning)
+                return;     // Listener is already stopped
+
             if (_ct.IsCancellationRequested)
                 return;     // Listener was already cancelled
 
@@ -177,7 +196,6 @@ namespace NewDalgs.Networking
                             {
                                 Message = innerMsg,
                                 SenderListeningPort = networkMsg.SenderListeningPort, 
-                                // TODO networkMsg.SenderHost ?
                                 ReceivedSystemId = wrappedMsg.SystemId,
                                 ReceivedToAbstractionId = wrappedMsg.ToAbstractionId
                             };
@@ -190,7 +208,7 @@ namespace NewDalgs.Networking
             }
             catch (Exception ex)
             {
-                throw new NetworkException($"[{_processPort}]: Could not handle incoming connection", ex);
+                Logger.Error(ex, $"[{_processPort}]: Could not receive message from incoming connection. Message ignored");
             }
         }
     }
