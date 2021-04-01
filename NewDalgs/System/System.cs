@@ -20,7 +20,7 @@ namespace NewDalgs.System
 
         private BlockingCollection<ReceivedMessage> _messageQueue;
 
-        private bool _isRunning;
+        private bool _wasStopped = false;
 
         public System(ProtoComm.ProcessId processId, string hubHost, int hubPort)
         {
@@ -36,72 +36,73 @@ namespace NewDalgs.System
 
         public void Start()
         {
-            _isRunning = true;
-
             SubscribeToMessageListener();
             _messageListener = new Task(() =>
                 {
                     _networkHandler.ListenForConnections();
                 });
-            //_messageListener.ContinueWith(MessageListenerExceptionHandler, TaskContinuationOptions.OnlyOnFaulted);
+            var messageListenerFallbackTask = _messageListener.ContinueWith(MessageListenerFallback);       // Continuation Task should handle exceptions thrown in messageListener Task
             _messageListener.Start();
 
             try
             {
                 RegisterToHub();
+                Logger.Info($"[{_processId.Port}]: Process registered - [{_processId.Owner}-{_processId.Index}]");
             }
             catch (NetworkException ex)
             {
-                Logger.Fatal(ex);
-                Stop();
-                // TODO throw StopProgramException to stop whole program?
-                return;
+                Logger.Fatal($"[{_processId.Port}]: {ex.Message}");
+                Stop();     // TODO throw StopProgramException to stop whole program?
             }
 
-            Logger.Info($"[{_processId.Port}]: Process registered - [{_processId.Owner}-{_processId.Index}]");
-
-            var _eventLoopTask = Task.Run(() => this.EventLoop());
-            
             try
             {
-                _messageListener.Wait();
+                EventLoop();
             }
-            catch (AggregateException ex)
+            catch (Exception ex)
             {
-                var exception = ex.GetBaseException();
-                Logger.Fatal(exception);
-
-                Stop();
+                Logger.Fatal($"[{_processId.Port}]: {ex.Message}");
+                Stop();     // TODO throw StopProgramException to stop whole program?
             }
 
-            _eventLoopTask.Wait();
+            messageListenerFallbackTask.Wait();
         }
 
         public void Stop()
         {
-            if (!_isRunning)
+            if (_wasStopped)
                 return;
 
             UnsubscribeFromMessageListener();
             _networkHandler.StopListener();     // TODO would be nice to notify dalgs that process is unregistered
 
-            // TODO try the alternative with continue when onlyfualt => try except aggregate + get rid of task for eventLoop
+            try
+            {
+                _messageListener.Wait();
+            }
+            catch (AggregateException) { }      // Exception ignored becaused it is handled by MessageListenerFallback
 
-            _isRunning = false;
-            Logger.Warn($"[{_processId.Port}]: isRunning: {_isRunning}");      // TODO
+            _wasStopped = true;
         }
 
-        private void MessageListenerExceptionHandler(Task task)
+        private void MessageListenerFallback(Task antecedent)
         {
-            var exception = task.Exception?.GetBaseException();
-            Logger.Fatal(exception);
-            Stop();
-            // TODO throw StopProgramException to stop whole program?
+            if (antecedent.Status == TaskStatus.RanToCompletion)
+            {
+                Logger.Debug($"[{_processId.Port}]: MessageListener stopped");
+                return;
+            } 
+            else if (antecedent.Status == TaskStatus.Faulted)
+            { 
+                var ex = antecedent.Exception?.GetBaseException();
+                Logger.Fatal($"[{_processId.Port}]: {ex.Message}");
+                Stop();     // TODO throw StopProgramException to stop whole program?
+            }
         }
 
         private void RegisterToHub()
         {
-            if (!_isRunning)
+            if (_wasStopped)
                 return;
 
             var procRegistration = new ProtoComm.ProcRegistration
@@ -131,7 +132,6 @@ namespace NewDalgs.System
         {
             _networkHandler.OnPublish -= OnMessageReceived;
             _messageQueue.CompleteAdding();
-            Logger.Warn($"[{_processId.Port}]: Unsubscribed");      // TODO
         }
 
         protected virtual void OnMessageReceived(NetworkHandler p, ReceivedMessage e)
@@ -142,7 +142,7 @@ namespace NewDalgs.System
 
         private void EventLoop()
         {
-            if (!_isRunning)
+            if (_wasStopped)
                 return;
             
             foreach (var msg in _messageQueue.GetConsumingEnumerable())
@@ -155,12 +155,12 @@ namespace NewDalgs.System
                 }
                 catch (Exception ex)        // TODO replace with more specific exception
                 {
-                    Logger.Error(ex);
+                    Logger.Error($"[{_processId.Port}]: {ex.Message}");
                     continue;
                 }
             }
 
-            Logger.Warn($"[{_processId.Port}]: EventLoop stopped");     // TODO
+            Logger.Debug($"[{_processId.Port}]: EventLoop stopped");
         }
 
 

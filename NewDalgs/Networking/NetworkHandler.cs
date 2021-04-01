@@ -74,7 +74,7 @@ namespace NewDalgs.Networking
             }
             catch (Exception ex)
             {
-                throw new NetworkException($"[{_processPort}]: Exception occurred in SendMessage", ex);
+                throw new NetworkException($"Exception occurred in SendMessage", ex);
             }
 
             Logger.Debug($"[{_processPort}]: Message [{message.Type}] sent to [{remoteHost}:{remotePort}]");
@@ -98,31 +98,27 @@ namespace NewDalgs.Networking
                 {
                     _listenerReady.Reset();
 
-                    Logger.Warn($"[{_processPort}]: Network. Before Accept");       // TODO
-
                     try
                     {
                         _listener.BeginAcceptTcpClient(new AsyncCallback(ProcessConnection), _listener);
                     }
-                    catch (SocketException ex)
+                    catch (SocketException)
                     {
-                        Logger.Error(ex, $"[{_processPort}]: Could not handle connection. Connection ignored");
+                        Logger.Error($"[{_processPort}]: Could not handle connection. Connection ignored");
                         continue;
                     }
-
-                    Logger.Warn($"[{_processPort}]: Network. Before wait");        // TODO
 
                     _listenerReady.WaitOne();
                 }
             }
             catch(SocketException ex)
             {
-                throw new NetworkException($"[{_processPort}]: Exception occurred in listener", ex);
+                throw new NetworkException("Exception occurred in listener", ex);
             }
             finally
             {
                 _listener?.Stop();
-                Logger.Info($"[{_processPort}]: Listener Stopped");
+                Logger.Debug($"[{_processPort}]: Listener Stopped");
 
                 _isRunning = false;
             }
@@ -201,14 +197,13 @@ namespace NewDalgs.Networking
                             };
 
                             OnPublish(this, receivedMsg);
-                            Logger.Debug($"[{_processPort}]: Message published");
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Logger.Error(ex, $"[{_processPort}]: Could not receive message from incoming connection. Message ignored");
+                Logger.Error($"[{_processPort}]: Could not receive message from incoming connection. Message ignored");
             }
         }
     }
