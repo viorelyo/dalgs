@@ -163,7 +163,7 @@ namespace NewDalgs.System
             Logger.Debug($"[{_processId.Port}]: EventLoop stopped");
         }
 
-        // TODO handle message should be done in separate class - maybe use dict to map type of message to corresponding alg
+        // TODO message handling should be done in separate class - maybe use dict to map type of message to corresponding alg
         private void ProcessReceivedMessage(ReceivedMessage msg)
         {
             if (msg.Message.Type == ProtoComm.Message.Types.Type.ProcInitializeSystem)
@@ -177,6 +177,10 @@ namespace NewDalgs.System
                         // TODO should throw exception?
                     }
                 }
+            }
+            else if (msg.Message.Type == ProtoComm.Message.Types.Type.ProcDestroySystem)
+            {
+                _processes.Clear();
             }
             else
             {
