@@ -1,5 +1,4 @@
-﻿using Google.Protobuf;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -19,7 +18,7 @@ namespace NewDalgs.Networking
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
         // TODO maybe implement abstract Publisher and inherit from him (if there will be more publishers)
-        public delegate void Notify(NetworkHandler publisher, ReceivedMessage e);
+        public delegate void Notify(NetworkHandler publisher, ProtoComm.Message e);
         public event Notify OnPublish;
 
         private bool _isRunning;
@@ -33,25 +32,8 @@ namespace NewDalgs.Networking
         /// <summary>
         /// Wrapping each message into Message(NetworMessage) before sending it through TCP Socket
         /// </summary>
-        public void SendMessage(ProtoComm.Message message, string remoteHost, int remotePort)
+        public void SendMessage(byte[] serializedMsg, string remoteHost, int remotePort)
         {
-            var networkMsg = new ProtoComm.NetworkMessage
-            {
-                Message = message,
-                SenderHost = _processHost,
-                SenderListeningPort = _processPort
-            };
-
-            var wrapperMsg = new ProtoComm.Message
-            {
-                Type = ProtoComm.Message.Types.Type.NetworkMessage,
-                NetworkMessage = networkMsg,
-                SystemId = message.SystemId,
-                ToAbstractionId = message.ToAbstractionId,
-            };
-
-            byte[] serializedMsg = wrapperMsg.ToByteArray();
-
             // https://stackoverflow.com/questions/8620885/c-sharp-binary-reader-in-big-endian
             // BinaryWriter / BinaryReader supports only LittleEndian.
             // We should convert the length to BigEndian, because dalgs.exe (Go) reads in BigEndian
@@ -76,8 +58,6 @@ namespace NewDalgs.Networking
             {
                 throw new NetworkException($"Exception occurred in SendMessage", ex);
             }
-
-            Logger.Debug($"[{_processPort}]: Message [{message.Type}] sent to [{remoteHost}:{remotePort}]");
         }
 
         public void ListenForConnections()
@@ -178,23 +158,7 @@ namespace NewDalgs.Networking
                                 return;
                             }
 
-                            var wrappedMsg = ProtoComm.Message.Parser.ParseFrom(serializedMsg);
-                            if (wrappedMsg.Type != ProtoComm.Message.Types.Type.NetworkMessage)
-                            {
-                                Logger.Error($"[{_processPort}]: Incorrect message received: [{wrappedMsg.Type}/{ProtoComm.Message.Types.Type.NetworkMessage}]. Message ignored");
-                                return;
-                            }
-
-                            var networkMsg = wrappedMsg.NetworkMessage;
-                            var innerMsg = networkMsg.Message;
-
-                            var receivedMsg = new ReceivedMessage
-                            {
-                                Message = innerMsg,
-                                SenderListeningPort = networkMsg.SenderListeningPort, 
-                                ReceivedSystemId = wrappedMsg.SystemId,
-                                ReceivedToAbstractionId = wrappedMsg.ToAbstractionId
-                            };
+                            var receivedMsg = ProtoComm.Message.Parser.ParseFrom(serializedMsg);
 
                             OnPublish(this, receivedMsg);
                         }
