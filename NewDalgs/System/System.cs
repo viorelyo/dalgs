@@ -105,10 +105,7 @@ namespace NewDalgs.System
 
         public void RegisterAbstraction(Abstraction abstraction)
         {
-            if (!_abstractions.TryAdd(abstraction.GetId(), abstraction))
-            {
-                Logger.Error($"[{ProcessId.Port}]: Could not register abstraction - [{abstraction.GetId()}]");
-            }
+            _abstractions.TryAdd(abstraction.GetId(), abstraction);
         }
 
         public void AddToMessageQueue(ProtoComm.Message e)

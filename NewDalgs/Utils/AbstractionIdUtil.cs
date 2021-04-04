@@ -18,15 +18,23 @@ namespace NewDalgs.Utils
             return originalAbstractionId[0..pos];
         }
 
-        public static string GetChildAbstractionId(string originalAbstractionId, string childAbstractionId)
+        public static string GetChildAbstractionId(string parentAbstractionId, string childAbstractionId)
         {
-            if ((originalAbstractionId == null) || (originalAbstractionId == ""))
+            if ((parentAbstractionId == null) || (parentAbstractionId == ""))
                 return "";
 
             if ((childAbstractionId == null) || (childAbstractionId == ""))
-                return originalAbstractionId;
+                return parentAbstractionId;
 
-            return originalAbstractionId + '.' + childAbstractionId;
+            return parentAbstractionId + '.' + childAbstractionId;
+        }
+
+        public static string GetNnarAbstractionId(string parentAbstractionId, string nnarId)
+        {
+            if ((parentAbstractionId == null) || (parentAbstractionId == ""))
+                return "";
+
+            return parentAbstractionId + '.' + "nnar" + '[' + nnarId + ']';
         }
     }
 }

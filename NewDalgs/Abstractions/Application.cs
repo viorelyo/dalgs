@@ -22,7 +22,14 @@ namespace NewDalgs.Abstractions
                 if (innerMsg.Type == ProtoComm.Message.Types.Type.AppBroadcast)
                 {
                     var appBroadcastMsg = innerMsg.AppBroadcast;
-                    HandleAppBroadcast(appBroadcastMsg, innerMsg.SystemId);
+                    HandleAppBroadcast(appBroadcastMsg, innerMsg.SystemId);     // TODO handle innerMsg (ProtoComm.Message) instead of specific message type - system id will be internally handled
+
+                    return true;
+                }
+
+                if (innerMsg.Type == ProtoComm.Message.Types.Type.AppWrite)
+                {
+                    HandleAppWrite(innerMsg);
 
                     return true;
                 }
@@ -45,6 +52,30 @@ namespace NewDalgs.Abstractions
             }
             
             return false;
+        }
+
+        private void HandleAppWrite(ProtoComm.Message msg)
+        {
+            var appWriteMsg = msg.AppWrite;
+
+            string nnarAbstractionId = AbstractionIdUtil.GetNnarAbstractionId(_abstractionId, appWriteMsg.Register);
+
+            _system.RegisterAbstraction(new NNAtomicRegister(nnarAbstractionId, _system));
+
+            var nnarWriteMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.NnarWrite,
+                NnarWrite = new ProtoComm.NnarWrite
+                {
+                   Value = appWriteMsg.Value
+                },
+                SystemId = msg.SystemId,
+                FromAbstractionId = _abstractionId,
+                ToAbstractionId = nnarAbstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            _system.AddToMessageQueue(nnarWriteMsg);
         }
 
         private void HandleAppBroadcast(ProtoComm.AppBroadcast msg, string systemId)
