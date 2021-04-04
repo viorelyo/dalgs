@@ -17,9 +17,7 @@ namespace NewDalgs.Abstractions
         {
             if (msg.Type == ProtoComm.Message.Types.Type.BebBroadcast)
             {
-                var bebBroadcastMsg = msg.BebBroadcast;
-                HandleBebBroadcast(bebBroadcastMsg, msg.SystemId);
-
+                HandleBebBroadcast(msg);
                 return true;
             }
 
@@ -33,28 +31,29 @@ namespace NewDalgs.Abstractions
                 }
 
                 HandleAppValue(plDeliverMsg.Sender, innnerMsg);
-
                 return true;
             }
 
             return false;
         }
 
-        private void HandleBebBroadcast(ProtoComm.BebBroadcast msg, string systemId)
+        private void HandleBebBroadcast(ProtoComm.Message msg)
         {
+            var bebBroadcastMsg = msg.BebBroadcast;
+
             foreach (var proc in _system.Processes)
             {
                 var plSendMsg = new ProtoComm.PlSend
                 {
                     Destination = proc,
-                    Message = msg.Message
+                    Message = bebBroadcastMsg.Message
                 };
 
                 var outMsg = new ProtoComm.Message
                 {
                     Type = ProtoComm.Message.Types.Type.PlSend,
                     PlSend = plSendMsg,
-                    SystemId = systemId,
+                    SystemId = msg.SystemId,
                     FromAbstractionId = _abstractionId,
                     ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                     MessageUuid = Guid.NewGuid().ToString()

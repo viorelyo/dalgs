@@ -244,6 +244,7 @@ namespace NewDalgs.System
             if (!_abstractions.ContainsKey(msg.ToAbstractionId))
             {
                 Logger.Error($"[{ProcessId.Port}]: Abstractions dict does not contain - [{msg.ToAbstractionId}]");
+                return;
             }
 
             if (!_abstractions[msg.ToAbstractionId].Handle(msg))

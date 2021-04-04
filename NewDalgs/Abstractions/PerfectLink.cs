@@ -16,17 +16,13 @@ namespace NewDalgs.Abstractions
         {
             if (msg.Type == ProtoComm.Message.Types.Type.NetworkMessage)
             {
-                var networkMsg = msg.NetworkMessage;
-                HandlePlDeliver(networkMsg, AbstractionIdUtil.GetParentAbstractionId(msg.ToAbstractionId));
-                
+                HandlePlDeliver(msg);
                 return true;
             }
 
             if (msg.Type == ProtoComm.Message.Types.Type.PlSend)
             {
-                var plSendMsg = msg.PlSend;
-                HandlePlSend(plSendMsg.Message, plSendMsg.Destination, msg.ToAbstractionId);
-
+                HandlePlSend(msg);
                 return true;
             }
 
@@ -36,14 +32,16 @@ namespace NewDalgs.Abstractions
         /// <summary>
         /// Wrapping received message into Message(PlDeliver)
         /// </summary>
-        private void HandlePlDeliver(ProtoComm.NetworkMessage msg, string toAbstractionId)
+        private void HandlePlDeliver(ProtoComm.Message msg)
         {
+            var networkMsg = msg.NetworkMessage;
+
             var plDeliverMsg = new ProtoComm.PlDeliver
             {
-                Message = msg.Message
+                Message = networkMsg.Message
             };
 
-            ProtoComm.ProcessId foundProcessId = _system.FindProcessByHostAndPort(msg.SenderHost, msg.SenderListeningPort);
+            ProtoComm.ProcessId foundProcessId = _system.FindProcessByHostAndPort(networkMsg.SenderHost, networkMsg.SenderListeningPort);
             if (foundProcessId != null)
             {
                 plDeliverMsg.Sender = foundProcessId;
@@ -53,20 +51,22 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlDeliver,
                 PlDeliver = plDeliverMsg,
-                SystemId = msg.Message.SystemId,
+                SystemId = networkMsg.Message.SystemId,
                 FromAbstractionId = _abstractionId,
-                ToAbstractionId = toAbstractionId,
+                ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(msg.ToAbstractionId),
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
             _system.AddToMessageQueue(outMsg);
         }
 
-        private void HandlePlSend(ProtoComm.Message msg, ProtoComm.ProcessId receiverProcessId, string toAbstractionId)
+        private void HandlePlSend(ProtoComm.Message msg)
         {
+            var plSendMsg = msg.PlSend;
+
             var networkMsg = new ProtoComm.NetworkMessage
             {
-                Message = msg,
+                Message = plSendMsg.Message,
                 SenderHost = _system.ProcessId.Host,
                 SenderListeningPort = _system.ProcessId.Port
             };
@@ -75,13 +75,13 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.NetworkMessage,
                 NetworkMessage = networkMsg,
-                SystemId = msg.SystemId,
+                SystemId = plSendMsg.Message.SystemId,
                 FromAbstractionId = _abstractionId,
-                ToAbstractionId = toAbstractionId,
+                ToAbstractionId = msg.ToAbstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.SendMessageOverNetwork(outMsg, receiverProcessId.Host, receiverProcessId.Port);
+            _system.SendMessageOverNetwork(outMsg, plSendMsg.Destination.Host, plSendMsg.Destination.Port);
         }
     }
 }

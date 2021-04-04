@@ -19,7 +19,6 @@ namespace NewDalgs.Abstractions
             if (msg.Type == ProtoComm.Message.Types.Type.NnarWrite)
             {
                 HandleNnarWrite(msg);
-
                 return true;
             }
 

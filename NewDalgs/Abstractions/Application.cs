@@ -21,16 +21,13 @@ namespace NewDalgs.Abstractions
                 var innerMsg = msg.PlDeliver.Message;
                 if (innerMsg.Type == ProtoComm.Message.Types.Type.AppBroadcast)
                 {
-                    var appBroadcastMsg = innerMsg.AppBroadcast;
-                    HandleAppBroadcast(appBroadcastMsg, innerMsg.SystemId);     // TODO handle innerMsg (ProtoComm.Message) instead of specific message type - system id will be internally handled
-
+                    HandleAppBroadcast(innerMsg);
                     return true;
                 }
 
                 if (innerMsg.Type == ProtoComm.Message.Types.Type.AppWrite)
                 {
                     HandleAppWrite(innerMsg);
-
                     return true;
                 }
 
@@ -45,9 +42,7 @@ namespace NewDalgs.Abstractions
                     return false;
                 }
 
-                var appValueMsg = bebDeliverMsg.Message;
-                HandleAppValue(appValueMsg);
-
+                HandleAppValue(bebDeliverMsg.Message);
                 return true;
             }
             
@@ -78,14 +73,16 @@ namespace NewDalgs.Abstractions
             _system.AddToMessageQueue(nnarWriteMsg);
         }
 
-        private void HandleAppBroadcast(ProtoComm.AppBroadcast msg, string systemId)
+        private void HandleAppBroadcast(ProtoComm.Message msg)
         {
+            var appBroadcastMsg = msg.AppBroadcast;
+
             var appValMsg = new ProtoComm.Message
             {
                 Type = ProtoComm.Message.Types.Type.AppValue,
-                AppValue = new ProtoComm.AppValue { Value = msg.Value },
-                SystemId = systemId,
-                FromAbstractionId = _abstractionId,   //TODO is it correct?
+                AppValue = new ProtoComm.AppValue { Value = appBroadcastMsg.Value },
+                SystemId = msg.SystemId,
+                FromAbstractionId = _abstractionId,
                 ToAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -99,7 +96,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.BebBroadcast,
                 BebBroadcast = bebBroadcastMsg,
-                SystemId = systemId,
+                SystemId = msg.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                 MessageUuid = Guid.NewGuid().ToString()
