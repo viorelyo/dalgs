@@ -21,7 +21,7 @@ namespace NewDalgs.Abstractions
                 if (innerMsg.Type == ProtoComm.Message.Types.Type.AppBroadcast)
                 {
                     var appBroadcastMsg = innerMsg.AppBroadcast;
-                    HandleAppBroadcast(appBroadcastMsg);
+                    HandleAppBroadcast(appBroadcastMsg, innerMsg.SystemId);
 
                     return true;
                 }
@@ -46,14 +46,15 @@ namespace NewDalgs.Abstractions
             return false;
         }
 
-        private void HandleAppBroadcast(ProtoComm.AppBroadcast msg)
+        private void HandleAppBroadcast(ProtoComm.AppBroadcast msg, string systemId)
         {
             var appValMsg = new ProtoComm.Message
             {
                 Type = ProtoComm.Message.Types.Type.AppValue,
                 AppValue = new ProtoComm.AppValue { Value = msg.Value },
-                //FromAbstractionId = _abstractionId,   TODO
-                //ToAbstractionId = 
+                SystemId = systemId,
+                FromAbstractionId = _abstractionId,   //TODO
+                ToAbstractionId = _abstractionId
             };
 
             var bebBroadcastMsg = new ProtoComm.BebBroadcast
@@ -65,6 +66,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.BebBroadcast,
                 BebBroadcast = bebBroadcastMsg,
+                SystemId = systemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name)
             };
@@ -84,6 +86,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlSend,
                 PlSend = plSendMsg,
+                SystemId = appValueMsg.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name)
             };

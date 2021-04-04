@@ -124,7 +124,7 @@ namespace NewDalgs.System
             // TODO maybe handle here NetworkException
             _networkHandler.SendMessage(serializedMsg, remoteHost, remotePort);
 
-            Logger.Debug($"[{ProcessId.Port}]: Message [{msg.Type}] sent to [{remoteHost}:{remotePort}]");
+            Logger.Debug($"[{ProcessId.Port}]: Message [{msg.NetworkMessage.Message}] sent to [{remoteHost}:{remotePort}]");       // TODO refactor here
         }
 
         private void MessageListenerFallback(Task antecedent)
@@ -158,7 +158,7 @@ namespace NewDalgs.System
                 Type = ProtoComm.Message.Types.Type.ProcRegistration,
                 ProcRegistration = procRegistration,
                 //SystemId = "sys-1",     // TODO should be added?!
-                ToAbstractionId = "app",
+                //ToAbstractionId = "app",
                 MessageUuid = Guid.NewGuid().ToString()
             };
 

@@ -52,7 +52,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlDeliver,
                 PlDeliver = plDeliverMsg,
-                //SystemId = msg.Message.SystemId,
+                SystemId = msg.Message.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = toAbstractionId
             };
@@ -73,7 +73,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.NetworkMessage,
                 NetworkMessage = networkMsg,
-                //SystemId = msg.SystemId,
+                SystemId = msg.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = toAbstractionId
             };
