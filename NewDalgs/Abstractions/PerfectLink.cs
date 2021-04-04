@@ -1,4 +1,5 @@
 ﻿using NewDalgs.Utils;
+using System;
 
 namespace NewDalgs.Abstractions
 {
@@ -54,7 +55,8 @@ namespace NewDalgs.Abstractions
                 PlDeliver = plDeliverMsg,
                 SystemId = msg.Message.SystemId,
                 FromAbstractionId = _abstractionId,
-                ToAbstractionId = toAbstractionId
+                ToAbstractionId = toAbstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
             };
 
             _system.AddToMessageQueue(outMsg);
@@ -75,7 +77,8 @@ namespace NewDalgs.Abstractions
                 NetworkMessage = networkMsg,
                 SystemId = msg.SystemId,
                 FromAbstractionId = _abstractionId,
-                ToAbstractionId = toAbstractionId
+                ToAbstractionId = toAbstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
             };
 
             _system.SendMessageOverNetwork(outMsg, receiverProcessId.Host, receiverProcessId.Port);

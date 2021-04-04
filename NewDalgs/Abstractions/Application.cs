@@ -1,4 +1,5 @@
 ﻿using NewDalgs.Utils;
+using System;
 
 namespace NewDalgs.Abstractions
 {
@@ -53,8 +54,9 @@ namespace NewDalgs.Abstractions
                 Type = ProtoComm.Message.Types.Type.AppValue,
                 AppValue = new ProtoComm.AppValue { Value = msg.Value },
                 SystemId = systemId,
-                FromAbstractionId = _abstractionId,   //TODO
-                ToAbstractionId = _abstractionId
+                FromAbstractionId = _abstractionId,   //TODO is it correct?
+                ToAbstractionId = _abstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
             };
 
             var bebBroadcastMsg = new ProtoComm.BebBroadcast
@@ -68,7 +70,8 @@ namespace NewDalgs.Abstractions
                 BebBroadcast = bebBroadcastMsg,
                 SystemId = systemId,
                 FromAbstractionId = _abstractionId,
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name)
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
+                MessageUuid = Guid.NewGuid().ToString()
             };
 
             _system.AddToMessageQueue(outMsg);
@@ -88,7 +91,8 @@ namespace NewDalgs.Abstractions
                 PlSend = plSendMsg,
                 SystemId = appValueMsg.SystemId,
                 FromAbstractionId = _abstractionId,
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name)
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
+                MessageUuid = Guid.NewGuid().ToString()
             };
 
             _system.AddToMessageQueue(outMsg);

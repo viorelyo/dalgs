@@ -1,4 +1,5 @@
 ﻿using NewDalgs.Utils;
+using System;
 
 namespace NewDalgs.Abstractions
 {
@@ -55,7 +56,8 @@ namespace NewDalgs.Abstractions
                     PlSend = plSendMsg,
                     SystemId = systemId,
                     FromAbstractionId = _abstractionId,
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name)
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
+                    MessageUuid = Guid.NewGuid().ToString()
                 };
 
                 _system.AddToMessageQueue(outMsg);
@@ -74,7 +76,8 @@ namespace NewDalgs.Abstractions
                 },
                 SystemId = appValueMsg.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
-                FromAbstractionId = _abstractionId
+                FromAbstractionId = _abstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
             };
 
             _system.AddToMessageQueue(outMsg);

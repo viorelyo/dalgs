@@ -174,7 +174,8 @@ namespace NewDalgs.System
                 Type = ProtoComm.Message.Types.Type.NetworkMessage,
                 NetworkMessage = networkMsg,
                 SystemId = wrapperMsg.SystemId,
-                ToAbstractionId = wrapperMsg.ToAbstractionId
+                ToAbstractionId = wrapperMsg.ToAbstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
             };
 
             SendMessageOverNetwork(outMsg, HubProcessId.Host, HubProcessId.Port);
