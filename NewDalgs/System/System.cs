@@ -13,8 +13,7 @@ namespace NewDalgs.System
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ProtoComm.ProcessId ProcessId { get; private set; }
-        private readonly string _hubHost;
-        private readonly int _hubPort;
+        public ProtoComm.ProcessId HubProcessId { get; private set; }
 
         public HashSet<ProtoComm.ProcessId> Processes { get; private set; }
 
@@ -27,11 +26,10 @@ namespace NewDalgs.System
 
         private bool _wasStopped = false;
 
-        public System(ProtoComm.ProcessId processId, string hubHost, int hubPort)
+        public System(ProtoComm.ProcessId processId, ProtoComm.ProcessId hubProcesId)
         {
             ProcessId = processId;
-            _hubHost = hubHost;
-            _hubPort = hubPort;
+            HubProcessId = hubProcesId;
 
             Processes = new HashSet<ProtoComm.ProcessId>();
 
@@ -179,7 +177,7 @@ namespace NewDalgs.System
                 ToAbstractionId = wrapperMsg.ToAbstractionId
             };
 
-            SendMessageOverNetwork(outMsg, _hubHost, _hubPort);
+            SendMessageOverNetwork(outMsg, HubProcessId.Host, HubProcessId.Port);
         }
 
         private void SubscribeToMessageListener()

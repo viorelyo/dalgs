@@ -137,7 +137,7 @@ namespace NewDalgs.Networking
             {
                 using (var connection = listener.EndAcceptTcpClient(ar))
                 {
-                    Logger.Debug($"[{_processPort}]: New connection accepted");
+                    Logger.Trace($"[{_processPort}]: New connection accepted");
                     if (OnPublish == null)
                         return;
 

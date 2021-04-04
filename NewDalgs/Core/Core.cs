@@ -14,6 +14,13 @@ namespace NewDalgs.Core
 
         public void Run(CoreParams coreParams)
         {
+            var hubProcessId = new ProtoComm.ProcessId
+            {
+                Host = coreParams.HubHost,
+                Port = coreParams.HubPort,
+                Owner = "hub"
+            };
+
             int processIndex = 1;
             foreach (var port in coreParams.ProcessesPorts)
             {
@@ -26,7 +33,7 @@ namespace NewDalgs.Core
                 };
                 processIndex++;
 
-                var system = new System.System(processsId, coreParams.HubHost, coreParams.HubPort);
+                var system = new System.System(processsId, hubProcessId);
                 var process = Task.Run(() =>
                 {
                     system.Start();

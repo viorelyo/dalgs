@@ -15,16 +15,30 @@ namespace NewDalgs.Abstractions
 
         public override bool Handle(ProtoComm.Message msg)
         {
-            if (msg.Type != ProtoComm.Message.Types.Type.PlDeliver)
+            if (msg.Type == ProtoComm.Message.Types.Type.PlDeliver)
             {
+                var innerMsg = msg.PlDeliver.Message;
+                if (innerMsg.Type == ProtoComm.Message.Types.Type.AppBroadcast)
+                {
+                    var appBroadcastMsg = innerMsg.AppBroadcast;
+                    HandleAppBroadcast(appBroadcastMsg);
+
+                    return true;
+                }
+
                 return false;
             }
 
-            var innerMsg = msg.PlDeliver.Message;
-            if (innerMsg.Type == ProtoComm.Message.Types.Type.AppBroadcast)
+            if (msg.Type == ProtoComm.Message.Types.Type.BebDeliver)
             {
-                var appBroadcastMsg = innerMsg.AppBroadcast;
-                HandleAppBroadcast(appBroadcastMsg);
+                var bebDeliverMsg = msg.BebDeliver;
+                if (bebDeliverMsg.Message.Type != ProtoComm.Message.Types.Type.AppValue)
+                {
+                    return false;
+                }
+
+                var appValueMsg = bebDeliverMsg.Message;
+                HandleAppValue(appValueMsg);
 
                 return true;
             }
@@ -38,7 +52,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.AppValue,
                 AppValue = new ProtoComm.AppValue { Value = msg.Value },
-                //FromAbstractionId = _abstractionId,
+                //FromAbstractionId = _abstractionId,   TODO
                 //ToAbstractionId = 
             };
 
@@ -53,6 +67,25 @@ namespace NewDalgs.Abstractions
                 BebBroadcast = bebBroadcastMsg,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name)
+            };
+
+            _system.AddToMessageQueue(outMsg);
+        }
+
+        private void HandleAppValue(ProtoComm.Message appValueMsg)
+        {
+            var plSendMsg = new ProtoComm.PlSend
+            {
+                Destination = _system.HubProcessId,
+                Message = appValueMsg
+            };
+
+            var outMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.PlSend,
+                PlSend = plSendMsg,
+                FromAbstractionId = _abstractionId,
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name)
             };
 
             _system.AddToMessageQueue(outMsg);
