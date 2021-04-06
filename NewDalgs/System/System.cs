@@ -109,7 +109,7 @@ namespace NewDalgs.System
         public void AddToMessageQueue(ProtoComm.Message e)
         {
             _messageQueue.Add(e);
-            Logger.Info($"[{ProcessId.Port}]: Message added - [{e.Type}]");
+            Logger.Info($"[{ProcessId.Port}]: Message added - [{e.ToAbstractionId}]");      // TODO refactor here
         }
 
         public void SendMessageOverNetwork(ProtoComm.Message msg, string remoteHost, int remotePort)
@@ -224,7 +224,7 @@ namespace NewDalgs.System
             
             foreach (var msg in _messageQueue.GetConsumingEnumerable())
             {
-                Logger.Warn($"[{ProcessId.Port}]: {msg.Type}");
+                //Logger.Warn($"[{ProcessId.Port}]: {msg.ToAbstractionId}");      // TODO refactor this
 
                 try
                 {
