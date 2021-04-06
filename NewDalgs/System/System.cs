@@ -60,8 +60,6 @@ namespace NewDalgs.System
                 Stop();     // TODO throw StopProgramException to stop whole program?
             }
 
-            RegisterAbstraction(new Application(Application.Name, this));
-
             try
             {
                 EventLoop();
@@ -193,6 +191,9 @@ namespace NewDalgs.System
         {
             if (msg.NetworkMessage.Message.Type == ProtoComm.Message.Types.Type.ProcInitializeSystem)
             {
+                // TODO create method for initialize + destroy 
+                RegisterAbstraction(new Application(Application.Name, this));
+
                 var procInitSysMsg = msg.NetworkMessage.Message.ProcInitializeSystem;
                 foreach (var proc in procInitSysMsg.Processes)
                 {
@@ -206,6 +207,7 @@ namespace NewDalgs.System
             else if (msg.NetworkMessage.Message.Type == ProtoComm.Message.Types.Type.ProcDestroySystem)
             {
                 Processes.Clear();
+                _abstractions.Clear();      // TODO test this 
                 // TODO create separate queue for messages/events -> On ProcDestroy -> should clear that queue
             }
             else

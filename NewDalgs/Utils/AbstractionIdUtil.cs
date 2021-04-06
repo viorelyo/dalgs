@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewDalgs.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -34,7 +35,7 @@ namespace NewDalgs.Utils
             if ((parentAbstractionId == null) || (parentAbstractionId == ""))
                 return "";
 
-            return parentAbstractionId + '.' + "nnar" + '[' + nnarId + ']';
+            return parentAbstractionId + '.' + NNAtomicRegister.Name + '[' + nnarId + ']';
         }
     }
 }
