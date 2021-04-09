@@ -1,14 +1,57 @@
 ﻿using NewDalgs.Utils;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace NewDalgs.Abstractions
 {
-    class NNAREntity
+    class NNAREntity : IComparable<NNAREntity>
     {
         public int Timestamp { get; set; }
         public int WriterRank { get; set; }
         public ProtoComm.Value Value { get; set; }
+
+        // TODO make sure these works
+        public static bool operator >(NNAREntity n1, NNAREntity n2)
+        {
+            if ((n1.Timestamp > n2.Timestamp) ||
+                ((n1.Timestamp == n2.Timestamp) && (n1.WriterRank > n2.WriterRank)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool operator <(NNAREntity n1, NNAREntity n2)
+        {
+            if ((n1.Timestamp < n2.Timestamp) ||
+                ((n1.Timestamp == n2.Timestamp) && (n1.WriterRank < n2.WriterRank)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        // TODO make sure this works
+        public int CompareTo([AllowNull] NNAREntity other)
+        {
+            if (other == null)
+                return 1;
+
+            if (this > other)
+            {
+                return 1;
+            }
+            else if (this < other)
+            {
+                return -1;
+            }
+
+            return 0;
+        }
     }
 
     class NNAtomicRegister : Abstraction
@@ -85,6 +128,11 @@ namespace NewDalgs.Abstractions
             return false;
         }
 
+        private NNAREntity GetHighest()
+        {
+            return _readList.Values.Max();
+        }
+
         private void HandleNNarInternalAck(ProtoComm.PlDeliver plDeliverMsg)
         {
             var nnarInternalAckMsg = plDeliverMsg.Message.NnarInternalAck;
@@ -135,7 +183,73 @@ namespace NewDalgs.Abstractions
 
         private void HandleNNarInternalValue(ProtoComm.PlDeliver plDeliverMsg)
         {
-            throw new NotImplementedException();
+            var nnarInternalValMsg = plDeliverMsg.Message.NnarInternalValue;
+            if (nnarInternalValMsg.ReadId != _readId)
+            {
+                return;
+            }
+
+            var receivedNNAREntity = new NNAREntity
+            {
+                Timestamp = nnarInternalValMsg.Timestamp,
+                WriterRank = nnarInternalValMsg.WriterRank,
+                Value = nnarInternalValMsg.Value
+            };
+
+            _readList[plDeliverMsg.Sender.Owner + plDeliverMsg.Sender.Index] = receivedNNAREntity;      // TODO maybe extract here a GetID (owner-index)
+
+            if (_readList.Count > (_system.Processes.Count / 2))
+            {
+                var maxNnarEntity = GetHighest();
+                _readVal = maxNnarEntity.Value;
+
+                _readList = new ConcurrentDictionary<string, NNAREntity>();
+
+                ProtoComm.NnarInternalWrite nnarInternalWriteMsg;
+                if (_isReading)
+                {
+                    nnarInternalWriteMsg = new ProtoComm.NnarInternalWrite
+                    {
+                        ReadId = nnarInternalValMsg.ReadId,
+                        Timestamp = maxNnarEntity.Timestamp,
+                        WriterRank = maxNnarEntity.WriterRank,
+                        Value = maxNnarEntity.Value
+                    };
+                }
+                else
+                {
+                    nnarInternalWriteMsg = new ProtoComm.NnarInternalWrite
+                    {
+                        ReadId = nnarInternalValMsg.ReadId,
+                        Timestamp = maxNnarEntity.Timestamp + 1,
+                        WriterRank = _system.ProcessId.Rank,
+                        Value = _writeVal
+                    };
+                }
+
+                var outMsg = new ProtoComm.Message
+                {
+                    Type = ProtoComm.Message.Types.Type.BebBroadcast,
+                    BebBroadcast = new ProtoComm.BebBroadcast
+                    {
+                        Message = new ProtoComm.Message
+                        {
+                            Type = ProtoComm.Message.Types.Type.NnarInternalWrite,
+                            NnarInternalWrite = nnarInternalWriteMsg,
+                            SystemId = plDeliverMsg.Message.SystemId,
+                            ToAbstractionId = _abstractionId,
+                            FromAbstractionId = _abstractionId,
+                            MessageUuid = Guid.NewGuid().ToString()
+                        }
+                    },
+                    SystemId = plDeliverMsg.Message.SystemId,
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
+                    FromAbstractionId = _abstractionId,
+                    MessageUuid = Guid.NewGuid().ToString()
+                };
+
+                _system.AddToMessageQueue(outMsg);
+            }
         }
 
         private void HandleNNarInternalWrite(ProtoComm.BebDeliver bebDeliverMsg)
@@ -149,8 +263,10 @@ namespace NewDalgs.Abstractions
                 Value = nnarInternalWriteMsg.Value
             };
 
-            if ((_nnarEntity.Timestamp > receivedNNAREntity.Timestamp) || 
-                ((_nnarEntity.Timestamp == receivedNNAREntity.Timestamp) && (_nnarEntity.WriterRank > receivedNNAREntity.WriterRank)))
+            // TODO check this
+            //if ((_nnarEntity.Timestamp > receivedNNAREntity.Timestamp) || 
+            //    ((_nnarEntity.Timestamp == receivedNNAREntity.Timestamp) && (_nnarEntity.WriterRank > receivedNNAREntity.WriterRank)))
+            if (_nnarEntity > receivedNNAREntity)
             {
                 _nnarEntity = receivedNNAREntity;
             }
@@ -187,7 +303,39 @@ namespace NewDalgs.Abstractions
 
         private void HandleNNarInternalRead(ProtoComm.BebDeliver bebDeliverMsg)
         {
-            throw new NotImplementedException();
+            var nnarInternalReadMsg = bebDeliverMsg.Message.NnarInternalRead;
+
+            var plSendMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.NnarInternalValue,
+                NnarInternalValue = new ProtoComm.NnarInternalValue
+                {
+                    ReadId = nnarInternalReadMsg.ReadId,
+                    Timestamp = _nnarEntity.Timestamp,
+                    WriterRank = _nnarEntity.WriterRank,
+                    Value = _nnarEntity.Value
+                },
+                SystemId = bebDeliverMsg.Message.SystemId,
+                ToAbstractionId = _abstractionId,
+                FromAbstractionId = _abstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            var msgOut = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.PlSend,
+                PlSend = new ProtoComm.PlSend
+                {
+                    Message = plSendMsg,
+                    Destination = bebDeliverMsg.Sender
+                },
+                SystemId = bebDeliverMsg.Message.SystemId,
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
+                FromAbstractionId = _abstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            _system.AddToMessageQueue(msgOut);
         }
 
         private void HandleNNarRead(string systemId)

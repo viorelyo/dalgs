@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf;
 using NewDalgs.Abstractions;
 using NewDalgs.Networking;
+using NewDalgs.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -203,6 +204,8 @@ namespace NewDalgs.System
                         // TODO should throw exception?
                     }
                 }
+
+                ProcessId = FindProcessByHostAndPort(ProcessId.Host, ProcessId.Port);   // TODO check if ok (it's done in order to update info sent by Hub)
             }
             else if (msg.NetworkMessage.Message.Type == ProtoComm.Message.Types.Type.ProcDestroySystem)
             {
@@ -246,6 +249,8 @@ namespace NewDalgs.System
             if (!_abstractions.ContainsKey(msg.ToAbstractionId))
             {
                 Logger.Error($"[{ProcessId.Port}]: Abstractions dict does not contain - [{msg.ToAbstractionId}]");
+
+                RegisterAbstraction(new NNAtomicRegister(msg.ToAbstractionId, this));
                 return;
             }
 
