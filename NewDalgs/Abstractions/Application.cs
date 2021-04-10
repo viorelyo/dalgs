@@ -45,8 +45,91 @@ namespace NewDalgs.Abstractions
                 HandleAppValue(bebDeliverMsg.Message);
                 return true;
             }
-            
+
+            if (msg.Type == ProtoComm.Message.Types.Type.NnarReadReturn)
+            {
+                HandleNnarReadReturn(msg);
+                return true;
+            }
+
+            if (msg.Type == ProtoComm.Message.Types.Type.NnarWriteReturn)
+            {
+                HandleNnarWriteReturn(msg);
+                return true;
+            }
+
             return false;
+        }
+
+        private void HandleNnarWriteReturn(ProtoComm.Message msg)
+        {
+            var registerName = AbstractionIdUtil.GetNnarRegisterName(msg.FromAbstractionId);
+
+            var plSendMsg = new ProtoComm.PlSend
+            {
+                Destination = _system.HubProcessId,
+                Message = new ProtoComm.Message
+                {
+                    Type = ProtoComm.Message.Types.Type.AppWriteReturn,
+                    AppWriteReturn = new ProtoComm.AppWriteReturn
+                    {
+                        Register = registerName
+                    },
+                    SystemId = msg.SystemId,
+                    FromAbstractionId = _abstractionId,
+                    //ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),  TODO
+                    MessageUuid = Guid.NewGuid().ToString()
+                }
+            };
+
+            var outMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.PlSend,
+                PlSend = plSendMsg,
+                SystemId = msg.SystemId,
+                FromAbstractionId = _abstractionId,
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            _system.AddToMessageQueue(outMsg);
+        }
+
+        private void HandleNnarReadReturn(ProtoComm.Message msg)
+        {
+            var nnarReadReturnMsg = msg.NnarReadReturn;
+
+            var registerName = AbstractionIdUtil.GetNnarRegisterName(msg.FromAbstractionId);
+
+            var plSendMsg = new ProtoComm.PlSend
+            {
+                Destination = _system.HubProcessId,
+                Message = new ProtoComm.Message
+                {
+                    Type = ProtoComm.Message.Types.Type.AppReadReturn,
+                    AppReadReturn = new ProtoComm.AppReadReturn
+                    {
+                        Register = registerName,
+                        Value = nnarReadReturnMsg.Value
+                    },
+                    SystemId = msg.SystemId,
+                    FromAbstractionId = _abstractionId,
+                    //ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),  TODO
+                    MessageUuid = Guid.NewGuid().ToString()
+                }
+            };
+
+            var outMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.PlSend,
+                PlSend = plSendMsg,
+                SystemId = msg.SystemId,
+                FromAbstractionId = _abstractionId,
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            _system.AddToMessageQueue(outMsg);
         }
 
         private void HandleAppWrite(ProtoComm.Message msg)

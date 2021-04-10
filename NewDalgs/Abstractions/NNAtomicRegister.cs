@@ -91,16 +91,15 @@ namespace NewDalgs.Abstractions
 
             if (msg.Type == ProtoComm.Message.Types.Type.BebDeliver)
             {
-                var bebDeliverMsg = msg.BebDeliver;
-                if (bebDeliverMsg.Message.Type == ProtoComm.Message.Types.Type.NnarInternalRead)
+                if (msg.BebDeliver.Message.Type == ProtoComm.Message.Types.Type.NnarInternalRead)
                 {
-                    HandleNNarInternalRead(bebDeliverMsg);
+                    HandleNNarInternalRead(msg);
                     return true;
                 }
 
-                if (bebDeliverMsg.Message.Type == ProtoComm.Message.Types.Type.NnarInternalWrite)
+                if (msg.BebDeliver.Message.Type == ProtoComm.Message.Types.Type.NnarInternalWrite)
                 {
-                    HandleNNarInternalWrite(bebDeliverMsg);
+                    HandleNNarInternalWrite(msg);
                     return true;
                 }
 
@@ -109,16 +108,15 @@ namespace NewDalgs.Abstractions
 
             if (msg.Type == ProtoComm.Message.Types.Type.PlDeliver)
             {
-                var plDeliverMsg = msg.PlDeliver;
-                if (plDeliverMsg.Message.Type == ProtoComm.Message.Types.Type.NnarInternalValue)
+                if (msg.PlDeliver.Message.Type == ProtoComm.Message.Types.Type.NnarInternalValue)
                 {
-                    HandleNNarInternalValue(plDeliverMsg);
+                    HandleNNarInternalValue(msg);
                     return true;
                 }
 
-                if (plDeliverMsg.Message.Type == ProtoComm.Message.Types.Type.NnarInternalAck)
+                if (msg.PlDeliver.Message.Type == ProtoComm.Message.Types.Type.NnarInternalAck)
                 {
-                    HandleNNarInternalAck(plDeliverMsg);
+                    HandleNNarInternalAck(msg);
                     return true;
                 }
 
@@ -133,8 +131,9 @@ namespace NewDalgs.Abstractions
             return _readList.Values.Max();
         }
 
-        private void HandleNNarInternalAck(ProtoComm.PlDeliver plDeliverMsg)
+        private void HandleNNarInternalAck(ProtoComm.Message msg)
         {
+            var plDeliverMsg = msg.PlDeliver;
             var nnarInternalAckMsg = plDeliverMsg.Message.NnarInternalAck;
             if (nnarInternalAckMsg.ReadId != _readId)
             {
@@ -144,45 +143,39 @@ namespace NewDalgs.Abstractions
             _acks++;
             if (_acks > (_system.Processes.Count / 2))
             {
+                var outMsg = new ProtoComm.Message
+                {
+                    SystemId = msg.SystemId,
+                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
+                    FromAbstractionId = _abstractionId,
+                    MessageUuid = Guid.NewGuid().ToString()
+                };
+
                 _acks = 0;
                 if (_isReading)
                 {
                     _isReading = false;
 
-                    var outMsg = new ProtoComm.Message
+                    outMsg.Type = ProtoComm.Message.Types.Type.NnarReadReturn;
+                    outMsg.NnarReadReturn = new ProtoComm.NnarReadReturn
                     {
-                        Type = ProtoComm.Message.Types.Type.NnarReadReturn,
-                        NnarReadReturn = new ProtoComm.NnarReadReturn
-                        {
-                            Value = _readVal
-                        },
-                        SystemId = plDeliverMsg.Message.SystemId,
-                        ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
-                        FromAbstractionId = _abstractionId,
-                        MessageUuid = Guid.NewGuid().ToString()
+                        Value = _readVal
                     };
-
-                    _system.AddToMessageQueue(outMsg);
                 }
                 else
                 {
-                    var outMsg = new ProtoComm.Message
-                    {
-                        Type = ProtoComm.Message.Types.Type.NnarWriteReturn,
-                        NnarWriteReturn = new ProtoComm.NnarWriteReturn(),
-                        SystemId = plDeliverMsg.Message.SystemId,
-                        ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
-                        FromAbstractionId = _abstractionId,
-                        MessageUuid = Guid.NewGuid().ToString()
-                    };
-
-                    _system.AddToMessageQueue(outMsg);
+                    outMsg.Type = ProtoComm.Message.Types.Type.NnarWriteReturn;
+                    outMsg.NnarWriteReturn = new ProtoComm.NnarWriteReturn();
                 }
+
+                _system.AddToMessageQueue(outMsg);
             }
         }
 
-        private void HandleNNarInternalValue(ProtoComm.PlDeliver plDeliverMsg)
+        private void HandleNNarInternalValue(ProtoComm.Message msg)
         {
+            var plDeliverMsg = msg.PlDeliver;
+
             var nnarInternalValMsg = plDeliverMsg.Message.NnarInternalValue;
             if (nnarInternalValMsg.ReadId != _readId)
             {
@@ -236,13 +229,13 @@ namespace NewDalgs.Abstractions
                         {
                             Type = ProtoComm.Message.Types.Type.NnarInternalWrite,
                             NnarInternalWrite = nnarInternalWriteMsg,
-                            SystemId = plDeliverMsg.Message.SystemId,
+                            SystemId = msg.SystemId,
                             ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
-                    SystemId = plDeliverMsg.Message.SystemId,
+                    SystemId = msg.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
@@ -252,8 +245,9 @@ namespace NewDalgs.Abstractions
             }
         }
 
-        private void HandleNNarInternalWrite(ProtoComm.BebDeliver bebDeliverMsg)
+        private void HandleNNarInternalWrite(ProtoComm.Message msg)
         {
+            var bebDeliverMsg = msg.BebDeliver;
             var nnarInternalWriteMsg = bebDeliverMsg.Message.NnarInternalWrite;
 
             var receivedNNAREntity = new NNAREntity
@@ -278,7 +272,7 @@ namespace NewDalgs.Abstractions
                 {
                     ReadId = _readId
                 },
-                SystemId = bebDeliverMsg.Message.SystemId,
+                SystemId = msg.SystemId,
                 ToAbstractionId = _abstractionId,
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -292,7 +286,7 @@ namespace NewDalgs.Abstractions
                     Message = plSendMsg,
                     Destination = bebDeliverMsg.Sender
                 },
-                SystemId = bebDeliverMsg.Message.SystemId,
+                SystemId = msg.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -301,8 +295,9 @@ namespace NewDalgs.Abstractions
             _system.AddToMessageQueue(msgOut);
         }
 
-        private void HandleNNarInternalRead(ProtoComm.BebDeliver bebDeliverMsg)
+        private void HandleNNarInternalRead(ProtoComm.Message msg)
         {
+            var bebDeliverMsg = msg.BebDeliver;
             var nnarInternalReadMsg = bebDeliverMsg.Message.NnarInternalRead;
 
             var plSendMsg = new ProtoComm.Message
@@ -315,7 +310,7 @@ namespace NewDalgs.Abstractions
                     WriterRank = _nnarEntity.WriterRank,
                     Value = _nnarEntity.Value
                 },
-                SystemId = bebDeliverMsg.Message.SystemId,
+                SystemId = msg.SystemId,
                 ToAbstractionId = _abstractionId,
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -329,7 +324,7 @@ namespace NewDalgs.Abstractions
                     Message = plSendMsg,
                     Destination = bebDeliverMsg.Sender
                 },
-                SystemId = bebDeliverMsg.Message.SystemId,
+                SystemId = msg.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()

@@ -37,5 +37,24 @@ namespace NewDalgs.Utils
 
             return parentAbstractionId + '.' + NNAtomicRegister.Name + '[' + nnarId + ']';
         }
+
+        public static string GetNnarRegisterName(string nnarAbstractionId)
+        {
+            int nnarKeywordIndex = nnarAbstractionId.IndexOf(NNAtomicRegister.Name);
+            if (nnarKeywordIndex < 0)
+                return "";
+
+            var nnarIdSubstring = nnarAbstractionId.Substring(nnarKeywordIndex);
+
+            int openingNnarScopeIndex = NNAtomicRegister.Name.Length;
+            if (nnarIdSubstring[openingNnarScopeIndex] != '[')
+                return "";
+
+            int closingNnarScopeIndex = nnarIdSubstring.IndexOf(']');
+            if (closingNnarScopeIndex < 0)
+                return "";
+
+            return nnarIdSubstring.Substring(openingNnarScopeIndex + 1, closingNnarScopeIndex - openingNnarScopeIndex - 1);
+        }
     }
 }

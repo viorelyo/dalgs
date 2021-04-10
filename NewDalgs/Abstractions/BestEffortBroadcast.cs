@@ -23,14 +23,7 @@ namespace NewDalgs.Abstractions
 
             if (msg.Type == ProtoComm.Message.Types.Type.PlDeliver)
             {
-                var plDeliverMsg = msg.PlDeliver;
-                var innnerMsg = plDeliverMsg.Message;
-                if (innnerMsg.Type != ProtoComm.Message.Types.Type.AppValue)
-                {
-                    return false;
-                }
-
-                HandleAppValue(plDeliverMsg.Sender, innnerMsg);
+                HandleBebDeliber(msg);
                 return true;
             }
 
@@ -63,17 +56,20 @@ namespace NewDalgs.Abstractions
             }
         }
 
-        private void HandleAppValue(ProtoComm.ProcessId sender, ProtoComm.Message appValueMsg)
+        private void HandleBebDeliber(ProtoComm.Message msg)
         {
+            var plDeliverMsg = msg.PlDeliver;
+            var innnerMsg = plDeliverMsg.Message;
+
             var outMsg = new ProtoComm.Message
             {
                 Type = ProtoComm.Message.Types.Type.BebDeliver,
                 BebDeliver = new ProtoComm.BebDeliver
                 {
-                    Message = appValueMsg,
-                    Sender = sender
+                    Message = innnerMsg,
+                    Sender = plDeliverMsg.Sender
                 },
-                SystemId = appValueMsg.SystemId,
+                SystemId = msg.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
