@@ -248,10 +248,18 @@ namespace NewDalgs.System
         {
             if (!_abstractions.ContainsKey(msg.ToAbstractionId))
             {
-                Logger.Error($"[{ProcessId.Port}]: Abstractions dict does not contain - [{msg.ToAbstractionId}]");
+                //Logger.Error($"[{ProcessId.Port}]: Abstractions dict does not contain - [{msg.ToAbstractionId}]");
 
-                RegisterAbstraction(new NNAtomicRegister(msg.ToAbstractionId, this));
-                return;
+                var nnarRegisterName = AbstractionIdUtil.GetNnarRegisterName(msg.ToAbstractionId);
+                if (nnarRegisterName != "")
+                {
+                    var nnarAbstractionId = AbstractionIdUtil.GetNnarAbstractionId(Application.Name, nnarRegisterName);
+                    RegisterAbstraction(new NNAtomicRegister(nnarAbstractionId, this));
+                }
+                else
+                {
+                    Logger.Error($"[{ProcessId.Port}]: Could not obtain nnarRegisterName");
+                }
             }
 
             if (!_abstractions[msg.ToAbstractionId].Handle(msg))

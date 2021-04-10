@@ -51,7 +51,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlDeliver,
                 PlDeliver = plDeliverMsg,
-                SystemId = networkMsg.Message.SystemId,
+                SystemId = msg.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(msg.ToAbstractionId),
                 MessageUuid = Guid.NewGuid().ToString()

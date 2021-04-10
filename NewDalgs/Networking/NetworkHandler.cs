@@ -17,7 +17,6 @@ namespace NewDalgs.Networking
         private CancellationToken _ct;
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
-        // TODO maybe implement abstract Publisher and inherit from him (if there will be more publishers)
         public delegate void Notify(NetworkHandler publisher, ProtoComm.Message e);
         public event Notify OnPublish;
 

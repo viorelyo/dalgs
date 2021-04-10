@@ -12,7 +12,6 @@ namespace NewDalgs.Abstractions
         public int WriterRank { get; set; }
         public ProtoComm.Value Value { get; set; }
 
-        // TODO make sure these works
         public static bool operator >(NNAREntity n1, NNAREntity n2)
         {
             if ((n1.Timestamp > n2.Timestamp) ||
@@ -35,7 +34,6 @@ namespace NewDalgs.Abstractions
             return false;
         }
 
-        // TODO make sure this works
         public int CompareTo([AllowNull] NNAREntity other)
         {
             if (other == null)
@@ -257,9 +255,6 @@ namespace NewDalgs.Abstractions
                 Value = nnarInternalWriteMsg.Value
             };
 
-            // TODO check this
-            //if ((_nnarEntity.Timestamp > receivedNNAREntity.Timestamp) || 
-            //    ((_nnarEntity.Timestamp == receivedNNAREntity.Timestamp) && (_nnarEntity.WriterRank > receivedNNAREntity.WriterRank)))
             if (_nnarEntity > receivedNNAREntity)
             {
                 _nnarEntity = receivedNNAREntity;
@@ -270,7 +265,7 @@ namespace NewDalgs.Abstractions
                 Type = ProtoComm.Message.Types.Type.NnarInternalAck,
                 NnarInternalAck = new ProtoComm.NnarInternalAck
                 {
-                    ReadId = _readId
+                    ReadId = nnarInternalWriteMsg.ReadId
                 },
                 SystemId = msg.SystemId,
                 ToAbstractionId = _abstractionId,

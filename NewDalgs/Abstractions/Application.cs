@@ -25,6 +25,12 @@ namespace NewDalgs.Abstractions
                     return true;
                 }
 
+                if (innerMsg.Type == ProtoComm.Message.Types.Type.AppRead)
+                {
+                    HandleAppRead(innerMsg);
+                    return true;
+                }
+
                 if (innerMsg.Type == ProtoComm.Message.Types.Type.AppWrite)
                 {
                     HandleAppWrite(innerMsg);
@@ -36,13 +42,7 @@ namespace NewDalgs.Abstractions
 
             if (msg.Type == ProtoComm.Message.Types.Type.BebDeliver)
             {
-                var bebDeliverMsg = msg.BebDeliver;
-                if (bebDeliverMsg.Message.Type != ProtoComm.Message.Types.Type.AppValue)
-                {
-                    return false;
-                }
-
-                HandleAppValue(bebDeliverMsg.Message);
+                HandleBebDeliver(msg);
                 return true;
             }
 
@@ -59,6 +59,26 @@ namespace NewDalgs.Abstractions
             }
 
             return false;
+        }
+
+        private void HandleAppRead(ProtoComm.Message msg)
+        {
+            var appReadMsg = msg.AppRead;
+
+            string nnarAbstractionId = AbstractionIdUtil.GetNnarAbstractionId(_abstractionId, appReadMsg.Register);
+            _system.RegisterAbstraction(new NNAtomicRegister(nnarAbstractionId, _system));
+
+            var nnarReadMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.NnarRead,
+                NnarRead = new ProtoComm.NnarRead(),
+                SystemId = msg.SystemId,
+                FromAbstractionId = _abstractionId,
+                ToAbstractionId = nnarAbstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            _system.AddToMessageQueue(nnarReadMsg);
         }
 
         private void HandleNnarWriteReturn(ProtoComm.Message msg)
@@ -137,7 +157,6 @@ namespace NewDalgs.Abstractions
             var appWriteMsg = msg.AppWrite;
 
             string nnarAbstractionId = AbstractionIdUtil.GetNnarAbstractionId(_abstractionId, appWriteMsg.Register);
-
             _system.RegisterAbstraction(new NNAtomicRegister(nnarAbstractionId, _system));
 
             var nnarWriteMsg = new ProtoComm.Message
@@ -188,19 +207,22 @@ namespace NewDalgs.Abstractions
             _system.AddToMessageQueue(outMsg);
         }
 
-        private void HandleAppValue(ProtoComm.Message appValueMsg)
+        private void HandleBebDeliver(ProtoComm.Message msg)
         {
+            var bebDeliverMsg = msg.BebDeliver;
+            var innerMsg = bebDeliverMsg.Message;
+
             var plSendMsg = new ProtoComm.PlSend
             {
                 Destination = _system.HubProcessId,
-                Message = appValueMsg
+                Message = innerMsg
             };
 
             var outMsg = new ProtoComm.Message
             {
                 Type = ProtoComm.Message.Types.Type.PlSend,
                 PlSend = plSendMsg,
-                SystemId = appValueMsg.SystemId,
+                SystemId = msg.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 MessageUuid = Guid.NewGuid().ToString()

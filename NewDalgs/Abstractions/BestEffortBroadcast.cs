@@ -23,7 +23,7 @@ namespace NewDalgs.Abstractions
 
             if (msg.Type == ProtoComm.Message.Types.Type.PlDeliver)
             {
-                HandleBebDeliber(msg);
+                HandlePlDeliber(msg);
                 return true;
             }
 
@@ -56,7 +56,7 @@ namespace NewDalgs.Abstractions
             }
         }
 
-        private void HandleBebDeliber(ProtoComm.Message msg)
+        private void HandlePlDeliber(ProtoComm.Message msg)
         {
             var plDeliverMsg = msg.PlDeliver;
             var innnerMsg = plDeliverMsg.Message;
