@@ -59,7 +59,7 @@ namespace NewDalgs.Abstractions
         private NNAREntity _nnarEntity = new NNAREntity { Timestamp = 0, WriterRank = 0, Value = new ProtoComm.Value { Defined = false } };
         private int _acks = 0;
         private int _readId = 0;
-        private ConcurrentDictionary<string, NNAREntity> _readList = new ConcurrentDictionary<string, NNAREntity>();
+        private ConcurrentDictionary<string, NNAREntity> _readList = new ConcurrentDictionary<string, NNAREntity>();        // TODO check if should be concurrent
         private bool _isReading = false;
 
         private ProtoComm.Value _writeVal = new ProtoComm.Value { Defined = false };
@@ -135,7 +135,7 @@ namespace NewDalgs.Abstractions
             var nnarInternalAckMsg = plDeliverMsg.Message.NnarInternalAck;
             if (nnarInternalAckMsg.ReadId != _readId)
             {
-                return;     // TODO check if should do anything else
+                return;
             }
 
             _acks++;
@@ -166,7 +166,7 @@ namespace NewDalgs.Abstractions
                     outMsg.NnarWriteReturn = new ProtoComm.NnarWriteReturn();
                 }
 
-                _system.AddToMessageQueue(outMsg);
+                _system.TriggerEvent(outMsg);
             }
         }
 
@@ -187,14 +187,14 @@ namespace NewDalgs.Abstractions
                 Value = nnarInternalValMsg.Value
             };
 
-            _readList[plDeliverMsg.Sender.Owner + plDeliverMsg.Sender.Index] = receivedNNAREntity;      // TODO maybe extract here a GetID (owner-index)
+            _readList[plDeliverMsg.Sender.Owner + '-' + plDeliverMsg.Sender.Index] = receivedNNAREntity;
 
             if (_readList.Count > (_system.Processes.Count / 2))
             {
                 var maxNnarEntity = GetHighest();
                 _readVal = maxNnarEntity.Value;
 
-                _readList = new ConcurrentDictionary<string, NNAREntity>();
+                _readList = new ConcurrentDictionary<string, NNAREntity>();     // TODO try to clear instead of recreating
 
                 ProtoComm.NnarInternalWrite nnarInternalWriteMsg;
                 if (_isReading)
@@ -239,7 +239,7 @@ namespace NewDalgs.Abstractions
                     MessageUuid = Guid.NewGuid().ToString()
                 };
 
-                _system.AddToMessageQueue(outMsg);
+                _system.TriggerEvent(outMsg);
             }
         }
 
@@ -287,7 +287,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(msgOut);
+            _system.TriggerEvent(msgOut);
         }
 
         private void HandleNNarInternalRead(ProtoComm.Message msg)
@@ -325,7 +325,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(msgOut);
+            _system.TriggerEvent(msgOut);
         }
 
         private void HandleNNarRead(string systemId)
@@ -361,7 +361,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(msgOut);
+            _system.TriggerEvent(msgOut);
         }
 
         private void HandleNNarWrite(ProtoComm.Message msg)
@@ -399,7 +399,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(msgOut);
+            _system.TriggerEvent(msgOut);
         }
     }
 }

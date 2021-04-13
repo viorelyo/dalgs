@@ -23,7 +23,7 @@ namespace NewDalgs.System
         private Task _messageListener;
         private NetworkHandler _networkHandler;
 
-        private BlockingCollection<ProtoComm.Message> _messageQueue;
+        private BlockingCollection<ProtoComm.Message> _eventQueue;
 
         private bool _wasStopped = false;
 
@@ -37,7 +37,7 @@ namespace NewDalgs.System
             _abstractions = new ConcurrentDictionary<string, Abstraction>();
 
             _networkHandler = new NetworkHandler(processId.Host, processId.Port);
-            _messageQueue = new BlockingCollection<ProtoComm.Message>(new ConcurrentQueue<ProtoComm.Message>());
+            _eventQueue = new BlockingCollection<ProtoComm.Message>(new ConcurrentQueue<ProtoComm.Message>());
         }
 
         public void Start()
@@ -50,26 +50,9 @@ namespace NewDalgs.System
             var messageListenerFallbackTask = _messageListener.ContinueWith(MessageListenerFallback);       // Continuation Task should handle exceptions thrown in messageListener Task
             _messageListener.Start();
 
-            try
-            {
-                RegisterToHub();
-                Logger.Info($"[{ProcessId.Port}]: Process registered - [{ProcessId.Owner}-{ProcessId.Index}]");
-            }
-            catch (NetworkException ex)
-            {
-                Logger.Fatal($"[{ProcessId.Port}]: {ex.Message}");
-                Stop();     // TODO throw StopProgramException to stop whole program?
-            }
-
-            try
-            {
-                EventLoop();
-            }
-            catch (Exception ex)
-            {
-                Logger.Fatal($"[{ProcessId.Port}]: {ex.Message}");
-                Stop();     // TODO throw StopProgramException to stop whole program?
-            }
+            RegisterToHub();    
+    
+            EventLoop();
 
             messageListenerFallbackTask.Wait();
         }
@@ -104,23 +87,41 @@ namespace NewDalgs.System
 
         public void RegisterAbstraction(Abstraction abstraction)
         {
-            _abstractions.TryAdd(abstraction.GetId(), abstraction);
+            if (_abstractions.TryAdd(abstraction.GetId(), abstraction))
+            {
+                Logger.Trace($"[{ProcessId.Port}]: New abstraction registered: {abstraction.GetId()}");
+            }
         }
 
-        public void AddToMessageQueue(ProtoComm.Message e)
+        /// <summary>
+        /// Adds event (ProtoComm.Message) to eventQueue
+        /// </summary>
+        public void TriggerEvent(ProtoComm.Message e)
         {
-            _messageQueue.Add(e);
-            Logger.Info($"[{ProcessId.Port}]: Message added - [{e.ToAbstractionId}]");      // TODO refactor here
+            try
+            {
+                _eventQueue.Add(e);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"[{ProcessId.Port}]: {ex.Message}. Exception occurred while triggering event - [{e}]");
+            }
         }
 
-        public void SendMessageOverNetwork(ProtoComm.Message msg, string remoteHost, int remotePort)
+        public bool SendMessageOverNetwork(ProtoComm.Message msg, string remoteHost, int remotePort)
         {
             byte[] serializedMsg = msg.ToByteArray();
 
-            // TODO maybe handle here NetworkException
-            _networkHandler.SendMessage(serializedMsg, remoteHost, remotePort);
-
-            Logger.Debug($"[{ProcessId.Port}]: Message [{msg.NetworkMessage.Message}] sent to [{remoteHost}:{remotePort}]");       // TODO refactor here
+            try
+            {
+                _networkHandler.SendMessage(serializedMsg, remoteHost, remotePort);
+                return true;
+            }
+            catch (NetworkException ex)
+            {
+                Logger.Error($"[{ProcessId.Port}]: {ex.Message}");
+                return false;
+            }
         }
 
         private void MessageListenerFallback(Task antecedent)
@@ -134,7 +135,7 @@ namespace NewDalgs.System
             { 
                 var ex = antecedent.Exception?.GetBaseException();
                 Logger.Fatal($"[{ProcessId.Port}]: {ex.Message}");
-                Stop();     // TODO throw StopProgramException to stop whole program?
+                Stop();
             }
         }
 
@@ -153,8 +154,7 @@ namespace NewDalgs.System
             {
                 Type = ProtoComm.Message.Types.Type.ProcRegistration,
                 ProcRegistration = procRegistration,
-                //SystemId = "sys-1",     // TODO should be added?!
-                //ToAbstractionId = "app",
+                ToAbstractionId = HubProcessId.Owner,
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
@@ -174,7 +174,15 @@ namespace NewDalgs.System
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            SendMessageOverNetwork(outMsg, HubProcessId.Host, HubProcessId.Port);
+            if (SendMessageOverNetwork(outMsg, HubProcessId.Host, HubProcessId.Port))
+            {
+                Logger.Info($"[{ProcessId.Port}]: Process registered - [{ProcessId.Owner}-{ProcessId.Index}]");
+            }
+            else
+            {
+                Logger.Fatal($"[{ProcessId.Port}]: Could not register to Hub");
+                Stop();
+            }
         }
 
         private void SubscribeToMessageListener()
@@ -185,38 +193,81 @@ namespace NewDalgs.System
         private void UnsubscribeFromMessageListener()
         {
             _networkHandler.OnPublish -= OnMessageReceived;
-            _messageQueue.CompleteAdding();
+            _eventQueue.CompleteAdding();
         }
 
-        protected virtual void OnMessageReceived(NetworkHandler p, ProtoComm.Message msg)
+        protected virtual void OnMessageReceived(NetworkHandler p, byte[] serializedMsg)
         {
-            if (msg.NetworkMessage.Message.Type == ProtoComm.Message.Types.Type.ProcInitializeSystem)
+            ProtoComm.Message msg;
+            try
             {
-                // TODO create method for initialize + destroy 
-                RegisterAbstraction(new Application(Application.Name, this));
-
-                var procInitSysMsg = msg.NetworkMessage.Message.ProcInitializeSystem;
-                foreach (var proc in procInitSysMsg.Processes)
-                {
-                    if (!Processes.Add(proc))
-                    {
-                        Logger.Error($"[{ProcessId.Port}]: Could not add a process from ProcInitializeSystem");
-                        // TODO should throw exception?
-                    }
-                }
-
-                ProcessId = FindProcessByHostAndPort(ProcessId.Host, ProcessId.Port);   // TODO check if ok (it's done in order to update info sent by Hub)
+                msg = ProtoComm.Message.Parser.ParseFrom(serializedMsg);
             }
-            else if (msg.NetworkMessage.Message.Type == ProtoComm.Message.Types.Type.ProcDestroySystem)
+            catch (InvalidProtocolBufferException)
             {
-                Processes.Clear();
-                _abstractions.Clear();      // TODO test this 
-                // TODO create separate queue for messages/events -> On ProcDestroy -> should clear that queue
+                Logger.Error($"[{ProcessId.Port}]: Protobuf could not parse incoming serialized message. Message ignored");
+                return;
+            }
+
+            // Each incoming message should be wrapped into Message(NetworkMessage)
+            if (msg.Type != ProtoComm.Message.Types.Type.NetworkMessage)
+            {
+                Logger.Error($"[{ProcessId.Port}]: Invalid message received - [{msg.Type}]. Message ignored");
+                return;
+            }
+
+            var innerMsg = msg.NetworkMessage.Message;
+            // TODO maybe log incoming messages
+
+
+            if (innerMsg.Type == ProtoComm.Message.Types.Type.ProcInitializeSystem)
+            {
+                HandleProcInit(innerMsg);
+            }
+            else if (innerMsg.Type == ProtoComm.Message.Types.Type.ProcDestroySystem)
+            {
+                HandleProcDestroy(innerMsg);
             }
             else
             {
-                AddToMessageQueue(msg);
-                // TODO maybe process ProcInit + ProcDestroy also here?
+                TriggerEvent(msg);
+            }
+        }
+
+        private void HandleProcDestroy(ProtoComm.Message innerMsg)
+        {
+            Processes.Clear();
+            _abstractions.Clear();      // TODO test this 
+                                        // TODO create separate queue for messages/events -> On ProcDestroy -> should clear that queue
+                                        // TODO or maybe clear messageQueue right before procInit is received
+        }
+
+        private void HandleProcInit(ProtoComm.Message msg)
+        {
+            try
+            {
+                RegisterAbstraction(new Application(Application.Name, this));
+
+                var procInitSysMsg = msg.ProcInitializeSystem;
+                foreach (var proc in procInitSysMsg.Processes)
+                {
+                    Processes.Add(proc);
+                }
+
+                var foundProcessId = FindProcessByHostAndPort(ProcessId.Host, ProcessId.Port);   // Hub updates info of ProcessId, so it should be replaced
+                if (foundProcessId != null)
+                {
+                    ProcessId = foundProcessId;
+                }
+                else
+                {
+                    Logger.Fatal($"[{ProcessId.Port}]: Could not find ProcessId from ProcInitializeSystem");
+                    // TODO can we stop System here?
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal($"[{ProcessId.Port}]: Exception occurred while handling ProcInitializeSystem message - {ex.Message}");
             }
         }
 
@@ -224,32 +275,37 @@ namespace NewDalgs.System
         {
             if (_wasStopped)
                 return;
-            
-            foreach (var msg in _messageQueue.GetConsumingEnumerable())
+            try
             {
-                //Logger.Warn($"[{ProcessId.Port}]: {msg.ToAbstractionId}");      // TODO refactor this
-
-                try
+                foreach (var msg in _eventQueue.GetConsumingEnumerable())
                 {
-                    HandleReceivedMessage(msg);
-                }
-                catch (Exception ex)        // TODO replace with more specific exception
-                {
-                    Logger.Error($"[{ProcessId.Port}]: {ex.Message}");
-                    continue;
+                    try
+                    {
+                        HandleEvent(msg);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error($"[{ProcessId.Port}]: {ex.Message}. Exception occurred while handling message: [{msg}]");
+                        continue;
+                    }
                 }
             }
-
-            Logger.Debug($"[{ProcessId.Port}]: EventLoop stopped");
+            catch (Exception ex)
+            {
+                Logger.Fatal($"[{ProcessId.Port}]: {ex.Message}. Exception occurred in EventLoop");
+                Stop();
+            }
+            finally
+            {
+                Logger.Debug($"[{ProcessId.Port}]: EventLoop stopped");
+            }
         }
 
-        // TODO message handling should be done in separate class - maybe use dict to map type of message to corresponding alg
-        private void HandleReceivedMessage(ProtoComm.Message msg)
+        private void HandleEvent(ProtoComm.Message msg)
         {
             if (!_abstractions.ContainsKey(msg.ToAbstractionId))
             {
-                //Logger.Error($"[{ProcessId.Port}]: Abstractions dict does not contain - [{msg.ToAbstractionId}]");
-
+                // TODO Extract this to separate method
                 var nnarRegisterName = AbstractionIdUtil.GetNnarRegisterName(msg.ToAbstractionId);
                 if (nnarRegisterName != "")
                 {

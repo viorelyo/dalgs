@@ -17,7 +17,7 @@ namespace NewDalgs.Networking
         private CancellationToken _ct;
         private CancellationTokenSource _cts = new CancellationTokenSource();
 
-        public delegate void Notify(NetworkHandler publisher, ProtoComm.Message e);
+        public delegate void Notify(NetworkHandler publisher, byte[] serializedMsg);
         public event Notify OnPublish;
 
         private bool _isRunning;
@@ -28,9 +28,7 @@ namespace NewDalgs.Networking
             _processPort = processPort;
         }
 
-        /// <summary>
-        /// Wrapping each message into Message(NetworMessage) before sending it through TCP Socket
-        /// </summary>
+        /// <exception cref="NetworkException">If could not create TcpClient, GetStream or create BinaryWriter</exception>
         public void SendMessage(byte[] serializedMsg, string remoteHost, int remotePort)
         {
             // https://stackoverflow.com/questions/8620885/c-sharp-binary-reader-in-big-endian
@@ -59,6 +57,7 @@ namespace NewDalgs.Networking
             }
         }
 
+        /// <exception cref="NetworkException">If could not create or start TcpListener</exception>
         public void ListenForConnections()
         {
             _isRunning = true;
@@ -117,10 +116,6 @@ namespace NewDalgs.Networking
             Logger.Debug($"[{_processPort}]: Stop Requested");
         }
 
-
-        /// <summary>
-        /// Unwrapping each received message from Message(NetworkMessage)
-        /// </summary>
         private void ProcessConnection(IAsyncResult ar)
         {
             if (_ct.IsCancellationRequested)
@@ -153,13 +148,11 @@ namespace NewDalgs.Networking
                             byte[] serializedMsg = reader.ReadBytes(msgSize);
                             if (msgSize != serializedMsg.Length)
                             {
-                                Logger.Error($"[{_processPort}]: Incomplete message received: [{serializedMsg.Length}/{msgSize}]. Message ignored");
+                                Logger.Error($"[{_processPort}]: Malformed message received: [{serializedMsg.Length}/{msgSize}]. Message ignored");
                                 return;
                             }
 
-                            var receivedMsg = ProtoComm.Message.Parser.ParseFrom(serializedMsg);
-
-                            OnPublish(this, receivedMsg);
+                            OnPublish(this, serializedMsg);
                         }
                     }
                 }

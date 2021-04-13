@@ -1,12 +1,10 @@
 ﻿using NewDalgs.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NewDalgs.Utils
 {
     static class AbstractionIdUtil
     {
+        // TODO before using these functions check the return value
         public static string GetParentAbstractionId(string originalAbstractionId)
         {
             if ((originalAbstractionId == null) || (originalAbstractionId == ""))

@@ -78,7 +78,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(nnarReadMsg);
+            _system.TriggerEvent(nnarReadMsg);
         }
 
         private void HandleNnarWriteReturn(ProtoComm.Message msg)
@@ -112,7 +112,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(outMsg);
+            _system.TriggerEvent(outMsg);
         }
 
         private void HandleNnarReadReturn(ProtoComm.Message msg)
@@ -149,7 +149,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(outMsg);
+            _system.TriggerEvent(outMsg);
         }
 
         private void HandleAppWrite(ProtoComm.Message msg)
@@ -172,7 +172,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(nnarWriteMsg);
+            _system.TriggerEvent(nnarWriteMsg);
         }
 
         private void HandleAppBroadcast(ProtoComm.Message msg)
@@ -204,7 +204,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(outMsg);
+            _system.TriggerEvent(outMsg);
         }
 
         private void HandleBebDeliver(ProtoComm.Message msg)
@@ -228,7 +228,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(outMsg);
+            _system.TriggerEvent(outMsg);
         }
     }
 }

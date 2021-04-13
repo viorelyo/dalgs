@@ -52,7 +52,7 @@ namespace NewDalgs.Abstractions
                     MessageUuid = Guid.NewGuid().ToString()
                 };
 
-                _system.AddToMessageQueue(outMsg);
+                _system.TriggerEvent(outMsg);
             }
         }
 
@@ -75,7 +75,7 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(outMsg);
+            _system.TriggerEvent(outMsg);
         }
     }
 }

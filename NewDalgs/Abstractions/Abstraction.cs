@@ -2,8 +2,6 @@
 {
     abstract class Abstraction
     {
-        protected static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
         protected string _abstractionId;
         protected System.System _system;
 

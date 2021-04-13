@@ -29,9 +29,6 @@ namespace NewDalgs.Abstractions
             return false;
         }
 
-        /// <summary>
-        /// Wrapping received message into Message(PlDeliver)
-        /// </summary>
         private void HandlePlDeliver(ProtoComm.Message msg)
         {
             var networkMsg = msg.NetworkMessage;
@@ -57,11 +54,12 @@ namespace NewDalgs.Abstractions
                 MessageUuid = Guid.NewGuid().ToString()
             };
 
-            _system.AddToMessageQueue(outMsg);
+            _system.TriggerEvent(outMsg);
         }
 
         private void HandlePlSend(ProtoComm.Message msg)
         {
+            // TODO maybe log outgoing messages
             var plSendMsg = msg.PlSend;
 
             var networkMsg = new ProtoComm.NetworkMessage

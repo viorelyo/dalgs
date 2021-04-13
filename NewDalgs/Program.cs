@@ -7,7 +7,7 @@ namespace NewDalgs
 {
     class Program
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();          // TODO maybe reconfigure logger on the fly?!
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static ManualResetEvent finished = new ManualResetEvent(false);
 
