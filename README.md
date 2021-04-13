@@ -1,7 +1,8 @@
 # Dalgs - Distributed algorithms
 
 ## dalgs commands
-`dalgs.exe 127.0.0.01 5000 127.0.0.1 5001 5002 5003`
+`dalgs.exe 127.0.0.1 5000 127.0.0.1 5001 5002 5003`
+`127.0.0.1 5000 127.0.0.1 5004 5005 5006 gvsd` - second instance
 
 ## ProtocolBuffers command
 `protoc.exe -I=C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto --csharp_out=C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto\communication-protocol.proto`

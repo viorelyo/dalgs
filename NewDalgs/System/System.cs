@@ -108,6 +108,19 @@ namespace NewDalgs.System
             }
         }
 
+        private void ClearEventQueue()
+        {
+            if (_eventQueue == null)
+            {
+                return;
+            }
+
+            while (_eventQueue.Count > 0)
+            {
+                _eventQueue.TryTake(out var _);
+            }
+        }
+
         public bool SendMessageOverNetwork(ProtoComm.Message msg, string remoteHost, int remotePort)
         {
             byte[] serializedMsg = msg.ToByteArray();
@@ -237,15 +250,15 @@ namespace NewDalgs.System
         private void HandleProcDestroy(ProtoComm.Message innerMsg)
         {
             Processes.Clear();
-            _abstractions.Clear();      // TODO test this 
-                                        // TODO create separate queue for messages/events -> On ProcDestroy -> should clear that queue
-                                        // TODO or maybe clear messageQueue right before procInit is received
+            _abstractions.Clear();
         }
 
         private void HandleProcInit(ProtoComm.Message msg)
         {
             try
             {
+                ClearEventQueue();
+
                 RegisterAbstraction(new Application(Application.Name, this));
 
                 var procInitSysMsg = msg.ProcInitializeSystem;
@@ -262,12 +275,13 @@ namespace NewDalgs.System
                 else
                 {
                     Logger.Fatal($"[{ProcessId.Port}]: Could not find ProcessId from ProcInitializeSystem");
-                    // TODO can we stop System here?
+                    Stop();
                 }
             }
             catch (Exception ex)
             {
                 Logger.Fatal($"[{ProcessId.Port}]: Exception occurred while handling ProcInitializeSystem message - {ex.Message}");
+                Stop();
             }
         }
 
