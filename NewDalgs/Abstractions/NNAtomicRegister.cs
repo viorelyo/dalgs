@@ -59,7 +59,7 @@ namespace NewDalgs.Abstractions
         private NNAREntity _nnarEntity = new NNAREntity { Timestamp = 0, WriterRank = 0, Value = new ProtoComm.Value { Defined = false } };
         private int _acks = 0;
         private int _readId = 0;
-        private ConcurrentDictionary<string, NNAREntity> _readList = new ConcurrentDictionary<string, NNAREntity>();        // TODO check if should be concurrent
+        private ConcurrentDictionary<string, NNAREntity> _readList = new ConcurrentDictionary<string, NNAREntity>();
         private bool _isReading = false;
 
         private ProtoComm.Value _writeVal = new ProtoComm.Value { Defined = false };
@@ -194,7 +194,7 @@ namespace NewDalgs.Abstractions
                 var maxNnarEntity = GetHighest();
                 _readVal = maxNnarEntity.Value;
 
-                _readList = new ConcurrentDictionary<string, NNAREntity>();     // TODO try to clear instead of recreating
+                _readList.Clear();
 
                 ProtoComm.NnarInternalWrite nnarInternalWriteMsg;
                 if (_isReading)
@@ -332,7 +332,7 @@ namespace NewDalgs.Abstractions
         {
             _readId++;
             _acks = 0;
-            _readList = new ConcurrentDictionary<string, NNAREntity>();
+            _readList.Clear();
             _isReading = true;
 
             var nnarInternalReadMsg = new ProtoComm.Message
@@ -371,7 +371,7 @@ namespace NewDalgs.Abstractions
             _readId++;
             _writeVal = new ProtoComm.Value { Defined = true, V = nnarWriteMsg.Value.V };
             _acks = 0;
-            _readList = new ConcurrentDictionary<string, NNAREntity>();
+            _readList.Clear();
 
             var nnarInternalReadMsg = new ProtoComm.Message
             {
