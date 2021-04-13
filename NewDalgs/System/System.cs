@@ -123,6 +123,16 @@ namespace NewDalgs.System
 
         public bool SendMessageOverNetwork(ProtoComm.Message msg, string remoteHost, int remotePort)
         {
+            // Each travelling message should be wrapped in Message(NetworkMessage)
+            if (msg.Type != ProtoComm.Message.Types.Type.NetworkMessage)
+            {
+                Logger.Error($"[{ProcessId.Port}]: Invalid message sent - {msg}");
+                return false;
+            }
+
+            var innerMsg = msg.NetworkMessage.Message;
+            Logger.Info($"[{ProcessId.Port}]: ===> Sending message: [{innerMsg.Type}] -> [{innerMsg.ToAbstractionId}] ({remoteHost}:{remotePort})");
+
             byte[] serializedMsg = msg.ToByteArray();
 
             try
@@ -230,8 +240,7 @@ namespace NewDalgs.System
             }
 
             var innerMsg = msg.NetworkMessage.Message;
-            // TODO maybe log incoming messages
-
+            Logger.Info($"[{ProcessId.Port}]: <=== Message received: [{innerMsg.Type}] -> [{innerMsg.ToAbstractionId}]");
 
             if (innerMsg.Type == ProtoComm.Message.Types.Type.ProcInitializeSystem)
             {
