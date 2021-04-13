@@ -13,7 +13,7 @@ namespace NewDalgs
 
         static void Main(string[] args)
         {
-            //Console.Clear();      // TODO uncomment this after creating exe
+            Console.Clear();
             Console.CancelKeyPress += new ConsoleCancelEventHandler(BreakHandler);
 
             var coreParams = ValidateInput(args);

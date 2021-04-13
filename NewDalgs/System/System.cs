@@ -328,22 +328,26 @@ namespace NewDalgs.System
         {
             if (!_abstractions.ContainsKey(msg.ToAbstractionId))
             {
-                // TODO Extract this to separate method
-                var nnarRegisterName = AbstractionIdUtil.GetNnarRegisterName(msg.ToAbstractionId);
-                if (nnarRegisterName != "")
-                {
-                    var nnarAbstractionId = AbstractionIdUtil.GetNnarAbstractionId(Application.Name, nnarRegisterName);
-                    RegisterAbstraction(new NNAtomicRegister(nnarAbstractionId, this));
-                }
-                else
-                {
-                    Logger.Error($"[{ProcessId.Port}]: Could not obtain nnarRegisterName");
-                }
+                HandleNewAbstractionId(msg.ToAbstractionId);
             }
 
             if (!_abstractions[msg.ToAbstractionId].Handle(msg))
             {
                 Logger.Error($"[{ProcessId.Port}]: Could not handle message: [{msg}]");
+            }
+        }
+
+        private void HandleNewAbstractionId(string toAbstractionId)
+        {
+            var nnarRegisterName = AbstractionIdUtil.GetNnarRegisterName(toAbstractionId);
+            if (nnarRegisterName != "")
+            {
+                var nnarAbstractionId = AbstractionIdUtil.GetNnarAbstractionId(Application.Name, nnarRegisterName);
+                RegisterAbstraction(new NNAtomicRegister(nnarAbstractionId, this));
+            }
+            else
+            {
+                Logger.Error($"[{ProcessId.Port}]: Could not obtain nnarRegisterName from [{toAbstractionId}]");
             }
         }
     }

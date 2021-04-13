@@ -59,7 +59,6 @@ namespace NewDalgs.Abstractions
 
         private void HandlePlSend(ProtoComm.Message msg)
         {
-            // TODO maybe log outgoing messages
             var plSendMsg = msg.PlSend;
 
             var networkMsg = new ProtoComm.NetworkMessage

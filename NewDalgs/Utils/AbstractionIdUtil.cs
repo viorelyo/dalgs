@@ -4,7 +4,6 @@ namespace NewDalgs.Utils
 {
     static class AbstractionIdUtil
     {
-        // TODO before using these functions check the return value
         public static string GetParentAbstractionId(string originalAbstractionId)
         {
             if ((originalAbstractionId == null) || (originalAbstractionId == ""))

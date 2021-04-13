@@ -97,7 +97,6 @@ namespace NewDalgs.Abstractions
                     },
                     SystemId = msg.SystemId,
                     FromAbstractionId = _abstractionId,
-                    //ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),  TODO
                     MessageUuid = Guid.NewGuid().ToString()
                 }
             };
@@ -134,7 +133,6 @@ namespace NewDalgs.Abstractions
                     },
                     SystemId = msg.SystemId,
                     FromAbstractionId = _abstractionId,
-                    //ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),  TODO
                     MessageUuid = Guid.NewGuid().ToString()
                 }
             };
