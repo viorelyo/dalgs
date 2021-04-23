@@ -34,22 +34,25 @@ namespace NewDalgs
             e.Cancel = true;
         }
 
+        /// <summary>
+        /// Example of input: "127.0.0.1 5000 127.0.0.1 5004 5005 5006 gvsd"
+        ///                    HUB-IP+PORT    PROCS-IP+PORTS           ALIAS
+        /// </summary>
         static CoreParams ValidateInput(string[] args)
         {
-            if (args.Length < 7)
+            if (args.Length != 7)
             {
-                
+                Logger.Fatal($"[main]: Invalid input. Invalid number of args");
                 return null;
             }
 
             var coreParams = new CoreParams();
-            // TODO validate input
             coreParams.HubHost = args[0];
 
             int parsedInt;
             if (!Int32.TryParse(args[1], out parsedInt))
             {
-
+                Logger.Fatal($"[main]: Invalid input. Could not find Hub port");
                 return null;
             }
 
@@ -59,21 +62,21 @@ namespace NewDalgs
 
             if (!Int32.TryParse(args[3], out parsedInt))
             {
-
+                Logger.Fatal($"[main]: Invalid input. Could not find Proc port");
                 return null;
             }
             coreParams.ProcessesPorts.Add(parsedInt);
 
             if (!Int32.TryParse(args[4], out parsedInt))
             {
-
+                Logger.Fatal($"[main]: Invalid input. Could not find Proc port");
                 return null;
             }
             coreParams.ProcessesPorts.Add(parsedInt);
 
             if (!Int32.TryParse(args[5], out parsedInt))
             {
-
+                Logger.Fatal($"[main]: Invalid input. Could not find Proc port");
                 return null;
             }
             coreParams.ProcessesPorts.Add(parsedInt);

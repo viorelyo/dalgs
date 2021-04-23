@@ -7,6 +7,9 @@
 ## ProtocolBuffers command
 `protoc.exe -I=C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto --csharp_out=C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto\communication-protocol.proto`
 
+## Publish command - creating self contained EXE .NET CORE
+`dotnet publish -c Release -r win10-x64 /p:PublishSingleFile=true`
+
 ## C# references
 #### Graceful Stop for TcpListener
 - [Async Socket](https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example)

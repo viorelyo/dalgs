@@ -63,7 +63,7 @@ namespace NewDalgs.System
                 return;
 
             UnsubscribeFromMessageListener();
-            _networkHandler.StopListener();     // TODO would be nice to notify dalgs that process is unregistered
+            _networkHandler.StopListener();     // Would be nice to notify dalgs that process is unregistered
 
             try
             {
