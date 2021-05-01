@@ -40,6 +40,8 @@ namespace NewDalgs.Abstractions
             var procId = msg.EpfdRestore.Process;
 
             _suspected.Remove(procId);
+
+            HandleInternalCheck();
         }
 
         private void HandleEpfdSuspect(ProtoComm.Message msg)
@@ -47,6 +49,8 @@ namespace NewDalgs.Abstractions
             var procId = msg.EpfdSuspect.Process;
 
             _suspected.Add(procId);
+
+            HandleInternalCheck();
         }
 
         private void HandleInternalCheck()

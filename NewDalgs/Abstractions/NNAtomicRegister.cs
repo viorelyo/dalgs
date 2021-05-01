@@ -59,6 +59,7 @@ namespace NewDalgs.Abstractions
         private NNAREntity _nnarEntity = new NNAREntity { Timestamp = 0, WriterRank = 0, Value = new ProtoComm.Value { Defined = false } };
         private int _acks = 0;
         private int _readId = 0;
+        // TODO replace with Dictionary
         private ConcurrentDictionary<string, NNAREntity> _readList = new ConcurrentDictionary<string, NNAREntity>();
         private bool _isReading = false;
 
