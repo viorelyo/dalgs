@@ -12,6 +12,8 @@ namespace NewDalgs.Abstractions
 
         private static readonly int Delta = 100;    // 100 milliseconds
 
+        private Timer _timer = new Timer();
+
         private HashSet<ProtoComm.ProcessId> _alive;
         private HashSet<ProtoComm.ProcessId> _suspected = new HashSet<ProtoComm.ProcessId>();
         private int _delay = Delta;
@@ -163,8 +165,8 @@ namespace NewDalgs.Abstractions
         private void StartTimer()
         {
             // TODO check if the timer should be reset first
-            var timer = new Timer(_delay);
-            timer.Elapsed += new ElapsedEventHandler(
+            _timer.Interval = _delay;
+            _timer.Elapsed += new ElapsedEventHandler(
                 (source, e) => 
                 {
                     var msg = new ProtoComm.Message
@@ -179,7 +181,7 @@ namespace NewDalgs.Abstractions
 
                     _system.TriggerEvent(msg);
                 });
-            timer.Start();
+            _timer.Start();
         }
     }
 }
