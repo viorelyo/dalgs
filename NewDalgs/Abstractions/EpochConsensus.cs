@@ -16,12 +16,14 @@ namespace NewDalgs.Abstractions
         public static readonly string Name = "ep";
 
         private bool _halted = false;
+
         private int _epochTimestamp;
         private EpochConsensusState _state;
-        private ProtoComm.Value _tmpVal;
+        private ProtoComm.Value _tmpVal = new ProtoComm.Value { Defined = false };
         private Dictionary<ProtoComm.ProcessId, EpochConsensusState> _states = new Dictionary<ProtoComm.ProcessId, EpochConsensusState>();
         private int _accepted = 0;
 
+        // TODO decide if Leader should be included in constructor, even if it is not used
         public EpochConsensus(string abstractionId, System.System system, EpochConsensusState state, int epochTimestamp)
             : base(abstractionId, system)
         {
