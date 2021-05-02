@@ -16,7 +16,6 @@ namespace NewDalgs.Abstractions
         private HashSet<ProtoComm.ProcessId> _suspected = new HashSet<ProtoComm.ProcessId>();
         private int _delay = Delta;
         
-
         public EventuallyPerfectFailureDetector(string abstractionId, System.System system)
             : base(abstractionId, system)
         {
@@ -76,13 +75,13 @@ namespace NewDalgs.Abstractions
                         Type = ProtoComm.Message.Types.Type.EpfdInternalHeartbeatReply,
                         EpfdInternalHeartbeatReply = new ProtoComm.EpfdInternalHeartbeatReply(),
                         SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                        ToAbstractionId = _abstractionId,    // TODO check this
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     }
                 },
                 SystemId = "sys-1",    // TODO sysid should be globally available :(
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -99,40 +98,34 @@ namespace NewDalgs.Abstractions
             
             foreach (var procId in _system.Processes)
             {
+                var msg = new ProtoComm.Message
+                {
+                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
+                    FromAbstractionId = _abstractionId,
+                    MessageUuid = Guid.NewGuid().ToString()
+                };
+
                 if (!_alive.Contains(procId) && !_suspected.Contains(procId))
                 {
                     _suspected.Add(procId);
 
-                    var msg = new ProtoComm.Message
+                    msg.Type = ProtoComm.Message.Types.Type.EpfdSuspect;
+                    msg.EpfdSuspect = new ProtoComm.EpfdSuspect
                     {
-                        Type = ProtoComm.Message.Types.Type.EpfdSuspect,
-                        EpfdSuspect = new ProtoComm.EpfdSuspect
-                        {
-                            Process = procId
-                        },
-                        SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
-                        FromAbstractionId = _abstractionId,
-                        MessageUuid = Guid.NewGuid().ToString()
+                        Process = procId
                     };
-
+                        
                     _system.TriggerEvent(msg);
                 }
                 else if (_alive.Contains(procId) && _suspected.Contains(procId))
                 {
                     _suspected.Remove(procId);
 
-                    var msg = new ProtoComm.Message
+                    msg.Type = ProtoComm.Message.Types.Type.EpfdRestore;
+                    msg.EpfdRestore = new ProtoComm.EpfdRestore
                     {
-                        Type = ProtoComm.Message.Types.Type.EpfdRestore,
-                        EpfdRestore = new ProtoComm.EpfdRestore
-                        {
-                            Process = procId
-                        },
-                        SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
-                        FromAbstractionId = _abstractionId,
-                        MessageUuid = Guid.NewGuid().ToString()
+                        Process = procId
                     };
 
                     _system.TriggerEvent(msg);
@@ -149,13 +142,13 @@ namespace NewDalgs.Abstractions
                             Type = ProtoComm.Message.Types.Type.EpfdInternalHeartbeatRequest,
                             EpfdInternalHeartbeatRequest = new ProtoComm.EpfdInternalHeartbeatRequest(),
                             SystemId = "sys-1",    // TODO sysid should be globally available :(
-                            ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                            ToAbstractionId = _abstractionId,    // TODO check this
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
                     SystemId = "sys-1",    // TODO sysid should be globally available :(
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -179,7 +172,7 @@ namespace NewDalgs.Abstractions
                         Type = ProtoComm.Message.Types.Type.EpfdTimeout,
                         EpfdTimeout = new ProtoComm.EpfdTimeout(),
                         SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                        ToAbstractionId = _abstractionId,    // TODO check this
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     };

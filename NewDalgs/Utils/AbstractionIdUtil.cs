@@ -40,7 +40,15 @@ namespace NewDalgs.Utils
             if ((parentAbstractionId == null) || (parentAbstractionId == ""))
                 return "";
 
-            return parentAbstractionId + '.' + NNAtomicRegister.Name + '[' + ucId + ']';
+            return parentAbstractionId + '.' + UniformConsensus.Name + '[' + ucId + ']';
+        }
+
+        public static string GetEpAbstractionId(string parentAbstractionId, int epId)
+        {
+            if ((parentAbstractionId == null) || (parentAbstractionId == ""))
+                return "";
+
+            return parentAbstractionId + '.' + EpochConsensus.Name + '[' + epId.ToString() + ']';
         }
 
         public static string GetNnarRegisterName(string nnarAbstractionId)

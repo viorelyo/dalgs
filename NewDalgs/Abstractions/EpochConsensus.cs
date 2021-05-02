@@ -130,7 +130,7 @@ namespace NewDalgs.Abstractions
                     Value = decidedMsg.Value
                 },
                 SystemId = "sys-1",    // TODO sysid should be globally available :(
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -201,13 +201,13 @@ namespace NewDalgs.Abstractions
                         Type = ProtoComm.Message.Types.Type.EpInternalAccept,
                         EpInternalAccept = new ProtoComm.EpInternalAccept(),
                         SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                        ToAbstractionId = _abstractionId,    // TODO check this
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     }
                 },
                 SystemId = "sys-1",    // TODO sysid should be globally available :(
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -291,13 +291,13 @@ namespace NewDalgs.Abstractions
                             ValueTimestamp = _state.ValTimestamp
                         },
                         SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                        ToAbstractionId = _abstractionId,    // TODO check this
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     }
                 },
                 SystemId = "sys-1",    // TODO sysid should be globally available :(
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };

@@ -30,7 +30,7 @@ namespace NewDalgs.Abstractions
                 ValTimestamp = 0
             };
 
-            _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, EpochConsensus.Name), _system, ep0State, _epochTimestamp));
+            _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp), _system, ep0State, _epochTimestamp));
 
             HandleInternalCheck();
         }
@@ -82,7 +82,7 @@ namespace NewDalgs.Abstractions
                             Value = epDecideMsg.Value
                         },
                         SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                        ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     };
@@ -106,7 +106,7 @@ namespace NewDalgs.Abstractions
                         Value = _val
                     },
                     SystemId = "sys-1",    // TODO sysid should be globally available :(
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -131,7 +131,7 @@ namespace NewDalgs.Abstractions
                     ValTimestamp = epAbortedMsg.ValueTimestamp
                 };
 
-                _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, EpochConsensus.Name), _system, epState, _epochTimestamp));
+                _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp), _system, epState, _epochTimestamp));
 
                 HandleInternalCheck();
             }
@@ -149,7 +149,7 @@ namespace NewDalgs.Abstractions
                 Type = ProtoComm.Message.Types.Type.EpAbort,
                 EpAbort = new ProtoComm.EpAbort(),
                 SystemId = "sys-1",    // TODO sysid should be globally available :(
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),    // TODO check this
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
