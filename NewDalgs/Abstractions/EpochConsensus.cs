@@ -28,6 +28,7 @@ namespace NewDalgs.Abstractions
             : base(abstractionId, system)
         {
             _system.RegisterAbstraction(new PerfectLink(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name), _system));
+            _system.RegisterAbstraction(new BestEffortBroadcast(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name), _system));       // TODO well...
 
             _epochTimestamp = epochTimestamp;
             _state = state;
