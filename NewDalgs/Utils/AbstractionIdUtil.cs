@@ -35,6 +35,14 @@ namespace NewDalgs.Utils
             return parentAbstractionId + '.' + NNAtomicRegister.Name + '[' + nnarId + ']';
         }
 
+        public static string GetUcAbstractionId(string parentAbstractionId, string ucId)
+        {
+            if ((parentAbstractionId == null) || (parentAbstractionId == ""))
+                return "";
+
+            return parentAbstractionId + '.' + NNAtomicRegister.Name + '[' + ucId + ']';
+        }
+
         public static string GetNnarRegisterName(string nnarAbstractionId)
         {
             int nnarKeywordIndex = nnarAbstractionId.IndexOf(NNAtomicRegister.Name);

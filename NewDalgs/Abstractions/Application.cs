@@ -37,6 +37,12 @@ namespace NewDalgs.Abstractions
                     return true;
                 }
 
+                if (innerMsg.Type == ProtoComm.Message.Types.Type.AppPropose)
+                {
+                    HandleAppPropose(innerMsg);
+                    return true;
+                }
+
                 return false;
             }
 
@@ -58,7 +64,69 @@ namespace NewDalgs.Abstractions
                 return true;
             }
 
+            if (msg.Type == ProtoComm.Message.Types.Type.UcDecide)
+            {
+                HandleUcDecide(msg);
+                return true;
+            }
+
             return false;
+        }
+
+        private void HandleUcDecide(ProtoComm.Message msg)
+        {
+            var ucDecideMsg = msg.UcDecide;
+
+            var plSendMsg = new ProtoComm.PlSend
+            {
+                Destination = _system.HubProcessId,
+                Message = new ProtoComm.Message
+                {
+                    Type = ProtoComm.Message.Types.Type.AppDecide,
+                    AppDecide = new ProtoComm.AppDecide
+                    {
+                        Value = ucDecideMsg.Value
+                    },
+                    SystemId = msg.SystemId,
+                    FromAbstractionId = _abstractionId,
+                    MessageUuid = Guid.NewGuid().ToString()
+                }
+            };
+
+            var outMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.PlSend,
+                PlSend = plSendMsg,
+                SystemId = msg.SystemId,
+                FromAbstractionId = _abstractionId,
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            _system.TriggerEvent(outMsg);
+        }
+
+        private void HandleAppPropose(ProtoComm.Message msg)
+        {
+            var appProposeMsg = msg.AppPropose;
+
+            string ucAbstractionId = AbstractionIdUtil.GetUcAbstractionId(_abstractionId, appProposeMsg.Topic);
+            _system.RegisterAbstraction(new UniformConsensus(ucAbstractionId, _system));
+
+            var ucProposeMsg = new ProtoComm.Message
+            {
+                Type = ProtoComm.Message.Types.Type.UcPropose,
+                UcPropose = new ProtoComm.UcPropose
+                {
+                    Value = appProposeMsg.Value
+                },
+                SystemId = msg.SystemId,
+                FromAbstractionId = _abstractionId,
+                ToAbstractionId = ucAbstractionId,
+                MessageUuid = Guid.NewGuid().ToString()
+            };
+
+            _system.TriggerEvent(ucProposeMsg);
         }
 
         private void HandleAppRead(ProtoComm.Message msg)
