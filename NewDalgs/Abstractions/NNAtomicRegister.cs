@@ -78,7 +78,7 @@ namespace NewDalgs.Abstractions
         {
             if (msg.Type == ProtoComm.Message.Types.Type.NnarRead)
             {
-                HandleNNarRead(msg.SystemId);
+                HandleNNarRead();
                 return true;
             }
 
@@ -144,7 +144,7 @@ namespace NewDalgs.Abstractions
             {
                 var outMsg = new ProtoComm.Message
                 {
-                    SystemId = msg.SystemId,
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
@@ -228,13 +228,13 @@ namespace NewDalgs.Abstractions
                         {
                             Type = ProtoComm.Message.Types.Type.NnarInternalWrite,
                             NnarInternalWrite = nnarInternalWriteMsg,
-                            SystemId = msg.SystemId,
+                            SystemId = _system.SystemId,
                             ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
-                    SystemId = msg.SystemId,
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
@@ -268,7 +268,7 @@ namespace NewDalgs.Abstractions
                 {
                     ReadId = nnarInternalWriteMsg.ReadId
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = _abstractionId,
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -282,7 +282,7 @@ namespace NewDalgs.Abstractions
                     Message = plSendMsg,
                     Destination = bebDeliverMsg.Sender
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -306,7 +306,7 @@ namespace NewDalgs.Abstractions
                     WriterRank = _nnarEntity.WriterRank,
                     Value = _nnarEntity.Value
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = _abstractionId,
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -320,7 +320,7 @@ namespace NewDalgs.Abstractions
                     Message = plSendMsg,
                     Destination = bebDeliverMsg.Sender
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -329,7 +329,7 @@ namespace NewDalgs.Abstractions
             _system.TriggerEvent(msgOut);
         }
 
-        private void HandleNNarRead(string systemId)
+        private void HandleNNarRead()
         {
             _readId++;
             _acks = 0;
@@ -343,7 +343,7 @@ namespace NewDalgs.Abstractions
                 {
                     ReadId = _readId
                 },
-                SystemId = systemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = _abstractionId,
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -356,7 +356,7 @@ namespace NewDalgs.Abstractions
                 {
                     Message = nnarInternalReadMsg
                 },
-                SystemId = systemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -381,7 +381,7 @@ namespace NewDalgs.Abstractions
                 {
                     ReadId = _readId
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = _abstractionId,
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -394,7 +394,7 @@ namespace NewDalgs.Abstractions
                 {
                     Message = nnarInternalReadMsg
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()

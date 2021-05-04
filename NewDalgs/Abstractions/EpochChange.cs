@@ -73,13 +73,13 @@ namespace NewDalgs.Abstractions
                             {
                                 Timestamp = _timestamp
                             },
-                            SystemId = "sys-1",    // TODO check this
+                            SystemId = _system.SystemId,
                             ToAbstractionId = _abstractionId,   // TODO check this
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
-                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
@@ -107,7 +107,7 @@ namespace NewDalgs.Abstractions
                         NewLeader = sender,
                         NewTimestamp = newTimestamp
                     },
-                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
@@ -127,13 +127,13 @@ namespace NewDalgs.Abstractions
                         {
                             Type = ProtoComm.Message.Types.Type.EcInternalNack,
                             EcInternalNack = new ProtoComm.EcInternalNack(),
-                            SystemId = "sys-1",    // TODO sysid should be globally available :(
+                            SystemId = _system.SystemId,
                             ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
-                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
@@ -163,13 +163,13 @@ namespace NewDalgs.Abstractions
                             {
                                 Timestamp = _timestamp
                             },
-                            SystemId = msg.SystemId,    // TODO check this
+                            SystemId = _system.SystemId,
                             ToAbstractionId = _abstractionId,   // TODO check this
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
-                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()

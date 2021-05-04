@@ -81,7 +81,7 @@ namespace NewDalgs.Abstractions
                         {
                             Value = epDecideMsg.Value
                         },
-                        SystemId = "sys-1",    // TODO sysid should be globally available :(
+                        SystemId = _system.SystemId,
                         ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
@@ -105,7 +105,7 @@ namespace NewDalgs.Abstractions
                     {
                         Value = _val
                     },
-                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
@@ -148,7 +148,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.EpAbort,
                 EpAbort = new ProtoComm.EpAbort(),
-                SystemId = "sys-1",    // TODO sysid should be globally available :(
+                SystemId = _system.SystemId,
                 ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),    // TODO check this
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()

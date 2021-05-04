@@ -70,7 +70,7 @@ namespace NewDalgs.Abstractions
                     {
                         Process = _leader
                     },
-                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    SystemId = _system.SystemId,
                     ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()

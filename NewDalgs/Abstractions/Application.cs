@@ -87,7 +87,7 @@ namespace NewDalgs.Abstractions
                     {
                         Value = ucDecideMsg.Value
                     },
-                    SystemId = msg.SystemId,
+                    SystemId = _system.SystemId,
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 }
@@ -97,7 +97,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlSend,
                 PlSend = plSendMsg,
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 MessageUuid = Guid.NewGuid().ToString()
@@ -120,7 +120,7 @@ namespace NewDalgs.Abstractions
                 {
                     Value = appProposeMsg.Value
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = ucAbstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -140,7 +140,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.NnarRead,
                 NnarRead = new ProtoComm.NnarRead(),
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = nnarAbstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -163,7 +163,7 @@ namespace NewDalgs.Abstractions
                     {
                         Register = registerName
                     },
-                    SystemId = msg.SystemId,
+                    SystemId = _system.SystemId,
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 }
@@ -173,7 +173,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlSend,
                 PlSend = plSendMsg,
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 MessageUuid = Guid.NewGuid().ToString()
@@ -199,7 +199,7 @@ namespace NewDalgs.Abstractions
                         Register = registerName,
                         Value = nnarReadReturnMsg.Value
                     },
-                    SystemId = msg.SystemId,
+                    SystemId = _system.SystemId,
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 }
@@ -209,7 +209,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlSend,
                 PlSend = plSendMsg,
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 MessageUuid = Guid.NewGuid().ToString()
@@ -232,7 +232,7 @@ namespace NewDalgs.Abstractions
                 {
                    Value = appWriteMsg.Value
                 },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = nnarAbstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -249,7 +249,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.AppValue,
                 AppValue = new ProtoComm.AppValue { Value = appBroadcastMsg.Value },
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
@@ -264,7 +264,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.BebBroadcast,
                 BebBroadcast = bebBroadcastMsg,
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                 MessageUuid = Guid.NewGuid().ToString()
@@ -288,7 +288,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlSend,
                 PlSend = plSendMsg,
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 MessageUuid = Guid.NewGuid().ToString()

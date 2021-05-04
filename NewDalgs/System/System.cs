@@ -19,6 +19,8 @@ namespace NewDalgs.System
 
         public HashSet<ProtoComm.ProcessId> Processes { get; private set; }
 
+        public string SystemId { get; private set; }
+
         private ConcurrentDictionary<string, Abstraction> _abstractions;
 
         private Task _messageListener;
@@ -264,9 +266,9 @@ namespace NewDalgs.System
 
         private void HandleProcDestroy(ProtoComm.Message innerMsg)
         {
+            StopTimers();
             Processes.Clear();
             _abstractions.Clear();
-            StopTimers();
         }
 
         private void HandleProcInit(ProtoComm.Message msg)
@@ -293,6 +295,8 @@ namespace NewDalgs.System
                     Logger.Fatal($"[{ProcessId.Port}]: Could not find ProcessId from ProcInitializeSystem");
                     Stop();
                 }
+
+                SystemId = msg.SystemId;
             }
             catch (Exception ex)
             {

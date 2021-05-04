@@ -48,7 +48,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.PlDeliver,
                 PlDeliver = plDeliverMsg,
-                SystemId = msg.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(msg.ToAbstractionId),
                 MessageUuid = Guid.NewGuid().ToString()
@@ -72,7 +72,7 @@ namespace NewDalgs.Abstractions
             {
                 Type = ProtoComm.Message.Types.Type.NetworkMessage,
                 NetworkMessage = networkMsg,
-                SystemId = plSendMsg.Message.SystemId,
+                SystemId = _system.SystemId,
                 FromAbstractionId = _abstractionId,
                 ToAbstractionId = msg.ToAbstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
