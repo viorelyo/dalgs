@@ -26,7 +26,21 @@ namespace NewDalgs.Abstractions
 
             _alive = new HashSet<ProtoComm.ProcessId>(_system.Processes);
 
-            _timer = _system.AllocateTimer();
+            _timer = _system.PrepareScheduledTask((source, e) =>
+            {
+                var msg = new ProtoComm.Message
+                {
+                    Type = ProtoComm.Message.Types.Type.EpfdTimeout,
+                    EpfdTimeout = new ProtoComm.EpfdTimeout(),
+                    SystemId = "sys-1",    // TODO sysid should be globally available :(
+                    ToAbstractionId = _abstractionId,    // TODO check this
+                    FromAbstractionId = _abstractionId,
+                    MessageUuid = Guid.NewGuid().ToString()
+                };
+
+                _system.TriggerEvent(msg);
+            });
+
             StartTimer();
         }
 
@@ -167,23 +181,7 @@ namespace NewDalgs.Abstractions
 
         private void StartTimer()
         {
-            // TODO check if the timer should be reset first
-            _timer.ScheduleTask(new ElapsedEventHandler(
-                (source, e) =>
-                {
-                    var msg = new ProtoComm.Message
-                    {
-                        Type = ProtoComm.Message.Types.Type.EpfdTimeout,
-                        EpfdTimeout = new ProtoComm.EpfdTimeout(),
-                        SystemId = "sys-1",    // TODO sysid should be globally available :(
-                        ToAbstractionId = _abstractionId,    // TODO check this
-                        FromAbstractionId = _abstractionId,
-                        MessageUuid = Guid.NewGuid().ToString()
-                    };
-
-                    _system.TriggerEvent(msg);
-                }), 
-                _delay);
+            _timer.ScheduleTask(_delay);
         }
     }
 }

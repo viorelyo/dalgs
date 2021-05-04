@@ -107,7 +107,7 @@ namespace NewDalgs.Abstractions
                     ValueTimestamp = _state.ValTimestamp
                 },
                 SystemId = "sys-1",    // TODO sysid should be globally available :(
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };

@@ -152,7 +152,8 @@ namespace NewDalgs.Networking
                                 return;
                             }
 
-                            OnPublish(this, serializedMsg);
+                            if (OnPublish != null)
+                                OnPublish(this, serializedMsg);
                         }
                     }
                 }

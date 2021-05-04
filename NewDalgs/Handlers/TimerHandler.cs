@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System;
+using System.Timers;
 
 namespace NewDalgs.Handlers
 {
@@ -6,10 +7,15 @@ namespace NewDalgs.Handlers
     {
         private Timer _timer = new Timer();
 
-        public void ScheduleTask(ElapsedEventHandler task, int delay)
+        public TimerHandler(Action<object, object> task)
+        {
+            _timer.AutoReset = false;
+            _timer.Elapsed += new ElapsedEventHandler(task);
+        }
+
+        public void ScheduleTask(int delay)
         {
             _timer.Interval = delay;
-            _timer.Elapsed += task;
             _timer.Start();
         }
 

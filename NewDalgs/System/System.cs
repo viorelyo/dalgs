@@ -105,7 +105,8 @@ namespace NewDalgs.System
         {
             try
             {
-                _eventQueue.Add(e);
+                if (!_eventQueue.IsCompleted)
+                    _eventQueue.Add(e);
             }
             catch (Exception ex)
             {
@@ -265,6 +266,7 @@ namespace NewDalgs.System
         {
             Processes.Clear();
             _abstractions.Clear();
+            StopTimers();
         }
 
         private void HandleProcInit(ProtoComm.Message msg)
@@ -359,16 +361,16 @@ namespace NewDalgs.System
             if (ucTopic != "")
             {
                 this.TriggerEvent(msg);     // TODO check this
-                Logger.Warn($"[{ProcessId.Port}] Message readded: [{msg}]");
+                //Logger.Warn($"[{ProcessId.Port}] Message readded: [{msg}]");
                 return;
             }
 
             Logger.Error($"[{ProcessId.Port}]: Could not identify ToAbstractionId: [{msg.ToAbstractionId}]");
         }
 
-        public TimerHandler AllocateTimer()
+        public TimerHandler PrepareScheduledTask(Action<object, object> task)
         {
-            var newTimerHandler = new TimerHandler();
+            var newTimerHandler = new TimerHandler(task);
             _timerHandlers.Add(newTimerHandler);
 
             return newTimerHandler;
@@ -380,6 +382,8 @@ namespace NewDalgs.System
             {
                 timerHandler.Stop();
             }
+
+            _timerHandlers.Clear();
         }
     }
 }
