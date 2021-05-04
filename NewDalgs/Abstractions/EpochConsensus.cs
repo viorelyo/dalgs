@@ -28,7 +28,7 @@ namespace NewDalgs.Abstractions
             : base(abstractionId, system)
         {
             _system.RegisterAbstraction(new PerfectLink(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name), _system));
-            _system.RegisterAbstraction(new BestEffortBroadcast(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name), _system));       // TODO well...
+            _system.RegisterAbstraction(new BestEffortBroadcast(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name), _system));
 
             _epochTimestamp = epochTimestamp;
             _state = state;
@@ -107,7 +107,7 @@ namespace NewDalgs.Abstractions
                     ValueTimestamp = _state.ValTimestamp
                 },
                 SystemId = _system.SystemId,
-                ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -131,7 +131,7 @@ namespace NewDalgs.Abstractions
                     Value = decidedMsg.Value
                 },
                 SystemId = _system.SystemId,
-                ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -165,13 +165,13 @@ namespace NewDalgs.Abstractions
                                 Value = _tmpVal
                             },
                             SystemId = _system.SystemId,
-                            ToAbstractionId = _abstractionId,   // TODO check this
+                            ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -202,13 +202,13 @@ namespace NewDalgs.Abstractions
                         Type = ProtoComm.Message.Types.Type.EpInternalAccept,
                         EpInternalAccept = new ProtoComm.EpInternalAccept(),
                         SystemId = _system.SystemId,
-                        ToAbstractionId = _abstractionId,    // TODO check this
+                        ToAbstractionId = _abstractionId,
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     }
                 },
                 SystemId = _system.SystemId,
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -258,13 +258,13 @@ namespace NewDalgs.Abstractions
                                 Value = _tmpVal
                             },
                             SystemId = _system.SystemId,
-                            ToAbstractionId = _abstractionId,   // TODO check this
+                            ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -292,13 +292,13 @@ namespace NewDalgs.Abstractions
                             ValueTimestamp = _state.ValTimestamp
                         },
                         SystemId = _system.SystemId,
-                        ToAbstractionId = _abstractionId,    // TODO check this
+                        ToAbstractionId = _abstractionId,
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     }
                 },
                 SystemId = _system.SystemId,
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -320,13 +320,13 @@ namespace NewDalgs.Abstractions
                         Type = ProtoComm.Message.Types.Type.EpInternalRead,
                         EpInternalRead = new ProtoComm.EpInternalRead(),
                         SystemId = _system.SystemId,
-                        ToAbstractionId = _abstractionId,   // TODO check this
+                        ToAbstractionId = _abstractionId,
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     }
                 },
                 SystemId = _system.SystemId,
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };

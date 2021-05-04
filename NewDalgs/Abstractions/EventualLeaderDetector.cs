@@ -71,7 +71,7 @@ namespace NewDalgs.Abstractions
                         Process = _leader
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };

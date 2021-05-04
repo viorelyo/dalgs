@@ -33,7 +33,7 @@ namespace NewDalgs.Abstractions
                     Type = ProtoComm.Message.Types.Type.EpfdTimeout,
                     EpfdTimeout = new ProtoComm.EpfdTimeout(),
                     SystemId = _system.SystemId,
-                    ToAbstractionId = _abstractionId,    // TODO check this
+                    ToAbstractionId = _abstractionId,
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -94,13 +94,13 @@ namespace NewDalgs.Abstractions
                         Type = ProtoComm.Message.Types.Type.EpfdInternalHeartbeatReply,
                         EpfdInternalHeartbeatReply = new ProtoComm.EpfdInternalHeartbeatReply(),
                         SystemId = _system.SystemId,
-                        ToAbstractionId = _abstractionId,    // TODO check this
+                        ToAbstractionId = _abstractionId,
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     }
                 },
                 SystemId = _system.SystemId,
-                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };
@@ -120,7 +120,7 @@ namespace NewDalgs.Abstractions
                 var msg = new ProtoComm.Message
                 {
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -161,13 +161,13 @@ namespace NewDalgs.Abstractions
                             Type = ProtoComm.Message.Types.Type.EpfdInternalHeartbeatRequest,
                             EpfdInternalHeartbeatRequest = new ProtoComm.EpfdInternalHeartbeatRequest(),
                             SystemId = _system.SystemId,
-                            ToAbstractionId = _abstractionId,    // TODO check this
+                            ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };

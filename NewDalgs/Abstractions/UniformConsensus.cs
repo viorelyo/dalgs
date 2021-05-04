@@ -82,7 +82,7 @@ namespace NewDalgs.Abstractions
                             Value = epDecideMsg.Value
                         },
                         SystemId = _system.SystemId,
-                        ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
+                        ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                         FromAbstractionId = _abstractionId,
                         MessageUuid = Guid.NewGuid().ToString()
                     };
@@ -149,7 +149,7 @@ namespace NewDalgs.Abstractions
                 Type = ProtoComm.Message.Types.Type.EpAbort,
                 EpAbort = new ProtoComm.EpAbort(),
                 SystemId = _system.SystemId,
-                ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),    // TODO check this
+                ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),
                 FromAbstractionId = _abstractionId,
                 MessageUuid = Guid.NewGuid().ToString()
             };

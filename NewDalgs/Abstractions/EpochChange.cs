@@ -74,13 +74,13 @@ namespace NewDalgs.Abstractions
                                 Timestamp = _timestamp
                             },
                             SystemId = _system.SystemId,
-                            ToAbstractionId = _abstractionId,   // TODO check this
+                            ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -108,7 +108,7 @@ namespace NewDalgs.Abstractions
                         NewTimestamp = newTimestamp
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -134,7 +134,7 @@ namespace NewDalgs.Abstractions
                         }
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -164,13 +164,13 @@ namespace NewDalgs.Abstractions
                                 Timestamp = _timestamp
                             },
                             SystemId = _system.SystemId,
-                            ToAbstractionId = _abstractionId,   // TODO check this
+                            ToAbstractionId = _abstractionId,
                             FromAbstractionId = _abstractionId,
                             MessageUuid = Guid.NewGuid().ToString()
                         }
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
