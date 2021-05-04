@@ -1,4 +1,5 @@
-﻿using NewDalgs.Utils;
+﻿using NewDalgs.Handlers;
+using NewDalgs.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace NewDalgs.Abstractions
 
         private static readonly int Delta = 100;    // 100 milliseconds
 
-        private Timer _timer = new Timer();
+        private TimerHandler _timer;
 
         private HashSet<ProtoComm.ProcessId> _alive;
         private HashSet<ProtoComm.ProcessId> _suspected = new HashSet<ProtoComm.ProcessId>();
@@ -24,6 +25,8 @@ namespace NewDalgs.Abstractions
             _system.RegisterAbstraction(new PerfectLink(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name), _system));
 
             _alive = new HashSet<ProtoComm.ProcessId>(_system.Processes);
+
+            _timer = _system.AllocateTimer();
             StartTimer();
         }
 
@@ -165,9 +168,8 @@ namespace NewDalgs.Abstractions
         private void StartTimer()
         {
             // TODO check if the timer should be reset first
-            _timer.Interval = _delay;
-            _timer.Elapsed += new ElapsedEventHandler(
-                (source, e) => 
+            _timer.ScheduleTask(new ElapsedEventHandler(
+                (source, e) =>
                 {
                     var msg = new ProtoComm.Message
                     {
@@ -180,8 +182,8 @@ namespace NewDalgs.Abstractions
                     };
 
                     _system.TriggerEvent(msg);
-                });
-            _timer.Start();
+                }), 
+                _delay);
         }
     }
 }

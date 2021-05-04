@@ -94,7 +94,7 @@ namespace NewDalgs.Abstractions
 
         private void HandleInternalCheck()
         {
-            if (_leader.Equals(_system.ProcessId) && _val.Defined && !_proposed)
+            if (_system.ProcessId.Equals(_leader) && _val.Defined && !_proposed)
             {
                 _proposed = true;
 

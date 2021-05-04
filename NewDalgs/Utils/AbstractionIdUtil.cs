@@ -78,7 +78,7 @@ namespace NewDalgs.Utils
 
             var UcIdSubstring = ucAbstractionId.Substring(ucKeywordIndex);
 
-            int openingUcScopeIndex = NNAtomicRegister.Name.Length;
+            int openingUcScopeIndex = UniformConsensus.Name.Length;
             if (UcIdSubstring[openingUcScopeIndex] != '[')
                 return "";
 

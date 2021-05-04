@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using NewDalgs.Abstractions;
+using NewDalgs.Handlers;
 using NewDalgs.Networking;
 using NewDalgs.Utils;
 using System;
@@ -25,6 +26,8 @@ namespace NewDalgs.System
 
         private BlockingCollection<ProtoComm.Message> _eventQueue;
 
+        private List<TimerHandler> _timerHandlers;
+
         private bool _wasStopped = false;
 
         public System(ProtoComm.ProcessId processId, ProtoComm.ProcessId hubProcesId)
@@ -38,6 +41,7 @@ namespace NewDalgs.System
 
             _networkHandler = new NetworkHandler(processId.Host, processId.Port);
             _eventQueue = new BlockingCollection<ProtoComm.Message>(new ConcurrentQueue<ProtoComm.Message>());
+            _timerHandlers = new List<TimerHandler>();
         }
 
         public void Start()
@@ -62,6 +66,7 @@ namespace NewDalgs.System
             if (_wasStopped)
                 return;
 
+            StopTimers();
             UnsubscribeFromMessageListener();
             _networkHandler.StopListener();     // Would be nice to notify dalgs that process is unregistered
 
@@ -331,9 +336,12 @@ namespace NewDalgs.System
                 HandleNewAbstractionId(msg);
             }
 
-            if (!_abstractions[msg.ToAbstractionId].Handle(msg))
+            if (_abstractions.ContainsKey(msg.ToAbstractionId))
             {
-                Logger.Error($"[{ProcessId.Port}]: Could not handle message: [{msg}]");
+                if (!_abstractions[msg.ToAbstractionId].Handle(msg))
+                {
+                    Logger.Error($"[{ProcessId.Port}]: Could not handle message: [{msg}]");
+                }
             }
         }
 
@@ -356,6 +364,22 @@ namespace NewDalgs.System
             }
 
             Logger.Error($"[{ProcessId.Port}]: Could not identify ToAbstractionId: [{msg.ToAbstractionId}]");
+        }
+
+        public TimerHandler AllocateTimer()
+        {
+            var newTimerHandler = new TimerHandler();
+            _timerHandlers.Add(newTimerHandler);
+
+            return newTimerHandler;
+        }
+
+        private void StopTimers()
+        {
+            foreach (var timerHandler in _timerHandlers)
+            {
+                timerHandler.Stop();
+            }
         }
     }
 }

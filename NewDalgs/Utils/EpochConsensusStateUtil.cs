@@ -1,8 +1,6 @@
 ﻿using NewDalgs.Abstractions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NewDalgs.Utils
 {
@@ -11,7 +9,7 @@ namespace NewDalgs.Utils
         public static EpochConsensusState FindHighest(IEnumerable<EpochConsensusState> states)
         {
             // TODO check this
-            return states.OrderBy(state => state.ValTimestamp).Last();
+            return (states.Count() == 0) ? null : states.OrderBy(state => state.ValTimestamp).Last();
         }
     }
 }
