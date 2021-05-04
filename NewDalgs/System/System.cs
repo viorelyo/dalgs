@@ -328,7 +328,7 @@ namespace NewDalgs.System
         {
             if (!_abstractions.ContainsKey(msg.ToAbstractionId))
             {
-                HandleNewAbstractionId(msg.ToAbstractionId);
+                HandleNewAbstractionId(msg);
             }
 
             if (!_abstractions[msg.ToAbstractionId].Handle(msg))
@@ -337,18 +337,25 @@ namespace NewDalgs.System
             }
         }
 
-        private void HandleNewAbstractionId(string toAbstractionId)
+        private void HandleNewAbstractionId(ProtoComm.Message msg)
         {
-            var nnarRegisterName = AbstractionIdUtil.GetNnarRegisterName(toAbstractionId);
+            var nnarRegisterName = AbstractionIdUtil.GetNnarRegisterName(msg.ToAbstractionId);
             if (nnarRegisterName != "")
             {
                 var nnarAbstractionId = AbstractionIdUtil.GetNnarAbstractionId(Application.Name, nnarRegisterName);
                 RegisterAbstraction(new NNAtomicRegister(nnarAbstractionId, this));
+                return;
             }
-            else
+
+            var ucTopic = AbstractionIdUtil.GetUcTopicName(msg.ToAbstractionId);
+            if (ucTopic != "")
             {
-                Logger.Error($"[{ProcessId.Port}]: Could not obtain nnarRegisterName from [{toAbstractionId}]");
+                this.TriggerEvent(msg);     // TODO check this
+                Logger.Warn($"[{ProcessId.Port}] Message readded: [{msg}]");
+                return;
             }
+
+            Logger.Error($"[{ProcessId.Port}]: Could not identify ToAbstractionId: [{msg.ToAbstractionId}]");
         }
     }
 }

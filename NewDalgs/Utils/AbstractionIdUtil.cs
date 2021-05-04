@@ -69,5 +69,24 @@ namespace NewDalgs.Utils
 
             return nnarIdSubstring.Substring(openingNnarScopeIndex + 1, closingNnarScopeIndex - openingNnarScopeIndex - 1);
         }
+
+        public static string GetUcTopicName(string ucAbstractionId)
+        {
+            int ucKeywordIndex = ucAbstractionId.IndexOf(UniformConsensus.Name);
+            if (ucKeywordIndex < 0)
+                return "";
+
+            var UcIdSubstring = ucAbstractionId.Substring(ucKeywordIndex);
+
+            int openingUcScopeIndex = NNAtomicRegister.Name.Length;
+            if (UcIdSubstring[openingUcScopeIndex] != '[')
+                return "";
+
+            int closingUcScopeIndex = UcIdSubstring.IndexOf(']');
+            if (closingUcScopeIndex < 0)
+                return "";
+
+            return UcIdSubstring.Substring(openingUcScopeIndex + 1, closingUcScopeIndex - openingUcScopeIndex - 1);
+        }
     }
 }
