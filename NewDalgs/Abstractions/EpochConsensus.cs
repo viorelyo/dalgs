@@ -1,7 +1,6 @@
 ﻿using NewDalgs.Utils;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NewDalgs.Abstractions
 {
@@ -17,19 +16,20 @@ namespace NewDalgs.Abstractions
 
         private bool _halted = false;
 
+        private ProtoComm.ProcessId _leader;
         private int _epochTimestamp;
         private EpochConsensusState _state;
         private ProtoComm.Value _tmpVal = new ProtoComm.Value { Defined = false };
         private Dictionary<ProtoComm.ProcessId, EpochConsensusState> _states = new Dictionary<ProtoComm.ProcessId, EpochConsensusState>();
         private int _accepted = 0;
 
-        // TODO decide if Leader should be included in constructor, even if it is not used
-        public EpochConsensus(string abstractionId, System.System system, EpochConsensusState state, int epochTimestamp)
+        public EpochConsensus(string abstractionId, System.System system, ProtoComm.ProcessId leader, EpochConsensusState state, int epochTimestamp)
             : base(abstractionId, system)
         {
             _system.RegisterAbstraction(new PerfectLink(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, PerfectLink.Name), _system));
             _system.RegisterAbstraction(new BestEffortBroadcast(AbstractionIdUtil.GetChildAbstractionId(_abstractionId, BestEffortBroadcast.Name), _system));
 
+            _leader = leader;
             _epochTimestamp = epochTimestamp;
             _state = state;
         }
@@ -37,7 +37,7 @@ namespace NewDalgs.Abstractions
         public override bool Handle(ProtoComm.Message msg)
         {
             if (_halted)
-                return false;
+                throw new EpochConsensusHaltedException("EpochConsensus was aborted");
 
             if (msg.Type == ProtoComm.Message.Types.Type.EpPropose)
             {
@@ -96,7 +96,6 @@ namespace NewDalgs.Abstractions
 
         private void HandleEpAbort()
         {
-            // TODO check this
             var outMsg = new ProtoComm.Message
             {
                 Type = ProtoComm.Message.Types.Type.EpAborted,
@@ -119,7 +118,6 @@ namespace NewDalgs.Abstractions
 
         private void HandleEpDecided(ProtoComm.Message msg)
         {
-            // TODO check this
             var decidedMsg = msg.BebDeliver.Message.EpInternalDecided;
 
             var outMsg = new ProtoComm.Message
@@ -238,7 +236,7 @@ namespace NewDalgs.Abstractions
                 if (highest == null)
                     return;
 
-                if (highest.Val != null)
+                if (highest.Val.Defined)
                 {
                     _tmpVal = highest.Val;
                 }
@@ -332,6 +330,26 @@ namespace NewDalgs.Abstractions
             };
 
             _system.TriggerEvent(outMsg);
+        }
+    }
+
+    /// <summary>
+    /// Expected exception after EpochConsensus was aborted
+    /// </summary>
+    class EpochConsensusHaltedException : Exception
+    {
+        public EpochConsensusHaltedException()
+        {
+        }
+
+        public EpochConsensusHaltedException(string message)
+            : base(message)
+        {
+        }
+
+        public EpochConsensusHaltedException(string message, Exception inner)
+            : base(message, inner)
+        {
         }
     }
 }

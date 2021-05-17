@@ -8,7 +8,6 @@ namespace NewDalgs.Utils
     {
         public static EpochConsensusState FindHighest(IEnumerable<EpochConsensusState> states)
         {
-            // TODO check this
             return (states.Count() == 0) ? null : states.OrderBy(state => state.ValTimestamp).Last();
         }
     }

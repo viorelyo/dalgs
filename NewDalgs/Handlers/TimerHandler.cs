@@ -23,7 +23,6 @@ namespace NewDalgs.Handlers
         {
             if (_timer.Enabled)
             {
-                // TODO meh - this triggers again the task
                 _timer.Stop();
             }
         }

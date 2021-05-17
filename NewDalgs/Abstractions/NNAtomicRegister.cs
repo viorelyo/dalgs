@@ -59,7 +59,6 @@ namespace NewDalgs.Abstractions
         private NNAREntity _nnarEntity = new NNAREntity { Timestamp = 0, WriterRank = 0, Value = new ProtoComm.Value { Defined = false } };
         private int _acks = 0;
         private int _readId = 0;
-        // TODO replace with Dictionary
         private ConcurrentDictionary<string, NNAREntity> _readList = new ConcurrentDictionary<string, NNAREntity>();
         private bool _isReading = false;
 
@@ -109,14 +108,24 @@ namespace NewDalgs.Abstractions
             {
                 if (msg.PlDeliver.Message.Type == ProtoComm.Message.Types.Type.NnarInternalValue)
                 {
-                    HandleNNarInternalValue(msg);
-                    return true;
+                    var nnarInternalValMsg = msg.PlDeliver.Message.NnarInternalValue;
+                    if (nnarInternalValMsg.ReadId == _readId)
+                    {
+                        HandleNNarInternalValue(msg);
+                        return true;
+                    }
+                    return false;
                 }
 
                 if (msg.PlDeliver.Message.Type == ProtoComm.Message.Types.Type.NnarInternalAck)
                 {
-                    HandleNNarInternalAck(msg);
-                    return true;
+                    var nnarInternalAckMsg = msg.PlDeliver.Message.NnarInternalAck;
+                    if (nnarInternalAckMsg.ReadId == _readId)
+                    {
+                        HandleNNarInternalAck(msg);
+                        return true;
+                    }
+                    return false;
                 }
 
                 return false;
@@ -132,13 +141,6 @@ namespace NewDalgs.Abstractions
 
         private void HandleNNarInternalAck(ProtoComm.Message msg)
         {
-            var plDeliverMsg = msg.PlDeliver;
-            var nnarInternalAckMsg = plDeliverMsg.Message.NnarInternalAck;
-            if (nnarInternalAckMsg.ReadId != _readId)
-            {
-                return;
-            }
-
             _acks++;
             if (_acks > (_system.Processes.Count / 2))
             {
@@ -176,10 +178,6 @@ namespace NewDalgs.Abstractions
             var plDeliverMsg = msg.PlDeliver;
 
             var nnarInternalValMsg = plDeliverMsg.Message.NnarInternalValue;
-            if (nnarInternalValMsg.ReadId != _readId)
-            {
-                return;
-            }
 
             var receivedNNAREntity = new NNAREntity
             {

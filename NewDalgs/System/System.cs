@@ -339,19 +339,27 @@ namespace NewDalgs.System
         {
             if (!_abstractions.ContainsKey(msg.ToAbstractionId))
             {
-                HandleNewAbstractionId(msg);
+                HandleUnknownAbstractionId(msg);
             }
 
             if (_abstractions.ContainsKey(msg.ToAbstractionId))
             {
-                if (!_abstractions[msg.ToAbstractionId].Handle(msg))
+                try
                 {
-                    Logger.Error($"[{ProcessId.Port}]: Could not handle message: [{msg}]");
+                    if (!_abstractions[msg.ToAbstractionId].Handle(msg))
+                    {
+                        this.TriggerEvent(msg);
+                    }
+                }
+                catch (EpochConsensusHaltedException)
+                {
+                    // Ignoring message
+                    return;
                 }
             }
         }
 
-        private void HandleNewAbstractionId(ProtoComm.Message msg)
+        private void HandleUnknownAbstractionId(ProtoComm.Message msg)
         {
             var nnarRegisterName = AbstractionIdUtil.GetNnarRegisterName(msg.ToAbstractionId);
             if (nnarRegisterName != "")
@@ -361,15 +369,8 @@ namespace NewDalgs.System
                 return;
             }
 
-            var ucTopic = AbstractionIdUtil.GetUcTopicName(msg.ToAbstractionId);
-            if (ucTopic != "")
-            {
-                this.TriggerEvent(msg);     // TODO check this
-                //Logger.Warn($"[{ProcessId.Port}] Message readded: [{msg}]");
-                return;
-            }
-
-            Logger.Error($"[{ProcessId.Port}]: Could not identify ToAbstractionId: [{msg.ToAbstractionId}]");
+            // In some scenarios (consensus) there are messages that contain unregistered yet abstractionIDs
+            this.TriggerEvent(msg);
         }
 
         public TimerHandler PrepareScheduledTask(Action<object, object> task)

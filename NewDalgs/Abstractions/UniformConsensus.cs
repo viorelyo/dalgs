@@ -30,9 +30,7 @@ namespace NewDalgs.Abstractions
                 ValTimestamp = 0
             };
 
-            _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp), _system, ep0State, _epochTimestamp));
-
-            HandleInternalCheck();
+            _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp), _system, _leader, ep0State, _epochTimestamp));
         }
 
         public override bool Handle(ProtoComm.Message msg)
@@ -51,14 +49,24 @@ namespace NewDalgs.Abstractions
 
             if (msg.Type == ProtoComm.Message.Types.Type.EpAborted)
             {
-                HandleEpAborted(msg);
-                return true;
+                var epAbortedMsg = msg.EpAborted;
+                if (epAbortedMsg.Ets == _epochTimestamp)
+                {
+                    HandleEpAborted(msg);
+                    return true;
+                }
+                return false;
             }
 
             if (msg.Type == ProtoComm.Message.Types.Type.EpDecide)
             {
-                HandleEpDecide(msg);
-                return true;
+                var epDecideMsg = msg.EpDecide;
+                if (epDecideMsg.Ets == _epochTimestamp)
+                {
+                    HandleEpDecide(msg);
+                    return true;
+                }
+                return false;
             }
 
             return false;
@@ -68,27 +76,24 @@ namespace NewDalgs.Abstractions
         {
             var epDecideMsg = msg.EpDecide;
 
-            if (epDecideMsg.Ets == _epochTimestamp)
+            if (!_decided)
             {
-                if (!_decided)
+                _decided = true;
+
+                var outMsg = new ProtoComm.Message
                 {
-                    _decided = true;
-
-                    var outMsg = new ProtoComm.Message
+                    Type = ProtoComm.Message.Types.Type.UcDecide,
+                    UcDecide = new ProtoComm.UcDecide
                     {
-                        Type = ProtoComm.Message.Types.Type.UcDecide,
-                        UcDecide = new ProtoComm.UcDecide
-                        {
-                            Value = epDecideMsg.Value
-                        },
-                        SystemId = _system.SystemId,
-                        ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
-                        FromAbstractionId = _abstractionId,
-                        MessageUuid = Guid.NewGuid().ToString()
-                    };
+                        Value = epDecideMsg.Value
+                    },
+                    SystemId = _system.SystemId,
+                    ToAbstractionId = AbstractionIdUtil.GetParentAbstractionId(_abstractionId),
+                    FromAbstractionId = _abstractionId,
+                    MessageUuid = Guid.NewGuid().ToString()
+                };
 
-                    _system.TriggerEvent(outMsg);
-                }
+                _system.TriggerEvent(outMsg);
             }
         }
 
@@ -106,7 +111,7 @@ namespace NewDalgs.Abstractions
                         Value = _val
                     },
                     SystemId = _system.SystemId,
-                    ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),    // TODO check this
+                    ToAbstractionId = AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp),
                     FromAbstractionId = _abstractionId,
                     MessageUuid = Guid.NewGuid().ToString()
                 };
@@ -119,22 +124,19 @@ namespace NewDalgs.Abstractions
         {
             var epAbortedMsg = msg.EpAborted;
 
-            if (epAbortedMsg.Ets == _epochTimestamp)
+            _epochTimestamp = _newEpochTimestamp;
+            _leader = _newLeader;
+            _proposed = false;
+
+            EpochConsensusState epState = new EpochConsensusState
             {
-                _epochTimestamp = _newEpochTimestamp;
-                _leader = _newLeader;
-                _proposed = false;
+                Val = epAbortedMsg.Value,
+                ValTimestamp = epAbortedMsg.ValueTimestamp
+            };
 
-                EpochConsensusState epState = new EpochConsensusState
-                {
-                    Val = epAbortedMsg.Value,
-                    ValTimestamp = epAbortedMsg.ValueTimestamp
-                };
+            _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp), _system, _leader, epState, _epochTimestamp));
 
-                _system.RegisterAbstraction(new EpochConsensus(AbstractionIdUtil.GetEpAbstractionId(_abstractionId, _epochTimestamp), _system, epState, _epochTimestamp));
-
-                HandleInternalCheck();
-            }
+            HandleInternalCheck();
         }
 
         private void HandleEcStartEpoch(ProtoComm.Message msg)
@@ -155,8 +157,6 @@ namespace NewDalgs.Abstractions
             };
 
             _system.TriggerEvent(outMsg);
-
-            HandleInternalCheck();
         }
 
         private void HandleUcPropose(ProtoComm.Message msg)

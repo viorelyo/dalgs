@@ -3,7 +3,6 @@ using NewDalgs.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Timers;
 
 namespace NewDalgs.Abstractions
 {
@@ -11,7 +10,7 @@ namespace NewDalgs.Abstractions
     {
         public static readonly string Name = "epfd";
 
-        private static readonly int Delta = 100;    // 100 milliseconds
+        private static readonly int Delta = 200;    // 100 milliseconds
 
         private TimerHandler _timer;
 
