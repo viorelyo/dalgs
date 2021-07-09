@@ -27,3 +27,13 @@ NewDalgs communicates via TCP with the Hub and other nodes (both `dalgs` and `Ne
 `NewDalgs.exe 127.0.0.1 5000 127.0.0.1 5004 5005 5006 alias` - Run second instance
 
 ### Demo
+* **Broadcast**
+<img src="/samples/broadcast.gif" width="800">  
+  
+* **(N,N)-Atomic Register**
+<img src="/samples/nnar.gif" width="800">  
+  
+<img src="/samples/storm.gif" width="800">  
+  
+* **Consensus**
+<img src="/samples/consensus.gif" width="800">
