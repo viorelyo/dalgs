@@ -1,35 +1,29 @@
 # Dalgs - Distributed algorithms
+Discovering some distributed algorithms. `Introduction to Reliable and Secure Distributed Programming. Second Edition` book by Christian Cachin, Rachid Guerraoui, Luis Rodrigues, used as main reference.
 
-## dalgs commands
-`dalgs.exe 127.0.0.1 5000 127.0.0.1 5001 5002 5003`
-`127.0.0.1 5000 127.0.0.1 5004 5005 5006 gvsd` - second instance
+### Implemented Algorithms
+* Best-Effort Broadcast (__*3.1 Basic Broadcast*__) - [goto](/NewDalgs/Abstractions/BestEffortBroadcast.cs)
+* (N,N)-Atomic Register (__*4.10-4.11 Read-Impose Write-Consult-Majority*__) - [goto](/NewDalgs/Abstractions/NNAtomicRegister.cs)
+* Eventually Perfect Failure Detector (__*2.7 Increasing Timeout*__) - [goto](/NewDalgs/Abstractions/EventuallyPerfectFailureDetector.cs)
+* Eventual Leader Detector (__*2.8 Monarchical Eventual Leader Detection*__) - [goto](/NewDalgs/Abstractions/EventualLeaderDetector.cs)
+* Epoch-Change (__*5.5 Leader-Based Epoch-Change*__) - [goto](/NewDalgs/Abstractions/EpochChange.cs)
+* Epoch Consensus (__*5.6 Read/Write Epoch Consensus*__) - [goto](/NewDalgs/Abstractions/EpochConsensus.cs)
+* Uniform Consensus (__*5.7 Leader-Driven Consensus (Paxos)*__) - [goto](/NewDalgs/Abstractions/UniformConsensus.cs)
 
-## ProtocolBuffers command
-`protoc.exe -I=C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto --csharp_out=C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto C:\Users\viorel\Desktop\amcds\NewDalgs\NewDalgs\NewDalgs\proto\communication-protocol.proto`
+### About
+NewDalgs communicates via TCP with the Hub and other nodes (both `dalgs` and `NewDalgs` run 3 separate nodes - simulating a distributed environment).
+* The Core uses `Asynchronous Server Socket` for networking (supports graceful stop)
+* The algorithms are based on `Event-driven programming`, so the Core uses a BlockingQueue in order to process all proto-defined messages.
 
-## Publish command - creating self contained EXE .NET CORE
-`dotnet publish -c Release -r win10-x64 /p:PublishSingleFile=true`
+### Built with
+* .NET Core
+* Protocol Buffers
+* NLog
 
-## C# references
-#### Graceful Stop for TcpListener
-- [Async Socket](https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example)
-- [Graceful stop for TcpClient - Async](https://codereview.stackexchange.com/questions/151228/asynchronous-tcp-server)
-- [Graceful stop Part2](https://github.com/avgoncharov/how_to/blob/master/how_to/SimpleTcpServer/TcpServer.cs)
+### Build/Run 
+* `protoc.exe -I=\NewDalgs\proto --csharp_out=\NewDalgs\proto NewDalgs\proto\communication-protocol.proto` - Generate proto
+* `dotnet publish -c Release -r win10-x64 /p:PublishSingleFile=true` - Compile app
+* `dalgs.exe 127.0.0.1 5000 127.0.0.1 5001 5002 5003` - Run [reference binaries (containing the Hub)](/dalgs/dalgs-reference-binaries.7z)
+`NewDalgs.exe 127.0.0.1 5000 127.0.0.1 5004 5005 5006 alias` - Run second instance
 
-#### .NET Logging
-- [Custom logging msg - Microsoft.Extension.Logging](https://stackoverflow.com/questions/45015660/how-to-format-the-output-of-logs-in-the-consolemicrosoft-extensions-logging)
-- [Example logging](https://www.blinkingcaret.com/2018/02/14/net-core-console-logging/)
-- [NLog](https://github.com/NLog/NLog/wiki/Tutorial#configure-nlog-targets-for-output)
-- [NLog features](https://blog.elmah.io/nlog-tutorial-the-essential-guide-for-logging-from-csharp/)
-
-#### Self contained EXE .NET Core
-- [Self-Contained EXE](https://dotnetcoretutorials.com/2019/06/20/publishing-a-single-exe-file-in-net-core-3-0/)
-
-#### Observer vs. events/delegates in C# (Pub-Sub)
-- [Plublisher/Subscriber vs. Observer](https://dev.to/absjabed/publisher-subscriber-vs-observer-pattern-with-c-3gpc)
-
-#### Deadlock - Do not try to stop yourself from same thread
-- [Handle task exceptions on continuation tasks](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/chaining-tasks-by-using-continuation-tasks)
-- [Working solution](https://stackoverflow.com/questions/27896613/continuewith-taskcontinuationoptions-onlyonfaulted-does-not-seem-to-catch-an-exc)
-- [Main idea](https://stackoverflow.com/questions/5983779/catch-exception-that-is-thrown-in-different-thread)
-
+### Demo
